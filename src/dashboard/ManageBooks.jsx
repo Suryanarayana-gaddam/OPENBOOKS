@@ -14,7 +14,7 @@ const ManageBooks = () => {
   const token = localStorage.getItem('access-token');
 
   useEffect (() => {
-    fetch("http://localhost:5000/all-books",{
+    fetch("https://book-store-api-theta.vercel.app/all-books",{
       method: "GET",
       headers: {
         "Content-Type" : "application/json",
@@ -27,7 +27,7 @@ const ManageBooks = () => {
   //console.log("User Email:", userEmail);
 
   // Fetch user data by email
-  fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+  fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json", // Set content type header explicitly
@@ -58,7 +58,7 @@ const handleDelete = (id) => {
   const isConfirmed = window.confirm("Are you sure you want to delete this book?");
   if (isConfirmed) {
     // If confirmed, proceed with the deletion
-    fetch(`http://localhost:5000/book/${id}`, {
+    fetch(`https://book-store-api-theta.vercel.app/book/${id}`, {
       method: "DELETE",
     }
   )

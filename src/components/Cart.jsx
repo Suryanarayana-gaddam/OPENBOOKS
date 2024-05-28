@@ -18,7 +18,7 @@ const Cart = () => {
     const userEmail = user?.user?.email;
 
     // Fetch user data by email
-    fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Set content type header explicitly
@@ -40,7 +40,7 @@ const Cart = () => {
         // Get user ID from userData
         const userId = userData._id;
         //console.log(userId);
-        fetch(`http://localhost:5000/user/${userId}/get/cart`, {
+        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/cart`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -83,7 +83,7 @@ const Cart = () => {
     }
 
     // Fetch user data by email
-    fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Set content type header explicitly
@@ -106,7 +106,7 @@ const Cart = () => {
         const userId = userData._id;
         const bookId = book._id;
         //delete book from the cart
-        fetch(`http://localhost:5000/user/${userId}/cart/remove/${bookId}`, {
+        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/remove/${bookId}`, {
             method: "POST",
             headers: {
               "Content-type": "application/json",
@@ -167,7 +167,7 @@ const Cart = () => {
     //console.log("User Email:", userEmail);
   
     // Fetch user data by email
-    fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Set content type header explicitly
@@ -225,7 +225,7 @@ const Cart = () => {
         //console.log(orderObj);
   
         // send data to DataBase
-        fetch(`http://localhost:5000/user/${userId}/add/orders`,{
+        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/add/orders`,{
           method:"POST",
           headers:{
             "Content-type": "application/json",
@@ -267,7 +267,7 @@ const Cart = () => {
     try {
       // Fetch user data by email
       const userEmail = user.user.email;
-      const userDataResponse = await fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+      const userDataResponse = await fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -283,7 +283,7 @@ const Cart = () => {
       const userId = userData._id;
   
       // Remove all items from the cart
-      const removeCartResponse = await fetch(`http://localhost:5000/user/${userId}/cart/removeAll`, {
+      const removeCartResponse = await fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/removeAll`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

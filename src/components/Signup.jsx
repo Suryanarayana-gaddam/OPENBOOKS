@@ -92,7 +92,7 @@ const Signup = () => {
             };
     
             // Check if the user already exists in the database
-            fetch(`http://localhost:5000/userByEmail/${user.email}`, {
+            fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
                 method: "GET",
                 headers: {
                     "Content-type": "application/json",
@@ -100,7 +100,7 @@ const Signup = () => {
             }).then(res => {
                 if (res.status === 404) {
                     // User does not exist, proceed with sign-up
-                    fetch("http://localhost:5000/sign-up", {
+                    fetch("https://book-store-api-theta.vercel.app/sign-up", {
                         method: "POST",
                         headers: {
                             "Content-type": "application/json",
@@ -153,7 +153,7 @@ const Signup = () => {
         const password = form.password.value;
       
         // Check if the user already exists in the database
-        fetch(`http://localhost:5000/userByEmail/${email}`, {
+        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${email}`, {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
@@ -183,7 +183,7 @@ const Signup = () => {
                   });
                 
                 // Send data to database
-                fetch("http://localhost:5000/sign-up", {
+                fetch("https://book-store-api-theta.vercel.app/sign-up", {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",

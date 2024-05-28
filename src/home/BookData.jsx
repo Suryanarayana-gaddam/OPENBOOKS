@@ -13,7 +13,7 @@ const BookData = ({ headLine }) => {
   const navigate = useNavigate(); // Use useNavigate hook
 
   useEffect(() => {
-    fetch("http://localhost:5000/all-books", {
+    fetch("https://book-store-api-theta.vercel.app/all-books", {
       headers : {
           authorization: `Bearer ${token}`
       }

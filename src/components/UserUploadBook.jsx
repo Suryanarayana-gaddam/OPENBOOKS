@@ -25,7 +25,7 @@ const UserUploadBook = () => {
   //console.log("User Email:", userEmail);
 
   // Fetch user data by email
-  fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+  fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json", // Set content type header explicitly
@@ -184,7 +184,7 @@ const handleBookSubmit = (event) => {
   //console.log("User Email:", userEmail);
 
   // Fetch user data by email
-  fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+  fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json", // Set content type header explicitly
@@ -230,7 +230,7 @@ const handleBookSubmit = (event) => {
       //console.log(bookObj);
 
       // send data to DataBase
-      fetch("http://localhost:5000/upload-book",{
+      fetch("https://book-store-api-theta.vercel.app/upload-book",{
         method:"POST",
         headers:{
           "Content-type": "application/json",

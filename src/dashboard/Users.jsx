@@ -12,7 +12,7 @@ const Users = () => {
     const token = localStorage.getItem('access-token');
   
     useEffect (() => {
-      fetch("http://localhost:5000/admin/all-users",{
+      fetch("https://book-store-api-theta.vercel.app/admin/all-users",{
         method: "GET",
         headers: {
           "Content-Type" : "application/json",
@@ -25,7 +25,7 @@ const Users = () => {
     //console.log("User Email:", userEmail);
   
     // Fetch user data by email
-    fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Set content type header explicitly
@@ -57,7 +57,7 @@ const Users = () => {
     const isConfirmed = window.confirm("Are you sure you want to delete this user ?");
     if (isConfirmed) {
       // If confirmed, proceed with the deletion
-      fetch(`http://localhost:5000/user/delete/${id}`, {
+      fetch(`https://book-store-api-theta.vercel.app/user/delete/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json", // Set content type header explicitly
@@ -87,7 +87,7 @@ const Users = () => {
     const isConfirmed = window.confirm("Are you sure , you want to make this user as admin ?");
     if (isConfirmed) {
       // If confirmed, proceed with the deletion
-      fetch(`http://localhost:5000/user/${id}`, {
+      fetch(`https://book-store-api-theta.vercel.app/user/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json", // Set content type header explicitly
@@ -112,7 +112,7 @@ const Users = () => {
       const isConfirmed = window.confirm("Are you sure , you want to remove this user as admin ?");
       if (isConfirmed) {
         // If confirmed, proceed with the deletion
-        fetch(`http://localhost:5000/user/${id}`, {
+        fetch(`https://book-store-api-theta.vercel.app/user/${id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json", // Set content type header explicitly

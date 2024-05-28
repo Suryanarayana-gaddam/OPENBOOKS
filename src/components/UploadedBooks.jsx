@@ -24,7 +24,7 @@ const UploadedBooks = () => {
 
       const fetchData = (userEmail) => {
         // Fetch user data by email
-        fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json", // Set content type header explicitly
@@ -46,7 +46,7 @@ const UploadedBooks = () => {
             // Get user ID from userData
             const createrId = userData._id;
             //console.log(createrId);
-            fetch(`http://localhost:5000/user/${createrId}/get/books`, {
+            fetch(`https://book-store-api-theta.vercel.app/user/${createrId}/get/books`, {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
@@ -82,7 +82,7 @@ const UploadedBooks = () => {
         const isConfirmed = window.confirm("Are you sure you want to delete this book?");
         if (isConfirmed) {
         // If confirmed, proceed with the deletion
-        fetch(`http://localhost:5000/book/${id}`, {
+        fetch(`https://book-store-api-theta.vercel.app/book/${id}`, {
             method: "DELETE",
             headers: {
               authorization: `Bearer ${token}`,

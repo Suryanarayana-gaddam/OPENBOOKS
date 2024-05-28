@@ -45,7 +45,7 @@ const AuthProvider = ({children}) => {
           setUser(currentUser);
           if(currentUser){
             const userInfo = {eamil: currentUser.email}
-            axios.post('http://localhost:5000/jwt', userInfo)
+            axios.post('https://book-store-api-theta.vercel.app/jwt', userInfo)
             .then( (response) => {
               //console.log(response.data.token);
               if(response.data.token){

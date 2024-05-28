@@ -48,7 +48,7 @@ const handleRegister = () => {
         };
         //sessionStorage.setItem("username",user.displayName);
         // Check if the user already exists in the database
-        fetch(`http://localhost:5000/userByEmail/${user.email}`, {
+        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
@@ -56,7 +56,7 @@ const handleRegister = () => {
         }).then(res => {
             if (res.status === 404) {
                 // User does not exist, proceed with sign-up
-                fetch("http://localhost:5000/login", {
+                fetch("https://book-store-api-theta.vercel.app/login", {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",

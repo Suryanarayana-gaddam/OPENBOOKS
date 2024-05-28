@@ -12,7 +12,7 @@ const About = () => {
 
   useEffect(() => {
     // Fetch book count
-    fetch("http://localhost:5000/all-books", {
+    fetch("https://book-store-api-theta.vercel.app/all-books", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +24,7 @@ const About = () => {
       .catch(error => console.error("Error fetching book count:", error));
 
     // Fetch user count
-    fetch("http://localhost:5000/admin/all-users", {
+    fetch("https://book-store-api-theta.vercel.app/admin/all-users", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ const About = () => {
       .catch(error => console.error("Error fetching user count:", error));
 
     // Fetch order count
-    fetch("http://localhost:5000/get/all-orders", {
+    fetch("https://book-store-api-theta.vercel.app/get/all-orders", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

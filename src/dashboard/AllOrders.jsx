@@ -11,7 +11,7 @@ const AllOrders = () => {
   const ordersPerPage = 8;
 
   useEffect(() => {
-        fetch(`http://localhost:5000/get/all-orders`, {
+        fetch(`https://book-store-api-theta.vercel.app/get/all-orders`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

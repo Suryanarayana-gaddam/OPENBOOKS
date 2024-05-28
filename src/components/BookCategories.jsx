@@ -273,7 +273,7 @@ const BookCategories = () => {
   const fetchBooksByCategory = async (category) => {
     try {
       //('Fetching books for category:', category);
-      const response = await fetch(`http://localhost:5000/all-books/bycategory/?category=${category}`, {
+      const response = await fetch(`https://book-store-api-theta.vercel.app/all-books/bycategory/?category=${category}`, {
         headers : {
             authorization: `Bearer ${token}`
         }

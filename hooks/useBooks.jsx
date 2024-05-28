@@ -7,7 +7,7 @@ const useBooks = () => {
         queryKey: "books",
         queryFn: async () => {
             try {
-                const response = await fetch("http://localhost:5000/all-books", {
+                const response = await fetch("https://book-store-api-theta.vercel.app/all-books", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

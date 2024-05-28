@@ -62,7 +62,7 @@ const token = localStorage.getItem('access-token');
         {
           path:"/book/:id",
           element:<PrivateRoute><SingleBook/></PrivateRoute>,
-          loader: ({params}) => fetch(`http://localhost:5000/book/${params.id}`, {
+          loader: ({params}) => fetch(`https://book-store-api-theta.vercel.app/book/${params.id}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json", // Set content type header explicitly
@@ -101,7 +101,7 @@ const token = localStorage.getItem('access-token');
         {
           path: "/user/edit-book/:id",
           element : <PrivateRoute><UserEditBook/></PrivateRoute>,
-          loader: ({params}) => fetch(`http://localhost:5000/book/${params.id}`, {
+          loader: ({params}) => fetch(`https://book-store-api-theta.vercel.app/book/${params.id}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json", // Set content type header explicitly
@@ -138,7 +138,7 @@ const token = localStorage.getItem('access-token');
         {
           path:"/admin/dashboard/edit-books/:id",
           element: <PrivateRoute><EditBooks/></PrivateRoute>,
-          loader: ({params}) => fetch(`http://localhost:5000/book/${params.id}`, {
+          loader: ({params}) => fetch(`https://book-store-api-theta.vercel.app/book/${params.id}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json", // Set content type header explicitly

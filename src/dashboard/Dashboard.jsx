@@ -13,20 +13,20 @@ const Dashboard = () => {
 
   
   useEffect(() => {
-     fetch("http://localhost:5000/all-books",{
+     fetch("https://book-store-api-theta.vercel.app/all-books",{
         method: "GET",
         headers: {
           "Content-Type" : "application/json",
           authorization: `Bearer ${token}`
         }}).then(res => res.json()).then(data => setBookCount(data.length));
-      fetch("http://localhost:5000/admin/all-users",{
+      fetch("https://book-store-api-theta.vercel.app/admin/all-users",{
         method: "GET",
         headers: {
           "Content-Type" : "application/json",
           authorization: `Bearer ${token}`
         }}).then(res => res.json()).then(data => setUserCount(data.length));
       //setUsername(user?.user?.displayName);
-      fetch(`http://localhost:5000/get/all-orders`, {
+      fetch(`https://book-store-api-theta.vercel.app/get/all-orders`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

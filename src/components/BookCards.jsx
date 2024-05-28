@@ -32,7 +32,7 @@ const BookCards = ({headLine,books, user}) => {
     if (!user) return;
     const userEmail = user.email;
     // Fetch user data by email
-    fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json", // Set content type header explicitly
@@ -51,7 +51,7 @@ const BookCards = ({headLine,books, user}) => {
         .then(userData => {
           // Get user ID from userData
           const userId = userData._id;
-          fetch(`http://localhost:5000/user/${userId}/get/wishlist`, {
+          fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/wishlist`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const BookCards = ({headLine,books, user}) => {
             // Handle unexpected errors
           });
 
-          fetch(`http://localhost:5000/user/${userId}/get/cart`, {
+          fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/cart`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -117,7 +117,7 @@ const BookCards = ({headLine,books, user}) => {
             return;
         }
         // Fetch user data by email
-        fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json", // Set content type header explicitly
@@ -139,7 +139,7 @@ const BookCards = ({headLine,books, user}) => {
         //console.log(bookId);
         if (!isBookInWishlist(book)) {
           // Add book to the wishlist
-          fetch(`http://localhost:5000/user/${userId}/wishlist/add`,{
+          fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/add`,{
             method:"POST",
             headers:{
               "Content-type": "application/json",
@@ -158,7 +158,7 @@ const BookCards = ({headLine,books, user}) => {
         } else {
             // Remove book from wishlist
             //console.log(bookId);
-           fetch(`http://localhost:5000/user/${userId}/wishlist/remove/${bookId}`, {
+           fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/remove/${bookId}`, {
             method: "POST",
             headers: {
               "Content-type": "application/json",
@@ -190,7 +190,7 @@ const BookCards = ({headLine,books, user}) => {
             return;
         }
         // Fetch user data by email
-        fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json", // Set content type header explicitly
@@ -211,7 +211,7 @@ const BookCards = ({headLine,books, user}) => {
         //console.log(bookId);
         if (!isBookInCart(book)) {
           // Add book to the wishlist
-          fetch(`http://localhost:5000/user/${userId}/cart/add`,{
+          fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/add`,{
             method:"POST",
             headers:{
               "Content-type": "application/json",
@@ -230,7 +230,7 @@ const BookCards = ({headLine,books, user}) => {
         } else {
             // Remove book from cart
             //console.log(bookId);
-           fetch(`http://localhost:5000/user/${userId}/cart/remove/${bookId}`, {
+           fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/remove/${bookId}`, {
             method: "POST",
             headers: {
               "Content-type": "application/json",
