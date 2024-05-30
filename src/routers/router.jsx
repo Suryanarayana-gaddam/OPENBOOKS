@@ -53,15 +53,15 @@ const token = localStorage.getItem('access-token');
         },
         {
           path:"/about",
-          element:<PrivateRoute><About/></PrivateRoute>
+          element:<About/>
         },
         {
           path:"/contact",
-          element:<PrivateRoute><Contact/></PrivateRoute>
+          element:<Contact/>
         },
         {
           path:"/book/:id",
-          element:<PrivateRoute><SingleBook/></PrivateRoute>,
+          element:<SingleBook/>,
           loader: ({params}) => fetch(`https://book-store-api-theta.vercel.app/book/${params.id}`, {
             method: "GET",
             headers: {
@@ -72,35 +72,35 @@ const token = localStorage.getItem('access-token');
         },
         {
           path : "/wishlist",
-          element : <PrivateRoute><Wishlist/></PrivateRoute>
+          element : <Wishlist/>
         },
         {
           path : "/cart",
-          element : <PrivateRoute><Cart/></PrivateRoute>
+          element : <Cart/>
         },
         {
           path : "/process-checkout",
-          element : <PrivateRoute><Payment/></PrivateRoute>
+          element : <Payment/>
         },
         {
           path: "/uploaded-books",
-          element : <PrivateRoute><UploadedBooks/></PrivateRoute>
+          element : <UploadedBooks/>
         },
         {
           path: "/books/searchedbooks",
-          element : <PrivateRoute><SearchedBooks/></PrivateRoute>
+          element : <SearchedBooks/>
         },
         {
           path: "/orders",
-          element : <PrivateRoute><Orders/></PrivateRoute>
+          element : <Orders/>
         },
         {
           path: "/user/upload-book",
-          element : <PrivateRoute><UserUploadBook/></PrivateRoute>
+          element : <UserUploadBook/>
         },
         {
           path: "/user/edit-book/:id",
-          element : <PrivateRoute><UserEditBook/></PrivateRoute>,
+          element : <UserEditBook/>,
           loader: ({params}) => fetch(`https://book-store-api-theta.vercel.app/book/${params.id}`, {
             method: "GET",
             headers: {
@@ -117,27 +117,27 @@ const token = localStorage.getItem('access-token');
       children: [
         {
           path:"/admin/dashboard",
-          element: <PrivateRoute><Dashboard/></PrivateRoute>
+          element: <Dashboard/>
         },
         {
           path:"/admin/dashboard/all-users",
-          element: <PrivateRoute><Users/></PrivateRoute>
+          element: <Users/>>
         },
         {
           path:"/admin/dashboard/all-orders",
-          element: <PrivateRoute><AllOrders/></PrivateRoute>
+          element: <AllOrders/>
         },
         {
           path: "/admin/dashboard/upload",
-          element: <PrivateRoute><UploadBook/></PrivateRoute>
+          element: <UploadBook/>
         },
         {
           path: "/admin/dashboard/manage",
-          element: <PrivateRoute><ManageBooks/></PrivateRoute>
+          element: <ManageBooks/>
         },
         {
           path:"/admin/dashboard/edit-books/:id",
-          element: <PrivateRoute><EditBooks/></PrivateRoute>,
+          element: <EditBooks/>,
           loader: ({params}) => fetch(`https://book-store-api-theta.vercel.app/book/${params.id}`, {
             method: "GET",
             headers: {
