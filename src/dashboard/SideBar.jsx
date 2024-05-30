@@ -31,19 +31,19 @@ const SideBar = () => {
       </div>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="/admin/dashboard" icon={HiChartPie}>
+          <Sidebar.Item href="/admin/dashboard-page" icon={HiChartPie}>
             Dashboard
           </Sidebar.Item>
-          <Sidebar.Item href="/admin/dashboard/upload" icon={HiOutlineCloudUpload}>
+          <Sidebar.Item href="/admin/upload" icon={HiOutlineCloudUpload}>
             Upload Book
           </Sidebar.Item>
-          <Sidebar.Item href="/admin/dashboard/manage" icon={HiInbox}>
+          <Sidebar.Item href="/admin/manage" icon={HiInbox}>
             Mangage Books
           </Sidebar.Item>
-          <Sidebar.Item href="/admin/dashboard/all-users" icon={HiUser}>
+          <Sidebar.Item href="/admin/all-users" icon={HiUser}>
             Manage Users
           </Sidebar.Item>
-          <Sidebar.Item href="/admin/dashboard/all-orders" icon={HiCash}>
+          <Sidebar.Item href="/admin/all-orders" icon={HiCash}>
             Orders
           </Sidebar.Item>
           <Sidebar.Item href="/logout" icon={HiTable}>

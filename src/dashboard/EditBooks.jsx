@@ -45,7 +45,7 @@ const updateBookObj = {
   }).then(res => res.json()).then(data => {
     //console.log(data);
     alert("Book is Updated Successfully!!!");
-    window.location.href = '/admin/dashboard/manage';
+    window.location.href = '/admin/manage';
   })
   .catch(error => {
     console.error('Error updating book:', error);
@@ -55,7 +55,7 @@ const updateBookObj = {
 
   return (
     <div className='px-4 my-8'>
-        <Link to="/admin/dashboard/manage" className="flex items-center">
+        <Link to="/admin/manage" className="flex items-center">
           <FaBackwardFast />
           <span className="ml-2">Back</span>
         </Link>

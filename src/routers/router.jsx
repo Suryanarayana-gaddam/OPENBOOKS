@@ -116,27 +116,27 @@ const token = localStorage.getItem('access-token');
       element:<DashboardLayout/>,
       children: [
         {
-          path:"/admin/dashboard",
+          path:"/admin/dashboard-page",
           element: <Dashboard/>
         },
         {
-          path:"/admin/dashboard/all-users",
+          path:"/admin/all-users",
           element: <Users/>>
         },
         {
-          path:"/admin/dashboard/all-orders",
+          path:"/admin/all-orders",
           element: <AllOrders/>
         },
         {
-          path: "/admin/dashboard/upload",
+          path: "/admin/upload",
           element: <UploadBook/>
         },
         {
-          path: "/admin/dashboard/manage",
+          path: "/admin/manage",
           element: <ManageBooks/>
         },
         {
-          path:"/admin/dashboard/edit-books/:id",
+          path:"/admin/edit-books/:id",
           element: <EditBooks/>,
           loader: ({params}) => fetch(`https://book-store-api-theta.vercel.app/book/${params.id}`, {
             method: "GET",

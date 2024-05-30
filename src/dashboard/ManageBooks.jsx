@@ -112,7 +112,7 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
                 <Table.Cell>
                   <Link 
                     className="font-medium text-cyan-600 hover:underline dark:text-cyan-500" 
-                    to={`/admin/dashboard/edit-books/${book._id}`}>
+                    to={`/admin/edit-books/${book._id}`}>
                     Edit
                   </Link>
                   <button onClick={() => handleDelete(book._id)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-sm hover:bg-sky-600 ml-5'>Delete</button>
