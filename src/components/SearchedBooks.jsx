@@ -102,7 +102,7 @@ const SearchedBooks = () => {
         });
 
     if (query) {
-      fetch(`https://book-store-api-theta.vercel.app/all-books/searchedbooks?query=${encodeURIComponent(query)}`, {
+      fetch(`https://book-store-api-theta.vercel.app/books/searchedbooks?query=${encodeURIComponent(query)}`, {
         headers : {
             authorization: `Bearer ${token}`
         }
