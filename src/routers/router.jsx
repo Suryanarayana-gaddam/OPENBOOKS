@@ -112,7 +112,7 @@ const token = localStorage.getItem('access-token');
       ]
     },
     {
-      path:"/admin/dashboard",
+      path:"/admin",
       element:<DashboardLayout/>,
       children: [
         {
