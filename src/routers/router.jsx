@@ -131,10 +131,7 @@ const token = localStorage.getItem('access-token');
           path: "/admin/upload",
           element: <UploadBook/>
         },
-        {
-          path: "/admin/manage",
-          element: <ManageBooks/>
-        },
+        
         {
           path:"/admin/edit-books/:id",
           element: <EditBooks/>,
@@ -147,6 +144,10 @@ const token = localStorage.getItem('access-token');
           })
         }
       ]
+    },
+    {
+      path: "/admin/manage",
+      element: <ManageBooks/>
     },
     {
       path: "sign-up",
