@@ -116,7 +116,7 @@ const token = localStorage.getItem('access-token');
       element:<DashboardLayout/>,
       children: [
         {
-          path:"/admin/dashboard-page",
+          path:"/admin/dashboard",
           element: <Dashboard/>
         },
         {

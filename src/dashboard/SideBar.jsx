@@ -31,7 +31,7 @@ const SideBar = () => {
       </div>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="/admin/dashboard-page" icon={HiChartPie}>
+          <Sidebar.Item href="/admin/dashboard" icon={HiChartPie}>
             Dashboard
           </Sidebar.Item>
           <Sidebar.Item href="/admin/upload" icon={HiOutlineCloudUpload}>
