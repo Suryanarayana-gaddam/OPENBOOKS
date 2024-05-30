@@ -121,7 +121,7 @@ const token = localStorage.getItem('access-token');
         },
         {
           path:"/admin/all-users",
-          element: <Users/>>
+          element: <Users/>
         },
         {
           path:"/admin/all-orders",
