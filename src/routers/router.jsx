@@ -112,26 +112,29 @@ const router = createBrowserRouter([
       ]
     },
     {
-      path:"/admin",
+      path:"/admin/Dashboard",
       element:<DashboardLayout/>,
       children: [
         {
-          path:"/admin/dashboard",
+          path:"/admin/Dashboard",
           element: <Dashboard/>
         },
         {
-          path:"/admin/all-users",
+          path:"/admin/Dashboard/all-users",
           element: <Users/>
         },
         {
-          path:"/admin/all-orders",
+          path:"/admin/Dashboard/all-orders",
           element: <AllOrders/>
         },
         {
-          path: "/admin/upload",
+          path: "/admin/Dashboard/upload",
           element: <UploadBook/>
         },
-        
+        {
+          path: "/admin/Dashboard/manage",
+          element: <ManageBooks/>
+        },
         {
           path:"/admin/edit-books/:id",
           element: <EditBooks/>,
@@ -144,10 +147,6 @@ const router = createBrowserRouter([
           })
         }
       ]
-    },
-    {
-      path: "/admin/manage",
-      element: <ManageBooks/>
     },
     {
       path: "sign-up",

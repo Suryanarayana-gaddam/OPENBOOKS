@@ -32,19 +32,19 @@ const SideBar = () => {
       <Sidebar.Items>
         <Sidebar.ItemGroup>
           <Sidebar.Item  icon={HiChartPie}>
-            <Link to={"/admin/dashboard"}>DashBoard</Link>
+            <Link to={"/admin/Dashboard"}>DashBoard</Link>
           </Sidebar.Item>
           <Sidebar.Item  icon={HiOutlineCloudUpload}>
-            <Link to={"/admin/upload"}>Upload Book</Link>
+            <Link to={"/admin/Dashboard/upload"}>Upload Book</Link>
           </Sidebar.Item>
           <Sidebar.Item  icon={HiInbox}>
-            <Link to={"/admin/manage"}>Mangage Books</Link>
+            <Link to={"/admin/Dashboard/manage"}>Mangage Books</Link>
           </Sidebar.Item>
           <Sidebar.Item icon={HiUser}>
-          <Link to={"/admin/all-users"}>Mangage Users</Link>
+          <Link to={"/admin/Dashboard/all-users"}>Mangage Users</Link>
           </Sidebar.Item>
           <Sidebar.Item  icon={HiCash}>
-            <Link to={"/admin/all-orders"}>Orders</Link>
+            <Link to={"/admin/Dashboard/all-orders"}>Orders</Link>
           </Sidebar.Item>
           <Sidebar.Item icon={HiTable}>
             <Link to={"/logout"}>Log Out</Link>
