@@ -34,7 +34,7 @@ import Payment from "../components/Payment";
 
 const token = localStorage.getItem('access-token');
 
-  const router = createBrowserRouter([
+const router = createBrowserRouter([
     {
       path: "/",
       element: <App/>,

@@ -324,8 +324,8 @@ const BookCategories = () => {
         ))}
       </ul>
       <h2 className='my-2 mt-5 bg-black text-center text-white text-2xl p-2 h-12'>Books</h2>
-      <p className='text-center font-bold text-gray-500 mt-'>{books.length == 0 && "No Books Available in this category!"}<Shop /></p>
       <BookCards books={books} user={user.user} /> {/* Pass books state as prop */}
+      <div className='text-center font-bold text-gray-500 mt-'>{books.length == 0 && "No Books Available in this category!"}<Shop /></div>
       {/* {books.length > 0 && <Shop />} Conditionally render Shop component when books are loaded */}
     </div>
   );
