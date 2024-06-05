@@ -22,8 +22,7 @@ const useBooks = () => {
                 return await response.json();
             } catch (error) {
                 console.error("Error fetching user data:", error);
-                // Handle the error (e.g., display a message to the user)
-                return []; // Return an empty array or handle the error state appropriately
+                return []; 
             }
         },
     });

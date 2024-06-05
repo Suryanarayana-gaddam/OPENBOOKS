@@ -189,19 +189,6 @@ const Cart = () => {
         // Get user ID from userData
         const userId = userData._id;
         const username = userData.username;
-  
-        // // Extract book data from the form
-        // const bookId = book._id; 
-        // const bookTitle = book.bookTitle; 
-        // const authorName = book.authorName;
-        // const imageURL = book.imageURL;
-        // const category = book.category;
-        // const bookDescription = book.bookDescription;
-        // const bookPDFURL = book.bookPDFURL;
-        // const bookPrice = book.bookPrice;
-        // const createrId = book.createrId;
-        // const quantity = book.quantity;
-        // const totalPrice = cartBooks.reduce((total, book) => total + (book.quantity || 1) * book.bookPrice, 0);
 
         // Submit each book in the cart individually
     cartBooks.forEach(book => {
@@ -233,16 +220,6 @@ const Cart = () => {
           },
           body: JSON.stringify(orderObj)
         }).then(res => res.json()).then(data => {
-          //console.log(data);
-           //alert("Order Uploaded Successfully!!!");
-          // const pdfBlob = book.bookPDFURL.blob();
-          // const pdfUrl = URL.createObjectURL(pdfBlob);
-          // const a = document.createElement("a");
-          // a.href = pdfUrl;
-          // a.download = `${book.bookTitle}.pdf`;
-          // a.click();
-          // URL.revokeObjectURL(pdfUrl);
-          //form.reset();
           emptyCart();
         });
       })
@@ -260,9 +237,6 @@ const Cart = () => {
       // Display a message to the user indicating that they need to log in
       return;
     }
-  
-    // Display loading indicator
-    // Optionally, you can use a loading state to indicate that the operation is in progress
   
     try {
       // Fetch user data by email
@@ -298,17 +272,11 @@ const Cart = () => {
       // Set cartBooks to empty array
       setCartBooks([]);
       refetch()
-      // Display success message to the user
-      //alert("Cart was emptied successfully!");
       
     } catch (error) {
       console.error("Error emptying cart:", error.message);
-      // Display an error message to the user indicating that something went wrong
-      // Optionally, you can log the error for debugging purposes
-    } finally {
-      // Hide loading indicator
-      // Optionally, you can remove the loading state here
-    }
+      
+    } 
 };
 
   

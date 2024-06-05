@@ -10,76 +10,8 @@ const Signup = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
-
-    // const handleSignUp = (event) => {
-    //     event.preventDefault();
-    //     const form = event.target;
-    //     const email = form.email.value;
-    //     const password = form.password.value;
-        
-
-
-    //     createUser(email,password).then((userCredential) => {
-    //         // Signed up 
-    //         const user = userCredential.user;
-    //         alert("Signed up Successfully !");
-    //         navigate(from,{replace:true});
-    //         // ...
-    //       })
-    //       .catch((error) => {
-    //         const errorCode = error.code;
-    //         const errorMessage = error.message;
-    //         setError(errorMessage);
-    //         // ..
-    //       });
-    // }
+    
     const from = location.state?.from?.pathname || "/";
-    //signup using google account
-
-    // const handleRegister = () => {
-    //     loginWithGoogle().then((result) => {
-    //         const user = result.user;
-    //         const userObj = {
-    //             username: user.displayName,
-    //             email: user.email,
-    //             password: "", // You can set a default password or leave it empty
-    //             googleSignIn: true // Add a flag to indicate Google sign-in
-    //         };
-    
-    //         // Check if the user already exists in the database
-    //         fetch(`http://localhost:5000/userByEmail/${user.email}`, {
-    //             method: "GET",
-    //             headers: {
-    //                 "Content-type": "application/json",
-    //             }
-    //         }).then(res => res.json()).then(existingUser => {
-    //             if (existingUser !== null && existingUser !== undefined) { // Check if user exists
-    //                 alert("User already exists!");
-    //                 navigate(from, { replace: true });
-    //                 return;
-    //             }else{                
-    
-    //                 // Send data to database only if the user does not already exist
-    //                 fetch("http://localhost:5000/sign-up", {
-    //                     method: "POST",
-    //                     headers: {
-    //                         "Content-type": "application/json",
-    //                     },
-    //                     body: JSON.stringify(userObj)
-    //                 }).then(res => res.json()).then(data => {
-    //                     // console.log(data);
-    //                     alert("Signed up Successfully!");
-    //                     navigate(from, { replace: true });
-    //                 });
-    //             }
-    //         });
-    //     }).catch((error) => {
-    //         const errorCode = error.code;
-    //         const errorMessage = error.message;
-    //         setError(errorMessage);
-    //         // Handle error
-    //     });
-    // }
 
     const handleRegister = () => {
         loginWithGoogle().then((result) => {
@@ -127,23 +59,6 @@ const Signup = () => {
     }
     
     
-
-    
-    // const handleRegister = () => {
-    //     loginWithGoogle().then( (result) => {
-    //         const user = result.user;
-    //         alert("Signed up Successfully !");
-    //         navigate(from,{replace:true});
-    //     })
-    //     .catch((error) => {
-    //         const errorCode = error.code;
-    //         const errorMessage = error.message;
-    //         setError(errorMessage);
-    //         // ..
-    //       });
-    // }
-
-
     const handleSignup = (event) => {
         event.preventDefault();
         const form = event.target;
@@ -201,49 +116,6 @@ const Signup = () => {
         });
     }
     
-
-
-    // const handleSignup = (event) => {
-    //     event.preventDefault();
-    //     const form = event.target;
-      
-    //     const username = form.username.value; 
-    //     const email = form.email.value;
-    //     const password = form.password.value;
-    //   const userObj = {
-    //     username,email,password
-    //   }
-      
-    //     //console.log(userObj);
-
-        // createUser(email,password).then((userCredential) => {
-        //     // Signed up 
-        //     const user = userCredential.user;
-        //     alert("Signed up Successfully !");
-        //     navigate(from,{replace:true});
-        //     // ...
-        //   })
-        //   .catch((error) => {
-        //     const errorCode = error.code;
-        //     const errorMessage = error.message;
-        //     setError(errorMessage);
-        //     // ..
-        //   });
-
-      
-    //     // send data to DataBase
-    //     fetch("http://localhost:5000/sign-up",{
-    //       method:"POST",
-    //       headers:{
-    //         "Content-type": "application/json",
-    //       },
-    //       body:JSON.stringify(userObj)
-    //     }).then(res => res.json()).then(data => {
-    //       //console.log(data);
-    //       alert("Sent data to the Database!");
-    //       form.reset();
-    //     })
-    //   }
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
         <div className="relative py-3 sm:max-w-xl sm:mx-auto">

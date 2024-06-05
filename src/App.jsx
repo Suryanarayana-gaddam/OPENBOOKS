@@ -6,7 +6,6 @@ import './App.css'
 import Navbar from './components/Navbar'
 import MyFooter from './components/MyFooter'
 import { useEffect, useState } from 'react';
-//import useSessionManagement from '../hooks/useSessionManagement'
 
 
 function App() {

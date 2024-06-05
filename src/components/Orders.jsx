@@ -9,25 +9,6 @@ const Orders = () => {
   const user = useContext(AuthContext);
   const token = localStorage.getItem('access-token');
 
-
-//   useEffect(() => {
-//     const fetchOrders = async () => {
-//       try {
-//         const userEmail = user?.user?.email;
-//         const response = await fetch(`http://localhost:5000/user/${userId}/orders`);
-//         if (!response.ok) {
-//           throw new Error('Failed to fetch orders');
-//         }
-//         const data = await response.json();
-//         setOrders(data);
-//       } catch (error) {
-//         console.error('Error fetching orders:', error);
-//       }
-//     };
-
-//     fetchOrders();
-//   }, [user]);
-
 useEffect(() => {
     const userEmail = user?.user?.email;
 

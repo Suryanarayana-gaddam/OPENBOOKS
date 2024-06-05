@@ -1,4 +1,3 @@
-// src/hooks/useSessionManagement.js
 import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../src/context/AuthProvider';
@@ -18,19 +17,15 @@ const useSessionManagement = () => {
         logOut();
         navigate('/login', { replace: true });
       }
-  
-      // Check network status
-      const handleNetworkChange = () => {
+        const handleNetworkChange = () => {
         if (!navigator.onLine) {
           alert('Network connection lost. Logging out...');
           logOutUser();
         }
       };
   
-      // Handle visibility change
       const handleVisibilityChange = () => {
         if (document.visibilityState === 'hidden') {
-          // Optionally, start a timer to log out after a certain period
           startInactivityTimer();
         } else {
           resetInactivityTimer();

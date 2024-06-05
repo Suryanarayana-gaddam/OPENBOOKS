@@ -1,6 +1,6 @@
 import { Sidebar } from 'flowbite-react';
 import { BiBuoy } from 'react-icons/bi';
-import { HiArrowSmRight, HiCash, HiChartPie, HiInbox, HiOutlineCloudUpload, HiShoppingBag, HiTable, HiUser, HiViewBoards } from 'react-icons/hi';
+import { HiCash, HiChartPie, HiInbox, HiOutlineCloudUpload, HiTable, HiUser } from 'react-icons/hi';
 
 //import userImg from "../assets/profile.jpg"
 import { useContext } from 'react';

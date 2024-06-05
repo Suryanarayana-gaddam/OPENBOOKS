@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 //import { Sidebar } from 'flowbite-react';
 
 
 //react icons
-import { FaBarsStaggered, FaBookAtlas, FaFaceLaugh, FaUser, FaXmark} from "react-icons/fa6"
+import { FaBarsStaggered, FaBookAtlas, FaUser, FaXmark} from "react-icons/fa6"
 import { AuthContext } from '../context/AuthProvider';
 import Logout from './Logout';
 import useCart from '../../hooks/useCart';
@@ -177,25 +177,7 @@ return (
                 </div>
             
             </div> 
-                    {/* <label tabIndex={0} role="button" className="btn btn-ghost btn-circle relative bg-slate-50 p-1 rounded-full size-auto">
-                        <div className="indicator">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                            <span className="badge badge-sm indicator-item absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 text-black rounded-full px-2 py-1 text-1xl">8</span>
-                        </div>
-                    </label> */}
-
                     
-             {/* User menu for lg devices */}
-            {/* <div className={`absolute top-full right-0 z-10 mt-2 py-2 bg-white rounded-lg shadow-md text-left ${isMenuOpen ? "block" : "hidden"}`}>
-                {userMenuItems.map(({ link, path }) => (
-                    <Link key={path} to={path} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        {link}
-                    </Link>
-                ))}
-            </div>    */}
-
                 {/* MENU BAR FOR THE MOBILE DEVICES */}
 
             {/* nav for sm devises */}
@@ -211,111 +193,5 @@ return (
 
 export default Navbar
 
-// import React, { useContext, useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
-// import { FaBarsStaggered, FaBookAtlas, FaFaceLaugh, FaUser, FaXmark } from "react-icons/fa6";
-// import { AuthContext } from '../context/AuthProvider';
 
-// const Navbar = () => {
-//     const [isMenuOpen, setIsMenuOpen] = useState(false);
-//     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-//     const [isSticky, setIsSticky] = useState(false);
-//     const { user } = useContext(AuthContext);
-
-//     const toggleMenu = () => {
-//         setIsMenuOpen(!isMenuOpen);
-//     }
-
-//     const toggleUserMenu = () => {
-//         setIsMenuOpen(false);
-//         setIsUserMenuOpen(!isUserMenuOpen);
-//     }
-
-//     useEffect(() => {
-//         const handleScroll = () => {
-//             if (window.scrollY > 100) {
-//                 setIsSticky(true);
-//             } else {
-//                 setIsSticky(false);
-//             }
-//         }
-//         window.addEventListener("scroll", handleScroll);
-
-//         return () => {
-//             window.removeEventListener("scroll", handleScroll);
-//         }
-//     }, [])
-
-//     const navItems = [
-//         { link: "Home", path: "/" },
-//         { link: "Categories", path: "/bookcategories" },
-//         { link: "Shop", path: "/shop" },
-//         { link: "Sell your book", path: "/admin/dashboard" },
-//         { link: "Blog", path: "/blog" },
-//     ];
-
-//     const userMenuItems = user ? [
-//         { link: "Profile", path: "/profile" },
-//         { link: "Wishlist", path: "/wishlist" },
-//         { link: "Cart", path: "/cart" },
-//         { link: "Logout", path: "/logout" }
-//     ] : [
-//         { link: "Signup", path: "/sign-up" },
-//         { link: "Login", path: "/login" }
-//     ];
-
-//     return (
-//         <header className='w-full bg-transparent fixed top-0 left-0 right-0 transition-all ease-in duration-300'>
-//             <nav className={`py-4 lg:px-24 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
-//                 <div className='flex justify-between items-center text-base gap-8'>
-//                     <Link to="/" className='text-2x1 font-bold text-blue-700 flex items-center gap-2'>
-//                         <FaBookAtlas className='inline-block text-3xl' />
-//                         <span className='text-3xl font-serif'>ReadIt</span>
-//                     </Link>
-//                     <ul className='md:flex space-x-12 hidden'>
-//                         {navItems.map(({ link, path }) => (
-//                             <Link key={path} to={path} className="block text-base text-black uppercase cursor-pointer hover:text-blue-700">
-//                                 {link}
-//                             </Link>
-//                         ))}
-//                     </ul>
-//                     <div className='space-x-5 lg:flex items-center'>
-//                         {user && user.photoURL ? (
-//                             <img src={user.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full' />
-//                         ) : (
-//                             <FaUser className='p-0 mt-2 mr-1 h-4 w-4 border-none rounded-full' />
-//                         )}
-//                         {user?.displayName || user?.email}
-//                         <div className="relative">
-//                             <button onClick={toggleUserMenu} className="text-black focus:outline-none">
-//                                 <FaBarsStaggered className="h-5 w-5 text-black mt-3" />
-//                             </button>
-//                             <div className={`absolute top-full right-0 z-10 mt-2 py-2 bg-white rounded-lg shadow-md text-left ${isUserMenuOpen ? "block" : "hidden"}`}>
-//                                 {userMenuItems.map(({ link, path }) => (
-//                                     <Link key={path} to={path} className="block p-0 px-4 py-2 text-base text-black  bg-white hover:bg-gray-200 ">
-//                                         {link}
-//                                     </Link>
-//                                 ))}
-//                             </div>
-//                         </div>
-//                     </div>
-//                     <div className='md:hidden absolute top-2 left-1'>
-//                         <button onClick={toggleMenu} className='text-black focus:outline-none'>
-//                             {isMenuOpen ? <FaXmark className='h-5 w-5 text-black' /> : <FaBarsStaggered className='h-5 w-5 text-black ' />}
-//                         </button>
-//                     </div>
-//                 </div>
-//                 <div className={`space-y-4 px-4 mt-16 py-7 bg-blue-700 text-white ${isMenuOpen ? "block fixed top-0 right-0 left-0" : "hidden"}`}>
-//                     {navItems.map(({ link, path }) => (
-//                         <Link key={path} to={path} className="block text-base text-white uppercase cursor-pointer ">
-//                             {link}
-//                         </Link>
-//                     ))}
-//                 </div>
-//             </nav>
-//         </header>
-//     )
-// }
-
-// // export default Navbar;
 
