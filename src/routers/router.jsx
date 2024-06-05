@@ -136,7 +136,7 @@ const router = createBrowserRouter([
           element: <ManageBooks/>
         },
         {
-          path:"/admin/edit-books/:id",
+          path:"/admin/Dashboard/edit-books/:id",
           element: <EditBooks/>,
           loader: ({params}) => fetch(`https://book-store-api-theta.vercel.app/book/${params.id}`, {
             method: "GET",
