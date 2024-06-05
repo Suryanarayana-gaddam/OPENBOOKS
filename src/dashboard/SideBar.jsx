@@ -31,8 +31,8 @@ const SideBar = () => {
       </div>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="/admin/dashboard" icon={HiChartPie}>
-            Dashboard
+          <Sidebar.Item  icon={HiChartPie}>
+            <Link to={"/admin/dashboard"}>DashBoard</Link>
           </Sidebar.Item>
           <Sidebar.Item href="/admin/upload" icon={HiOutlineCloudUpload}>
             Upload Book
