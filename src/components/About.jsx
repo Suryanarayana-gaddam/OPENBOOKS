@@ -11,7 +11,7 @@ const About = () => {
   console.log(allBooks);
 
   useEffect(() => {
-    // Fetch book count
+    // Fetch book count here
     fetch("https://book-store-api-theta.vercel.app/all-books", {
       method: "GET",
       headers: {
