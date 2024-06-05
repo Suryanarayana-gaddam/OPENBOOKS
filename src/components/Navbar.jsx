@@ -93,7 +93,7 @@ const Navbar = () => {
         {link:"Home",path:"/"},
         {link:"Categories",path:"/bookcategories"},
         {link:"Shop",path:"/shop"},
-        {link:"Admin",path: isAdmin ? "/admin" : "/login"},
+        {link:"Admin",path: isAdmin ? "/admin/Dashboard" : "/login"},
     ]
     //console.log(user)
     //console.log("pic :",user?.photoURL)
