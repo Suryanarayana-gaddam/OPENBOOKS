@@ -89,10 +89,7 @@ const BookCards = ({headLine,books, user}) => {
             }
             return res.json();
           })
-          .then(data =>{
-            setCartBooks(data);
-            window.location.reload();
-          })
+          .then(data =>setCartBooks(data))
           .catch(error => {
             console.error("Error:", error);
             // Handle unexpected errors
@@ -225,6 +222,7 @@ const BookCards = ({headLine,books, user}) => {
             //alert("Book Uploaded to Cart Successfully!!!");
             setCartBooks([...cartBooks, book]);
             refetch()
+            window.location.reload();
           })
           .catch(error => {
             console.error("Error:", error);// Handle unexpected errors
