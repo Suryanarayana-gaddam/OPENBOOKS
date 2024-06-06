@@ -25,9 +25,9 @@ const SideBar = () => {
         {user && user.photoURL !== null && user.photoURL !== undefined ? (
           <img src={user.photoURL} alt="User" className="w-8 h-8 rounded-full mr-2" />
         ) : (
-          <FaUser className="w-8 h-8 mr-2 text-white bg:gray-700" />
+          <FaUser className="w-8 h-8 mr-2 " />
         )}
-        <span>{user ? user.displayName || user.email : "Guest"}</span>
+        <span className='text-white bg:gray-700'>{user ? user.displayName || user.email : "Guest"}</span>
       </div>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
