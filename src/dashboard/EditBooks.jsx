@@ -55,7 +55,7 @@ const updateBookObj = {
 
   return (
     <div className='px-4 my-8'>
-        <Link to="/admin/manage" className="flex items-center">
+        <Link to="/admin/Dashboard/manage" className="flex items-center">
           <FaBackwardFast />
           <span className="ml-2">Back</span>
         </Link>
