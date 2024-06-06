@@ -89,7 +89,10 @@ const BookCards = ({headLine,books, user}) => {
             }
             return res.json();
           })
-          .then(data => setCartBooks(data))
+          .then(data =>{
+            setCartBooks(data);
+            window.location.reload();
+          })
           .catch(error => {
             console.error("Error:", error);
             // Handle unexpected errors

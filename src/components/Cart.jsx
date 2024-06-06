@@ -3,11 +3,13 @@ import { AuthContext } from '../context/AuthProvider';
 import { motion } from 'framer-motion'; // For animations
 import { Link } from 'react-router-dom';
 import useCart from '../../hooks/useCart';
+import BookCards from './BookCards';
 
 const Cart = () => {
   const [cartBooks, setCartBooks] = useState([]);
   const user = useContext(AuthContext);
   const [bookQuantity, setBookQuantity] = useState(1); // Initialize quantity state
+  const [books,setBooks] = useState([]);
 
   const token = localStorage.getItem('access-token');
   const headLine = "My Cart";
@@ -67,6 +69,13 @@ const Cart = () => {
         console.error("Error:", error);
         // Handle unexpected errors
       });
+
+
+      fetch("https://book-store-api-theta.vercel.app/all-books", {
+                headers : {
+                    authorization: `Bearer ${token}`
+                }
+            }).then(res => res.json()).then(data => setBooks(data.slice(20,30).reverse()))
   }, [user]);
 
   //console.log(cartBooks)
@@ -282,11 +291,14 @@ const Cart = () => {
   
 
   return (
-    <div className="container mx-auto px-4 lg:px-24 mt-16">
+    <div className="container mx-auto px-4 mt-16">
           <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
       <div>
         {cartBooks.length === 0 ? (
-          <p className='px-4 lg:px-24 text-2xl text-center my-3'>Your Cart was Empty!</p>
+          <div>
+            <p className='px-4 lg:px-24 text-2xl text-center my-3'>Your Cart was Empty!</p>
+            <BookCards books={books} headLine="Suggested Books" user={user.user}/>
+          </div>
         ) : (
           <div className='p-10 mb-5'>
             {cartBooks.map(book => (
