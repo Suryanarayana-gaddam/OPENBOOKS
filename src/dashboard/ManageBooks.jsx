@@ -109,7 +109,7 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
                 <Table.Cell>{book.authorName}</Table.Cell>
                 <Table.Cell>{book.category}</Table.Cell>
                 <Table.Cell>₹{book.bookPrice}</Table.Cell>
-                <Table.Cell>
+                <Table.Cell className='whitespace-nowrap'>
                   <Link 
                     className="font-medium text-cyan-600 hover:underline dark:text-cyan-500" 
                     to={`/admin/Dashboard/edit-books/${book._id}`}>
