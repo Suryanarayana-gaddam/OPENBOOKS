@@ -1,7 +1,7 @@
-import React , { useState } from 'react'
+import { useState } from 'react'
 import { Link, useLoaderData , useParams } from 'react-router-dom';
 import { Button, Label, Select, TextInput, Textarea } from "flowbite-react";
-import { FaBackward, FaBackwardFast } from 'react-icons/fa6';
+import { FaBackwardFast } from 'react-icons/fa6';
 
 const EditBooks = () => {
   const {id} = useParams();
@@ -9,7 +9,7 @@ const EditBooks = () => {
   const token = localStorage.getItem('access-token');
   
   const bookCategories = [
-    "Fiction","Non-Fiction","Mistery","Programming","Science Fiction","Fantasy","Horror","Bibliogarphy","Autobiography","History","Self-help","Memoir","Business","Children Books","Travel","Religion","Art And Design"
+    "Fiction","Mistery","Programming","Science Fiction","Fantasy","Horror","Bibliogarphy","Autobiography","History","Self-help","Memoir","Business","Children Books","Travel","Religion","Art And Design"
   ]
   const [selectedBookCategory,setselectedBookCategory] = useState(bookCategories[0]);
 
@@ -35,7 +35,7 @@ const updateBookObj = {
 
   //console.log(bookObj);
   //update book data
-  fetch(`https://book-store-api-theta.vercel.app/book/${id}`,{
+  fetch(`https://book-store-api-theta.vercel.app/book/update/${id}`,{
     method: "PATCH",
     headers: {
       "Content-Type" : "application/json",
