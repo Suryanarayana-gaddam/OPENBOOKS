@@ -103,7 +103,7 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                   {indexOfFirstBook + index + 1} 
                 </Table.Cell>
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {book.bookTitle}
                 </Table.Cell>
                 <Table.Cell>{book.authorName}</Table.Cell>
