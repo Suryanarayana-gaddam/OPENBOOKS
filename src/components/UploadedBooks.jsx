@@ -82,7 +82,7 @@ const UploadedBooks = () => {
         const isConfirmed = window.confirm("Are you sure you want to delete this book?");
         if (isConfirmed) {
         // If confirmed, proceed with the deletion
-        fetch(`https://book-store-api-theta.vercel.app/book/${id}`, {
+        fetch(`https://book-store-api-theta.vercel.app/book/delete/${id}`, {
             method: "DELETE",
             headers: {
               authorization: `Bearer ${token}`,

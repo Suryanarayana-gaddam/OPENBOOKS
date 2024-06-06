@@ -72,7 +72,7 @@ const updateBookObj = {
 
   //console.log(bookObj);
   //update book data
-  fetch(`https://book-store-api-theta.vercel.app/book/${id}`,{
+  fetch(`https://book-store-api-theta.vercel.app/book/update/${id}`,{
     method: "PATCH",
     headers: {
       "Content-Type" : "application/json",
