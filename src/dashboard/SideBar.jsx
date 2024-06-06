@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
 import { IoArrowBack } from 'react-icons/io5';
-import { FaPerson } from 'react-icons/fa6';
+import { FaPerson, FaUser } from 'react-icons/fa6';
 
 
 const SideBar = () => {
@@ -25,7 +25,7 @@ const SideBar = () => {
         {user && user.photoURL !== null && user.photoURL !== undefined ? (
           <img src={user.photoURL} alt="User" className="w-8 h-8 rounded-full mr-2" />
         ) : (
-          <FaPerson className="w-8 h-8 mr-2" />
+          <FaUser className="w-8 h-8 mr-2 text-white bg:gray-700" />
         )}
         <span>{user ? user.displayName || user.email : "Guest"}</span>
       </div>
