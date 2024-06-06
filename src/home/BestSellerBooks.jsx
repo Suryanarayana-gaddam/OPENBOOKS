@@ -13,7 +13,7 @@ const BestSellerBooks = () => {
                 headers : {
                     authorization: `Bearer ${token}`
                 }
-            }).then(res => res.json()).then(data => setBooks(data.slice(30,42)))
+            }).then(res => res.json()).then(data => setBooks(data.slice(45,57)))
     },[])
     
   return (
