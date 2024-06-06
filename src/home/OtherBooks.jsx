@@ -17,7 +17,7 @@ const OtherBooks = () => {
     
   return (
         <div>
-            <BookCards books={books} headLine="Other Books" user={user.user}/>
+            <BookCards books={books.slice(15,35).reverse()} headLine="Other Books" user={user.user}/>
         </div>
     )
 }

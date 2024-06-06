@@ -76,7 +76,7 @@ const AllOrders = () => {
               whileHover={{ scale: 1.05 }}
             >
               <Link to={`/book/${order.bookId}`}> {/* Wrap the image with Link component */}
-                <img src={order.imageURL} alt={order.bookTitle} className="h-34 w-24 object-cover mr-4 cursor-pointer" />
+                <img src={order.imageURL} alt={order.bookTitle} className="sm:w-34 h-34 w-24 object-cover mr-4 cursor-pointer" />
               </Link>
               <div className="flex items-center">
                 <div>

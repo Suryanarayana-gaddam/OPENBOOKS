@@ -75,7 +75,7 @@ const Cart = () => {
                 headers : {
                     authorization: `Bearer ${token}`
                 }
-            }).then(res => res.json()).then(data => setBooks(data.slice(20,30).reverse()))
+            }).then(res => res.json()).then(data => setBooks(data.slice(15,25).reverse()))
   }, [user]);
 
   //console.log(cartBooks)
