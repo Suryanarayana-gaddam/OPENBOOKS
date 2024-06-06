@@ -83,7 +83,7 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
 
   return (
     <div className='px-4 my-12 sm:max-w-md md:max-w-lg lg:max-w-full'>
-      <h2 className='mb-8 text-3xl font-bold'>Manage Your Books</h2>
+      <h2 className='mb-8 text-3xl font-bold'>Manage All Books</h2>
       <h2 className='mb-2'>Welcome <b>{username}</b> you can manage a book here !</h2>
       {/* Table for book data */}
       <Table className='lg:w-[1000px]'>
