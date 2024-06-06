@@ -171,9 +171,9 @@ const Users = () => {
                     
                     {
                         userInfo.role == "admin" ?
-                          (<div>
+                          (<div className='text-center'>
                             {userInfo.email == "suryanarayanagaddam020@gmail.com" ? 
-                            <button className='bg-green-600 px-4 py-1 font-semibold text-white rounded hover:bg-blue-500 hover:text-white ml-8'>Developer </button>
+                            <button className='bg-green-600 px-4 py-1 font-serif font-semibold text-white rounded hover:bg-blue-500 hover:text-white text-center'>Developer </button>
                             : (
                                 <button onClick={() => handleRemoveAdmin(userInfo._id,userInfo.role,userInfo.username)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-600 hover:text-red ml-5 text-start'>Remove Admin</button>
                               ) 
