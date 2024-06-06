@@ -12,12 +12,12 @@ const OtherBooks = () => {
                 headers : {
                     authorization: `Bearer ${token}`
                 }
-            }).then(res => res.json()).then(data => setBooks(data.slice(20,30).reverse()))
+            }).then(res => res.json()).then(data => setBooks(data.slice(15,35).reverse()))
     },[])
     
   return (
         <div>
-            <BookCards books={books.slice(15,35).reverse()} headLine="Other Books" user={user.user}/>
+            <BookCards books={books} headLine="Other Books" user={user.user}/>
         </div>
     )
 }
