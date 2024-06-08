@@ -10,9 +10,6 @@ const useCart = () => {
         
         queryKey: ['carts', user?.user?.email],
         queryFn: async () => {
-            if (!user){
-                return null;
-            }
             try {
                 const response = await fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user?.user?.email}`, {
                     method: "GET",
