@@ -214,7 +214,7 @@ const Cart = () => {
         const username = userData.username;
 
         // Submit each book in the cart individually
-    cartBooks.forEach(book => {
+    cartBooks.map(book => {
       const orderObj = {
         userId,
         username,
@@ -309,10 +309,12 @@ const Cart = () => {
           <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
       <div>
         {cartBooks.length === 0 ? (
-          <div>
-            <p className='px-4 lg:px-24 text-2xl text-center my-3'>Your Cart was Empty!</p>
-            <BookCards books={books} headLine="Suggested Books" user={user.user}/>
-          </div>
+          <div className='lg:px-14'>
+          <p className='px-4 lg:px-24 text-1xl text-center my-3'>Your Cart was Empty!</p>
+          
+          <h1 className='text-center text-3xl relative top-8'>Suggested Books </h1>
+          <BookCards books={books} user={user.user} className=''/>
+        </div> 
         ) : (
           <div className='p-10 mb-5'>
             {cartBooks.map(book => (
