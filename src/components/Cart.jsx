@@ -306,7 +306,7 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto px-4 mt-16">
-          <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
+          <h2 className='text-3xl text-center text-bold text-black my-5'>{headLine}</h2>
       <div>
         {cartBooks.length === 0 ? (
           <div className='lg:px-14'>
