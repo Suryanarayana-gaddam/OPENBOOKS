@@ -71,11 +71,25 @@ const Cart = () => {
       });
 
 
-      fetch("https://book-store-api-theta.vercel.app/all-books", {
-                headers : {
-                    authorization: `Bearer ${token}`
-                }
-            }).then(res => res.json()).then(data => setBooks(data.slice(15,25).reverse()))
+      const fetchBooks = async () => {
+        try {
+          const response = await fetch("https://book-store-api-theta.vercel.app/all-books", {
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          });
+          if (!response.ok) {
+            throw new Error('Error fetching books');
+          }
+          const data = await response.json();
+          const shuffledBooks = data.sort(() => 0.5 - Math.random());
+          setBooks(shuffledBooks.slice(0, 10));
+        } catch (error) {
+          console.error('Error:', error.message);
+        }
+      };
+  
+      fetchBooks();
   }, [user]);
 
   //console.log(cartBooks)
