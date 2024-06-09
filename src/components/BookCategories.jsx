@@ -16,7 +16,7 @@ const BookCategories = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [flag,setFlag] = useState(false);
   const bookCategories = [
-    "Fiction", "Non-Fiction", "Mystery", "Programming", "Science Fiction", "Fantasy", "Horror", "Bibliography", "Autobiography", "History", "Self-help", "Memoir", "Business", "Children Books", "Travel", "Religion", "Art And Design"
+    "Fiction", "Mystery", "Programming", "Science Fiction", "Fantasy", "Horror", "Bibliography", "Autobiography", "History", "Self-help", "Memoir", "Business", "Children Books", "Travel", "Religion", "Art And Design"
   ];
 
   const token = localStorage.getItem('access-token');
@@ -79,7 +79,7 @@ const BookCategories = () => {
       {!flag && (
         <div>
           <br />
-          <h4 className='text-center font-serif text-red'>Select one category to view the books inside it!</h4>
+          <h4 className='text-center font-serif text-red-500'>Select one category to view the books inside it!</h4>
         </div>
       )}
       <BookCards books={books} user={user.user} /> {/* Pass books state as prop */}

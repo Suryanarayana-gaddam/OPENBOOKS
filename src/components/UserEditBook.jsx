@@ -9,7 +9,7 @@ const UserEditBook = () => {
   const {bookTitle,authorName,imageURL,category,bookDescription,bookPDFURL,bookPrice} = useLoaderData();
   
   const bookCategories = [
-    "Fiction","Non-Fiction","Mistery","Programming","Science Fiction","Fantasy","Horror","Bibliogarphy","Autobiography","History","Self-help","Memoir","Business","Children Books","Travel","Religion","Art And Design"
+    "Fiction","Mistery","Programming","Science Fiction","Fantasy","Horror","Bibliogarphy","Autobiography","History","Self-help","Memoir","Business","Children Books","Travel","Religion","Art And Design"
   ]
   const [selectedBookCategory,setselectedBookCategory] = useState(bookCategories[0]);
   const [username, setUsername] = useState('');

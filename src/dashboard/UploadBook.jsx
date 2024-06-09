@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthProvider';
 
 const UploadBook = () => {
   const bookCategories = [
-    "Fiction","Non-Fiction","Mystery","Programming","Science Fiction","Fantasy","Horror","Bibliogarphy","Autobiography","History","Self-help","Memoir","Business","Children Books","Travel","Religion","Art And Design"
+    "Fiction","Mystery","Programming","Science Fiction","Fantasy","Horror","Bibliogarphy","Autobiography","History","Self-help","Memoir","Business","Children Books","Travel","Religion","Art And Design"
   ]
   const [selectedBookCategory,setselectedBookCategory] = useState(bookCategories[0]);
   const token = localStorage.getItem('access-token');
