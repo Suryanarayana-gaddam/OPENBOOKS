@@ -76,6 +76,9 @@ const BookCategories = () => {
         ))}
       </ul>
       <h2 className='my-2 mt-5 bg-black text-center text-white text-2xl p-2 h-12'>Books</h2>
+      {!flag && (
+        <h5 className=''>Select one category to view the books inside it!</h5>
+      )}
       <BookCards books={books} user={user.user} /> {/* Pass books state as prop */}
       {flag && (
         <div className="text-center font-bold text-gray-500">
