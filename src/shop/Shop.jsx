@@ -5,7 +5,7 @@ import { FaCartShopping, FaHeart } from "react-icons/fa6";
 import { AuthContext } from "../context/AuthProvider";
 import useCart from "../../hooks/useCart";
 
-const Shop = () => {
+const Shop = ({showSearchBox}) => {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 15;
@@ -362,22 +362,24 @@ const handleBuyCart = (event,book) => {
       <h2 className="text-3xl text-center text-bold text-black ">
         All Books Here
       </h2><br />
-      <div className='w-full text-center'>
-            <input
-              type="text"
-              placeholder='Search a book'
-              className='py-2 px-2 rounded-s-sm outline-none lg:w-5/6 md:w-4/6 sm:w-4 text-center ml-10'
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-            />
-            <Link to={`/books/searchedbooks?query=${encodeURIComponent(searchQuery)}`}>
-              <button
-                className='bg-blue-700 px-6 py-2 text-white lg:w-24 md:w-24 sm:w-8 font-medium hover:bg-black transition-all ease-in duration-200'
-              >
-                Search
-              </button>
-            </Link>
-          </div>
+      {showSearchBox && (
+        <div className='w-full text-center'>
+        <input
+          type="text"
+          placeholder='Search a book'
+          className='py-2 px-2 rounded-s-sm outline-none lg:w-5/6 md:w-4/6 sm:w-4 text-center ml-10'
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+        />
+        <Link to={`/books/searchedbooks?query=${encodeURIComponent(searchQuery)}`}>
+          <button
+            className='bg-blue-700 px-6 py-2 text-white lg:w-24 md:w-24 sm:w-8 font-medium hover:bg-black transition-all ease-in duration-200'
+          >
+            Search
+          </button>
+        </Link>
+      </div>
+      )}
 
       {/* Cards */}
       <div className="mt-12">

@@ -14,6 +14,7 @@ const BookCategories = () => {
   const [books, setBooks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [flag,setFlag] = useState(false);
   const bookCategories = [
     "Fiction", "Non-Fiction", "Mystery", "Programming", "Science Fiction", "Fantasy", "Horror", "Bibliography", "Autobiography", "History", "Self-help", "Memoir", "Business", "Children Books", "Travel", "Religion", "Art And Design"
   ];
@@ -42,6 +43,7 @@ const BookCategories = () => {
 
   const handleClick = (category) => {
     fetchBooksByCategory(category);
+    setFlag(true);
   };
 
   return (
@@ -75,7 +77,12 @@ const BookCategories = () => {
       </ul>
       <h2 className='my-2 mt-5 bg-black text-center text-white text-2xl p-2 h-12'>Books</h2>
       <BookCards books={books} user={user.user} /> {/* Pass books state as prop */}
-      <div className='text-center font-bold text-gray-500 mt-'>{books.length == 0 && "No Books Available in this category!"}<Shop /></div>
+      {flag && (
+        <div className="text-center font-bold text-gray-500">
+          {books.length === 0 && "No Books Available in this category!"}
+          <Shop showSearchBox={false}/>
+        </div>
+      )}
       {/* {books.length > 0 && <Shop />} Conditionally render Shop component when books are loaded */}
     </div>
   );
