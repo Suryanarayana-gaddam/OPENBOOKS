@@ -234,7 +234,7 @@ const SingleBook = () => {
         // alert("Book Uploaded to Cart Successfully!!!");
         setCartBooks([...cartBooks, book]);
         refetch()
-        window.location.href="/cart";
+        
       })
       .catch(error => {
         console.error("Error:", error);// Handle unexpected errors

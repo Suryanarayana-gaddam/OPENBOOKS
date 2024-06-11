@@ -37,7 +37,7 @@ const Banner = () => {
 
             {/* right side */}
             <div>
-              <BannerCard/>
+              <BannerCard className="width"/>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 .banner .swiper {
-    width: 240px;
-    height: 320px;
+    width: 300px;
+    height: 400px;
   }
   
   .banner .swiper-slide {
@@ -15,49 +15,59 @@
   
   .banner .swiper-slide:nth-child(1n) {
     background-image: url("../assets/banner-books/book1.jpg");
-    background-size: cover;
+    background-size:contain;
+    background-position: center;  
   }
   
   .banner .swiper-slide:nth-child(2n) {
     background-image: url("../assets/banner-books/book2.jpg");
-    background-size: cover;
+    background-size:contain;
+    background-position: center;  
   }
   
   .banner .swiper-slide:nth-child(3n) {
     background-image: url("../assets/banner-books/book3.jpg");
-    background-size: cover;
+    background-size:contain;
+    background-position: center;  
   }
   .banner .swiper-slide:nth-child(4n) {
     background-image: url("../assets/banner-books/book4.jpg");
-    background-size: cover;
+    background-size:contain;
+    background-position: center;  
   }
   
   .banner .swiper-slide:nth-child(5n) {
     background-image: url("../assets/banner-books/book5.jpg");
-    background-size: cover;
+    background-size:contain;
+    background-position: center;  
   }
   
   .banner .swiper-slide:nth-child(6n) {
     background-image: url("../assets/banner-books/book6.jpg");
-    background-size: cover;
+    background-size:contain;
+    background-position: center;  
   }
   .banner .swiper-slide:nth-child(7n) {
     background-image: url("../assets/banner-books/book7.jpg");
-    background-size: cover;
+    background-size:contain;
+    background-position: center;  
   }
   .banner .swiper-slide:nth-child(8n) {
     background-image: url("../assets/banner-books/book8.jpg");
-    background-size: cover;
+    background-size:contain;
+    background-position: center;  
   }
 
   .banner .swiper-slide:nth-child(9n) {
     background-image: url("../assets/banner-books/book9.jpg");
-    background-size: cover;
+    background-size:contain;
+    background-position: center;  
   }
 
   .banner .swiper-slide:nth-child(10n) {
     background-image: url("../assets/banner-books/book10.jpg");
-    background-size: cover;
+    background-size:contain;
+    background-position: center;  
   }
   
   
