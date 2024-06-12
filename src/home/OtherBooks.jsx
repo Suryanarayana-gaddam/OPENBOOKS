@@ -8,11 +8,11 @@ const OtherBooks = () => {
     const user = useContext(AuthContext);
 
     useEffect( () =>  {
-            fetch("https://book-store-api-theta.vercel.app/all-books", {
+            fetch("https://book-store-api-theta.vercel.app/all-books/other-books", {
                 headers : {
                     authorization: `Bearer ${token}`
                 }
-            }).then(res => res.json()).then(data => setBooks(data.slice(15,35).reverse()))
+            }).then(res => res.json()).then(data => setBooks(data))
     },[])
     
   return (

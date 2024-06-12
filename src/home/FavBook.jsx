@@ -63,7 +63,7 @@ const FavBook = () => {
         headers: {
           "Content-Type" : "application/json",
           authorization: `Bearer ${token}`
-        }}).then(res => res.json()).then(data => setUserCount(data.CountOfUsers));
+        }}).then(res => res.json()).then(data => setUserCount(data.userCount));
       //setUsername(user?.user?.displayName);
       fetch(`https://book-store-api-theta.vercel.app/get/all-orders-count`, {
         method: "GET",
@@ -82,7 +82,7 @@ const FavBook = () => {
         return res.json();
       })
       .then(data => {
-          setOrderCount(data.length);
+          setOrderCount(data.ordersCount);
 
       })
       .catch(error => {
