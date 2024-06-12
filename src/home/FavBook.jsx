@@ -52,20 +52,20 @@ const FavBook = () => {
 
   
   useEffect(() => {
-     fetch("https://book-store-api-theta.vercel.app/all-books",{
+     fetch("https://book-store-api-theta.vercel.app/all-books-count",{
         method: "GET",
         headers: {
           "Content-Type" : "application/json",
           authorization: `Bearer ${token}`
-        }}).then(res => res.json()).then(data => setBookCount(data.length));
+        }}).then(res => res.json()).then(data => setBookCount(data.booksCount));
       fetch("https://book-store-api-theta.vercel.app/admin/all-users",{
         method: "GET",
         headers: {
           "Content-Type" : "application/json",
           authorization: `Bearer ${token}`
-        }}).then(res => res.json()).then(data => setUserCount(data.length));
+        }}).then(res => res.json()).then(data => setUserCount(data.CountOfUsers));
       //setUsername(user?.user?.displayName);
-      fetch(`https://book-store-api-theta.vercel.app/get/all-orders`, {
+      fetch(`https://book-store-api-theta.vercel.app/get/all-orders-count`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
