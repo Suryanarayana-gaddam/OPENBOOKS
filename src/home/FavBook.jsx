@@ -57,7 +57,7 @@ const FavBook = () => {
         headers: {
           "Content-Type" : "application/json",
           authorization: `Bearer ${token}`
-        }}).then(res => res.json()).then(data => setBookCount(data.booksCount));
+        }}).then(res => res.json()).then(data => setBookCount(data.bookscount));
       fetch("https://book-store-api-theta.vercel.app/admin/all-users-count",{
         method: "GET",
         headers: {
