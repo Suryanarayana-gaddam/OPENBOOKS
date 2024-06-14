@@ -9,7 +9,7 @@ const BestSellerBooks = () => {
     const token = localStorage.getItem("access-token")
 
     useEffect( () =>  {
-            fetch("https://book-store-api-theta.vercel.app/all-books/bestSellerBooks", {
+            fetch("https://book-store-api-theta.vercel.app/all-books/get/bestSellerBooks", {
                 headers : {
                     authorization: `Bearer ${token}`
                 }

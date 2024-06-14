@@ -8,7 +8,7 @@ const OtherBooks = () => {
     const user = useContext(AuthContext);
 
     useEffect( () =>  {
-            fetch("https://book-store-api-theta.vercel.app/all-books/other-books", {
+            fetch("https://book-store-api-theta.vercel.app/all-books/get/other-books", {
                 headers : {
                     "Content-Type" : "application/json",
                     authorization: `Bearer ${token}`
