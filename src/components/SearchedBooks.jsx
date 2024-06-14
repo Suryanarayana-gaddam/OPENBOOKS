@@ -355,7 +355,7 @@ const handleBuyCart = (event,book) => {
         </h2><br />
         <div className=' flex'>
             <input
-              type="text"
+              type="text" name='search-input'
               placeholder='Search a book'
               className='py-2 px-2 rounded-s-sm outline-none lg:w-5/6 sm:w-4 text-center ml-10'
               value={searchQuery}
