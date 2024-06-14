@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 const useCart = () => {
     const user = useContext(AuthContext);
     const token = localStorage.getItem("access-token");
-    
+
     const { refetch, data: cart = [] } = useQuery({
         
         queryKey: ['carts', user?.user?.email],
@@ -30,6 +30,7 @@ const useCart = () => {
                 return []; 
             }
         },
+        enabled: !user,  // Only run the query if the user is available
     });
 
     return [cart, refetch];

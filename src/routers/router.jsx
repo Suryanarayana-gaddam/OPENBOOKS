@@ -61,7 +61,7 @@ const router = createBrowserRouter([
         },
         {
           path:"/book/:id",
-          element:<SingleBook/>,
+          element:<PrivateRoute><SingleBook/></PrivateRoute>,
           loader: ({params}) => fetch(`https://book-store-api-theta.vercel.app/book/${params.id}`, {
             method: "GET",
             headers: {
@@ -88,7 +88,7 @@ const router = createBrowserRouter([
         },
         {
           path: "/books/searchedbooks",
-          element : <SearchedBooks/>
+          element : <PrivateRoute><SearchedBooks/></PrivateRoute>
         },
         {
           path: "/orders",
