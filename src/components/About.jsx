@@ -12,7 +12,7 @@ const About = () => {
 
   useEffect(() => {
     // Fetch book count here
-    fetch("https://book-store-api-theta.vercel.app/all-books", {
+    fetch("https://book-store-api-theta.vercel.app/all-books-count", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -20,11 +20,11 @@ const About = () => {
       }
     })
       .then(res => res.json())
-      .then(data => setBookCount(data.length))
+      .then(data => setBookCount(data.booksCount))
       .catch(error => console.error("Error fetching book count:", error));
 
     // Fetch user count
-    fetch("https://book-store-api-theta.vercel.app/admin/all-users", {
+    fetch("https://book-store-api-theta.vercel.app/admin/all-users-count", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -32,11 +32,11 @@ const About = () => {
       }
     })
       .then(res => res.json())
-      .then(data => setUserCount(data.length))
+      .then(data => setUserCount(data.usercount))
       .catch(error => console.error("Error fetching user count:", error));
 
     // Fetch order count
-    fetch("https://book-store-api-theta.vercel.app/get/all-orders", {
+    fetch("https://book-store-api-theta.vercel.app/get/all-orders-count", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const About = () => {
       }
     })
       .then(res => res.json())
-      .then(data => setOrderCount(data.length))
+      .then(data => setOrderCount(data.ordersCount))
       .catch(error => console.error("Error fetching order count:", error))
       .finally(() => setIsLoading(false));
   }, []);
