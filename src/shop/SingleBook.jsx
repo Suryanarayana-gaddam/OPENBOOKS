@@ -7,6 +7,8 @@ import { AuthContext } from '../context/AuthProvider';
 import { FaHeart } from 'react-icons/fa6';
 import useCart from '../../hooks/useCart';
 
+
+
 const SingleBook = () => {
   const { _id, createrId, bookTitle, imageURL, category, bookDescription, authorName,bookPrice } = useLoaderData();
   const [books, setBooks] = useState([]);
@@ -20,6 +22,16 @@ const SingleBook = () => {
   const [cart,refetch] = useCart();
 
   const token = localStorage.getItem('access-token');
+  
+  // Function to shuffle an array
+  function shuffleArray(array) {
+    const shuffledArray = array.slice(); // Create a copy of the array
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+  }
 
   useEffect(() => {
 
@@ -109,7 +121,7 @@ const SingleBook = () => {
   const fetchBooksByCategory = async (category) => {
     try {
       //console.log('Fetching books for category:', category);
-      const response = await fetch(`https://book-store-api-theta.vercel.app/all-books?category=${category}`, {
+      const response = await fetch(`https://book-store-api-theta.vercel.app/all-books/bycategory/?category=${category}`, {
         headers : {
             authorization: `Bearer ${token}`
         }
@@ -119,7 +131,9 @@ const SingleBook = () => {
       }
       const data = await response.json();
       //console.log('Fetched books:', data);
-      setBooks(data);
+      // Shuffle the fetched books and select the first 15
+      const shuffledBooks = shuffleArray(data).slice(0, 15);
+      setBooks(shuffledBooks);
     } catch (error) {
       console.error('Error:', error.message);
     }
@@ -309,7 +323,7 @@ const SingleBook = () => {
       </div>
       <div>
         <h2 className='my-2 mt-5 bg-black text-center text-white text-2xl p-2 h-12'>Similar Books</h2>
-        <BookCards books={books.slice(10,25).reverse()} category={category} user={user.user}/>
+        <BookCards books={books} category={category} user={user.user}/>
       </div>
     </div>
   );
