@@ -20,10 +20,27 @@ const Login = () => {
       login(email,password).then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        alert(`Welcome back , ${user.displayName} `);
-        navigate(from, { replace: true });
-        //sessionStorage.setItem('session-active', JSON.stringify(true));
-        // ...
+        // Check if the user already exists in the database
+        fetch(`http://localhost:5000/userByEmail/${user.email}`, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+            }
+        }).then(res => {
+            if (!res.ok) {
+            return res.json().then(error => {
+                console.error("Error fetching user data:", error);
+                // Handle the error (e.g., display a message to the user)
+            });
+            }
+            return res.json(); // Parse valid JSON response
+        })
+        .then(Userdata => {
+            alert(`Welcome back ${Userdata.username}!`);
+            // console.log("userdata",Userdata);
+            // console.log("Welcome back:", Userdata.username);
+            navigate(from, { replace: true });
+        })
       })
       .catch((error) => {
         const errorCode = error.code;

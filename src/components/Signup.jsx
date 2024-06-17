@@ -2,23 +2,70 @@ import React, { useContext, useState } from 'react'
 import { Link , useLocation , useNavigate } from 'react-router-dom';
 import {AuthContext} from '../context/AuthProvider';
 import googleLogo from "../assets/google-logo.svg"
-
+import pica from "pica";
 
 const Signup = () => {
     const {createUser,loginWithGoogle} = useContext(AuthContext);
     const [error,setError] = useState("error");
+
+    const [profilePic, setProfilePic] = useState(null);
+
+    const picaa = pica();
 
     const location = useLocation();
     const navigate = useNavigate();
     
     const from = location.state?.from?.pathname || "/";
 
+    const handleProfilePicChange = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const resizedImage = await resizeImage(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setProfilePic(reader.result);
+            };
+            reader.readAsDataURL(resizedImage);
+        }
+    };
+
+    const resizeImage = (file) => {
+        return new Promise((resolve, reject) => {
+            const img = document.createElement('img');
+            const canvas = document.createElement('canvas');
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                img.src = event.target.result;
+            };
+
+            img.onload = () => {
+                const width = 300; // Set the desired width
+                const scaleFactor = width / img.width;
+                const height = img.height * scaleFactor;
+
+                canvas.width = width;
+                canvas.height = height;
+
+                picaa.resize(img, canvas)
+                    .then(result => picaa.toBlob(result, 'image/jpeg', 0.90))
+                    .then(blob => resolve(blob))
+                    .catch(err => reject(err));
+            };
+
+            img.onerror = reject;
+
+            reader.readAsDataURL(file);
+        });
+    }; 
+
     const handleRegister = () => {
         loginWithGoogle().then((result) => {
             const user = result.user;
             const userObj = {
                 username: user.displayName,
-                email: user.email,
+                email: user.email,               
+                profilePic: user.photoURL,
                 password: "", // You can set a default password or leave it empty
                 googleSignIn: true // Add a flag to indicate Google sign-in
             };
@@ -80,6 +127,7 @@ const Signup = () => {
                     username,
                     email,
                     password,
+                    profilePic,
                     googleSignIn: false // Indicate non-Google sign-in
                 };
 
@@ -140,6 +188,10 @@ const Signup = () => {
                             <div className="relative">
                                 <input id="password" name="password" type="password" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Password" />
                                 
+                            </div>
+                            <div className="relative">
+                                <label htmlFor="profilePic" className="block">Profile Picture:</label>
+                                <input id="profilePic" name="profilePic" type="file" accept=".jpeg, .png, .jpg" onChange={handleProfilePicChange} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" />
                             </div>
                             <p>If you have an account. Please <Link to="/login" className="text-blue-700 underline">Login</Link></p>
                             <div className="relative">

@@ -16,7 +16,7 @@ const Navbar = () => {
     const [isSticky,setIsSticky] = useState(false);
     const [isAdmin,setIsAdmin] = useState(false);
     const [username, setUsername] = useState('');
-    
+    const [profilePic,setProfilePic] = useState(null)
     const {user} = useContext (AuthContext);
     const [cart,refetch] = useCart();
     //console.log(cart)
@@ -67,7 +67,8 @@ const Navbar = () => {
                       (setIsAdmin(true)) : (setIsAdmin(false))
                       }
                     // Get user ID from userData
-                    setUsername(userData.username);
+                    setUsername(userData.username);                    
+                    setProfilePic(userData.profilePic);
                 })
             
         
@@ -127,7 +128,7 @@ return (
                 {/* btn for lg devices */}
                 <div className='space-x-5  hidden lg:flex sm:flex items-center mr-0'>
                     {/* Use the img tag to display the user's photo */}
-                    {user? (user?.photoURL ? (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full mr-0' />) : <FaUser className='p-0 mt-1 mr-1 h-4 w-4 border-none rounded-full' />) : <FaUser className='p-0 mt-1 h-4 w-4 border-none rounded-full' />}
+                    {user? (user?.photoURL ? (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full mr-0' />) : <img src={profilePic} alt="Profile" className='rounded-full h-10 w-10 ml-2' />) : <FaUser className='p-0 mt-1 h-4 w-4 border-none rounded-full' />}
                     {user?.displayName || username || user?.email}
                     
                        {
