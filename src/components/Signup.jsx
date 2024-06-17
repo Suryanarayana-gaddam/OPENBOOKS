@@ -121,7 +121,7 @@ const Signup = () => {
                 "Content-type": "application/json",
             }
         }).then(res => {
-            if (res.status === 404) {
+            if (res.status === 404 || res.status === 401) {
                 // User does not exist, proceed with sign-up
                 const userObj = {
                     username,
