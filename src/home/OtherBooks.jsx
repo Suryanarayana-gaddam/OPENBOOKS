@@ -18,28 +18,31 @@ const OtherBooks = () => {
   }
 
     useEffect( () =>  {
-        if(!user){
+        // if(user){
+        //     const fetchOtherBooks = async () =>  {
+        //         try{
+        //          const response= await fetch("https://book-store-api-theta.vercel.app/all-books", {
+        //              headers : {
+        //                  authorization: `Bearer ${token}`
+        //              }
+        //          });
+        //          if (!response.ok) {
+        //              throw new Error('Error fetching books by category');
+        //            }
+        //            const data = await response.json();
+        //            // Shuffle the fetched books and select the first 15
+        //            const shuffledBooks = shuffleArray(data).slice(0, 15);
+        //            setBooks(shuffledBooks);
+        //          } catch (error) {
+        //              console.error('Error:', error.message);
+        //            }
+        //     }
+        //     fetchOtherBooks();
+        // }else{
             const fetchOtherBooks = async () =>  {
                 try{
                     const response= await fetch("https://book-store-api-theta.vercel.app/all-books/get/other-books", {
-                 });
-                 if (!response.ok) {
-                     throw new Error('Error fetching books by category');
-                   }
-                   const data = await response.json();
-                   setBooks(data);
-                 } catch (error) {
-                     console.error('Error:', error.message);
-                   }
-            }
-            fetchOtherBooks();
-        }
-        else{
-            console.log("user :",user);
-            const fetchOtherBooksuser = async () =>  {
-                try{
-                 const response= await fetch("https://book-store-api-theta.vercel.app/all-books", {
-                     headers : {
+                        headers : {
                          authorization: `Bearer ${token}`
                      }
                  });
@@ -48,20 +51,19 @@ const OtherBooks = () => {
                    }
                    const data = await response.json();
                    // Shuffle the fetched books and select the first 15
-                   const shuffledBooksuser = shuffleArray(data).slice(0, 15);
-                   setBooks(shuffledBooksuser);
+                   const shuffledBooks = shuffleArray(data).slice(0, 15);
+                   setBooks(shuffledBooks);
                  } catch (error) {
                      console.error('Error:', error.message);
                    }
             }
-            fetchOtherBooksuser();
-        
-        }
+            fetchOtherBooks();
+        // }
     },[user])
     
   return (
         <div>
-            <BookCards books={books} headLine="Other Books" />
+            <BookCards books={books} headLine="Other Books" user={user.user}/>
         </div>
     )
 }
