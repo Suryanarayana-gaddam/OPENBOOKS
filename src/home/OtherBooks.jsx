@@ -19,7 +19,7 @@ const OtherBooks = () => {
 
     useEffect( () =>  {
         if(user){
-            const fetchOtherBooks = async () =>  {
+            const fetchOtherBooksuser = async () =>  {
                 try{
                  const response= await fetch("https://book-store-api-theta.vercel.app/all-books", {
                      headers : {
@@ -31,13 +31,13 @@ const OtherBooks = () => {
                    }
                    const data = await response.json();
                    // Shuffle the fetched books and select the first 15
-                   const shuffledBooks = shuffleArray(data).slice(0, 15);
-                   setBooks(shuffledBooks);
+                   const shuffledBooksuser = shuffleArray(data).slice(0, 15);
+                   setBooks(shuffledBooksuser);
                  } catch (error) {
                      console.error('Error:', error.message);
                    }
             }
-            fetchOtherBooks();
+            fetchOtherBooksuser();
         }else{
             const fetchOtherBooks = async () =>  {
                 try{
