@@ -21,7 +21,7 @@ const Login = () => {
         // Signed in 
         const user = userCredential.user;
         // Check if the user already exists in the database
-        fetch(`http://localhost:5000/userByEmail/${user.email}`, {
+        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
