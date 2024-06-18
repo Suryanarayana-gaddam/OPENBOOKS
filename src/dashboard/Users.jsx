@@ -92,7 +92,6 @@ const Users = () => {
         headers: {
           "Content-Type": "application/json", // Set content type header explicitly
           authorization: `Bearer ${token}`
-    
         },
         body: JSON.stringify(updateUserObj)
       }).then(res => res.json()).then(data => {

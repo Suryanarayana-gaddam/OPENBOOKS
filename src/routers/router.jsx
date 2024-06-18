@@ -31,6 +31,7 @@ import AllOrders from "../dashboard/AllOrders";
 import About from "../components/About";
 import Contact from "../components/Contact";
 import Payment from "../components/Payment";
+import UserProfile from "../components/UserProfile";
 
 const token = localStorage.getItem('access-token');
 
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
         {
           path:"/about",
           element:<About/>
+        },
+        {
+          path:"/userProfile",
+          element:<UserProfile/>
         },
         {
           path:"/contact",

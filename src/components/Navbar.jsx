@@ -129,8 +129,19 @@ return (
                 <div className='space-x-5  hidden lg:flex sm:flex items-center mr-0'>
                     {/* Use the img tag to display the user's photo */}
                     {user?.displayName || username || user?.email}
-                    {user? (profilePic ? (<img src={profilePic} alt="Profile" className='rounded-full h-10 w-10 ml-2' />):(<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full mr-0' />)  ) : <FaUser className='p-0 mt-1 h-4 w-4 border-none rounded-full' />}
-                    
+                    <span>
+                        <Link to="/userProfile">
+                            {user ? (
+                                user.photoURL ? (
+                                    <img src={user.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full mr-0' />
+                                ) : (
+                                    <img src={profilePic} alt="Profile" className='rounded-full h-10 w-10 ml-2' />
+                                )
+                            ) : (
+                                <FaUser className='p-0 mt-1 h-4 w-4 border-none rounded-full' />
+                            )}
+                        </Link>
+                    </span>
                        {
                         user ? (
                             <Link to={"/cart"}> 
