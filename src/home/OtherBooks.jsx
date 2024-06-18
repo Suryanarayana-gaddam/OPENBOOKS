@@ -17,49 +17,37 @@ const OtherBooks = () => {
     return shuffledArray;
   }
 
-    useEffect( () =>  {
-        if(user){
-            const fetchOtherBooksuser = async () =>  {
-                try{
-                 const response= await fetch("https://book-store-api-theta.vercel.app/all-books", {
-                     headers : {
-                         authorization: `Bearer ${token}`
-                     }
-                 });
-                 if (!response.ok) {
-                     throw new Error('Error fetching books by category');
-                   }
-                   const data = await response.json();
-                   // Shuffle the fetched books and select the first 15
-                   const shuffledBooksuser = shuffleArray(data).slice(0, 15);
-                   setBooks(shuffledBooksuser);
-                 } catch (error) {
-                     console.error('Error:', error.message);
-                   }
+  useEffect(() => {
+    const fetchBooks = async () => {
+        try {
+            let url;
+            if (user) {
+                url = "https://book-store-api-theta.vercel.app/all-books";
+            } else {
+                url = "https://book-store-api-theta.vercel.app/all-books/get/other-books";
             }
-            fetchOtherBooksuser();
-        }else{
-            const fetchOtherBooks = async () =>  {
-                try{
-                    const response= await fetch("https://book-store-api-theta.vercel.app/all-books/get/other-books", {
-                        headers : {
-                         authorization: `Bearer ${token}`
-                     }
-                 });
-                 if (!response.ok) {
-                     throw new Error('Error fetching books by category');
-                   }
-                   const data = await response.json();
-                   // Shuffle the fetched books and select the first 15
-                   const shuffledBooks = shuffleArray(data).slice(0, 15);
-                   setBooks(shuffledBooks);
-                 } catch (error) {
-                     console.error('Error:', error.message);
-                   }
+
+            const response = await fetch(url, {
+                headers: {
+                    Authorization: user ? `Bearer ${token}` : undefined
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Error fetching books');
             }
-            fetchOtherBooks();
+
+            const data = await response.json();
+            const shuffledBooks = shuffleArray(data).slice(0, 15);
+            setBooks(shuffledBooks);
+        } catch (error) {
+            console.error('Error:', error.message);
         }
-    },[user])
+    };
+
+    fetchBooks();
+}, [user]); // Assuming `token` is also a dependency if it changes with user state
+
     
   return (
         <div>
