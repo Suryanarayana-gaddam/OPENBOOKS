@@ -11,6 +11,7 @@ const Login = () => {
     
   const location = useLocation();
   const navigate = useNavigate();
+  const token = localStorage.getItem('access-token');
 
   const handleLogin = (event) => {
       event.preventDefault();
@@ -25,6 +26,7 @@ const Login = () => {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
+                authorization: `Bearer ${token}`
             }
         }).then(res => {
             if (!res.ok) {
@@ -69,6 +71,7 @@ const handleRegister = () => {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
+                authorization: `Bearer ${token}`
             }
         }).then(res => {
             if (res.status === 404) {
