@@ -12,32 +12,6 @@ const Login = () => {
   
   const location = useLocation();
   const navigate = useNavigate();
-  const user = useContext(AuthContext)
-  const handleAlertMessage = () =>{
-    const token = localStorage.getItem('access-token');
-        // Check if the user already exists in the database
-        const responce = fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user?.user?.email}`, {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json",
-                authorization: `Bearer ${token}`,
-
-            }
-        })
-            if (!responce.ok) {
-            return responce.json().then(error => {
-                console.error("Error fetching user data:", error);
-                // Handle the error (e.g., display a message to the user)
-            });
-            }
-            const Userdata= responce.json(); // Parse valid JSON response
-        
-            setIsLoading(false);
-            alert(`Welcome back ${Userdata.username}!`);
-            // console.log("userdata",Userdata);
-            // console.log("Welcome back:", Userdata.username);
-            navigate(from, { replace: true });
-    } 
   if(isLoading){
     return <div className="flex items-center justify-center h-screen">
     <div className="relative">
@@ -47,7 +21,6 @@ const Login = () => {
     </div>
 </div>
   }
-  
   const handleLogin = (event) => {
       event.preventDefault();
       setIsLoading(true);
@@ -57,8 +30,32 @@ const Login = () => {
       login(email,password).then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
+        
+        const token = localStorage.getItem('access-token');
+        // Check if the user already exists in the database
+        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                authorization: `Bearer ${token}`,
 
-        handleAlertMessage()
+            }
+        }).then(res => {
+            if (!res.ok) {
+            return res.json().then(error => {
+                console.error("Error fetching user data:", error);
+                // Handle the error (e.g., display a message to the user)
+            });
+            }
+            return res.json(); // Parse valid JSON response
+        })
+        .then(Userdata => {
+            setIsLoading(false);
+            alert(`Welcome back ${Userdata.username}!`);
+            // console.log("userdata",Userdata);
+            // console.log("Welcome back:", Userdata.username);
+            navigate(from, { replace: true });
+        })
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -68,6 +65,9 @@ const Login = () => {
      
   }
   const from = location.state?.from?.pathname || "/";
+
+
+
 
 const handleRegister = () => {
     loginWithGoogle().then((result) => {
