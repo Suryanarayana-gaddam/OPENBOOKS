@@ -12,35 +12,31 @@ const Login = () => {
   
   const location = useLocation();
   const navigate = useNavigate();
-  const user = useContext(AuthContext)
 
-  const handleAlertMessage = () =>{
+  const handleAlertMessage = async (user) =>{
     const token = localStorage.getItem('access-token');
-    const Email = user?.user?.email;
         // Check if the user already exists in the database
-        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${Email}`, {
+        const responce = await fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
                 authorization: `Bearer ${token}`,
 
             }
-        }).then(res => {
-            if (!res.ok) {
-            return res.json().then(error => {
+        })
+            if (!responce.ok) {
+            return responce.json().then(error => {
                 console.error("Error fetching user data:", error);
                 // Handle the error (e.g., display a message to the user)
             });
             }
-            return res.json(); // Parse valid JSON response
-        })
-        .then(Userdata => {
+            const Userdata= await responce.json(); // Parse valid JSON response
+        
             setIsLoading(false);
             alert(`Welcome back ${Userdata.username}!`);
             // console.log("userdata",Userdata);
             // console.log("Welcome back:", Userdata.username);
             navigate(from, { replace: true });
-        })
     } 
   if(isLoading){
     return <div className="flex items-center justify-center h-screen">
@@ -62,7 +58,7 @@ const Login = () => {
         // Signed in 
         const user = userCredential.user;
 
-        handleAlertMessage()
+        handleAlertMessage(user)
       })
       .catch((error) => {
         const errorCode = error.code;
