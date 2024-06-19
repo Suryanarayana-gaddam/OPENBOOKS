@@ -69,10 +69,6 @@ const Login = () => {
   }
   const from = location.state?.from?.pathname || "/";
 
-  
-
-
-
 const handleRegister = () => {
     loginWithGoogle().then((result) => {
         const user = result.user;
