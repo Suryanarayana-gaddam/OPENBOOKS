@@ -20,7 +20,7 @@ const UserProfile = () => {
 
     useEffect(() => {
         if (userEmail) {
-            fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+            fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ const UserProfile = () => {
             return;
         }
         try {
-            const response = await fetch(`http://localhost:5000/user/${userId}`, {
+            const response = await fetch(`https://book-store-api-theta.vercel.app/user/${userId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

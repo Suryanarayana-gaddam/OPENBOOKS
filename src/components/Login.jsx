@@ -3,7 +3,6 @@ import React, { useContext, useState } from 'react'
 import { Link , useLocation , useNavigate } from 'react-router-dom';
 import {AuthContext} from '../context/AuthProvider';
 import googleLogo from "../assets/google-logo.svg"
-import { Spinner } from "flowbite-react";
 
 const Login = () => {
   const [isLoading,setIsLoading] = useState(false)
