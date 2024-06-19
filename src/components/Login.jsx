@@ -30,7 +30,7 @@ const Login = () => {
       login(email,password).then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        
+        navigate(from, { replace: true });
         const token = localStorage.getItem('access-token');
         // Check if the user already exists in the database
         fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
@@ -54,7 +54,6 @@ const Login = () => {
             alert(`Welcome back ${Userdata.username}!`);
             // console.log("userdata",Userdata);
             // console.log("Welcome back:", Userdata.username);
-            navigate(from, { replace: true });
         })
       })
       .catch((error) => {
