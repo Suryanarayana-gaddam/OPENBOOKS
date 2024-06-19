@@ -12,11 +12,11 @@ const Login = () => {
   
   const location = useLocation();
   const navigate = useNavigate();
-
-  const handleAlertMessage = async (user) =>{
+  const user = useContext(AuthContext)
+  const handleAlertMessage = async () =>{
     const token = localStorage.getItem('access-token');
         // Check if the user already exists in the database
-        const responce = await fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
+        const responce = await fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user?.user?.email}`, {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
@@ -58,7 +58,7 @@ const Login = () => {
         // Signed in 
         const user = userCredential.user;
 
-        handleAlertMessage(user)
+        handleAlertMessage()
       })
       .catch((error) => {
         const errorCode = error.code;
