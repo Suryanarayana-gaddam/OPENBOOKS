@@ -3,30 +3,41 @@ import React, { useContext, useState } from 'react'
 import { Link , useLocation , useNavigate } from 'react-router-dom';
 import {AuthContext} from '../context/AuthProvider';
 import googleLogo from "../assets/google-logo.svg"
+import { Spinner } from "flowbite-react";
 
 const Login = () => {
-
+  const [isLoading,setIsLoading] = useState(false)
   const {login,loginWithGoogle} = useContext(AuthContext);
   const [error,setError] = useState("");
-    
+  
   const location = useLocation();
   const navigate = useNavigate();
-  const token = localStorage.getItem('access-token');
-
+  if(isLoading){
+    return <div className="flex items-center justify-center h-screen">
+    <div className="relative">
+        <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
+        <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
+        </div>
+    </div>
+</div>
+  }
   const handleLogin = (event) => {
       event.preventDefault();
+      setIsLoading(true);
       const form = event.target;
       const email = form.email.value;
       const password = form.password.value;
       login(email,password).then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
+        const token = localStorage.getItem('access-token');
         // Check if the user already exists in the database
         fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
-                authorization: `Bearer ${token}`
+                authorization: `Bearer ${token}`,
+
             }
         }).then(res => {
             if (!res.ok) {
@@ -38,6 +49,7 @@ const Login = () => {
             return res.json(); // Parse valid JSON response
         })
         .then(Userdata => {
+            setIsLoading(false);
             alert(`Welcome back ${Userdata.username}!`);
             // console.log("userdata",Userdata);
             // console.log("Welcome back:", Userdata.username);
@@ -65,8 +77,10 @@ const handleRegister = () => {
             password: "", // You can set a default password or leave it empty
             googleSignIn: true // Add a flag to indicate Google sign-in
         };
+        setIsLoading(true);
         //sessionStorage.setItem("username",user.displayName);
         // Check if the user already exists in the database
+        const token = localStorage.getItem('access-token');
         fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
             method: "GET",
             headers: {
@@ -74,7 +88,7 @@ const handleRegister = () => {
                 authorization: `Bearer ${token}`
             }
         }).then(res => {
-            if (res.status === 404) {
+            if (res.status === 404 || res.status == 401) {
                 // User does not exist, proceed with sign-up
                 fetch("https://book-store-api-theta.vercel.app/login", {
                     method: "POST",

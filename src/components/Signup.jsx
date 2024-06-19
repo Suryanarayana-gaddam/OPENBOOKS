@@ -9,13 +9,23 @@ const Signup = () => {
     const [error,setError] = useState("error");
 
     const [profilePic, setProfilePic] = useState(null);
-
+    const [isLoading,setIsLoading] = useState(false);
     const picaa = pica();
 
     const location = useLocation();
     const navigate = useNavigate();
     
     const from = location.state?.from?.pathname || "/";
+
+    if(isLoading){
+        return <div className="flex items-center justify-center h-screen">
+        <div className="relative">
+            <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
+            <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
+            </div>
+        </div>
+    </div>
+    }
 
     const handleProfilePicChange = async (e) => {
         const file = e.target.files[0];
@@ -69,7 +79,7 @@ const Signup = () => {
                 password: "", // You can set a default password or leave it empty
                 googleSignIn: true // Add a flag to indicate Google sign-in
             };
-    
+            setIsLoading(true);
             // Check if the user already exists in the database
             fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
                 method: "GET",
@@ -93,6 +103,7 @@ const Signup = () => {
                     });
                 } else {
                     // User already exists
+                    setIsLoading(false);
                     alert(`Welcome back , ${user.displayName} `);
                     navigate(from, { replace: true });
                 }
@@ -109,7 +120,7 @@ const Signup = () => {
     const handleSignup = (event) => {
         event.preventDefault();
         const form = event.target;
-      
+        setIsLoading(true)
         const username = form.username.value; 
         const email = form.email.value;
         const password = form.password.value;
@@ -153,12 +164,14 @@ const Signup = () => {
                     },
                     body: JSON.stringify(userObj)
                 }).then(res => res.json()).then(data => {
+                    setIsLoading(false)
                     alert("Signed up Successfully!");
                     navigate(from, { replace: true });
                     //sessionStorage.setItem('session-active', JSON.stringify(true));
                 });
             } else {
                 // User already exists
+                setIsLoading(false)
                 alert("User already exists!");
             }
         });
