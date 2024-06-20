@@ -169,12 +169,12 @@ return (
                     </div>
                 </div>
 
-                <div className='md:hidden absolute top-6 left-1 '>
+                <div className='md:hidden absolute top-6 right-6 '>
                     <button onClick={toggleMenu} className="text-black focus:outline-none">
                         {isMenuOpen ? <FaXmark className='h-5 w-5 text-black' /> : <FaBarsStaggered className='h-5 w-5 text-black text-3xl' />}
                     </button>
                 </div>
-                <div className='md:hidden sm:hidden flex' >
+                <div className='md:hidden sm:hidden flex absolute right-6' >
                 <Link to="/userProfile">
                 {user? (user.photoURL ? (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full' />) : <img src={profilePic} alt="Profile" className='p-0 mt-1 mr-1 h-6 w-6 border-none rounded-full' />
 ) : <FaUser className='p-0 mt-1 mr-1 h-4 w-4 border-none rounded-full' />}
