@@ -175,7 +175,7 @@ return (
                     </button>
                 </div>
                 <div className='md:hidden sm:hidden flex ' >
-                <div>
+                <div className='relative right-5'>
                 <Link to="/userProfile">
                 {user? (user.photoURL ? (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full' />) : <img src={profilePic} alt="Profile" className='p-0 h-8 w-8 border-none rounded-full' />
 ) : <FaUser className='p-0 mt-1 mr-1 h-4 w-4 border-none rounded-full' />}
