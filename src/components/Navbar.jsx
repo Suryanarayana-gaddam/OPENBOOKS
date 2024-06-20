@@ -175,11 +175,11 @@ return (
                     </button>
                 </div>
                 <div className='md:hidden sm:hidden flex ' >
-                <Link to="/userProfile" className='relative right-5'>
+                <Link to="/userProfile" className='relative right-6'>
                 {user? (user.photoURL ? (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full' />) : <img src={profilePic} alt="Profile" className='p-0 h-8 w-8 border-none rounded-full' />
 ) : <FaUser className='p-0 mt-1 mr-1 h-4 w-4 border-none rounded-full' />}
                 </Link>
-                    <button onClick={toggleUserMenu} className="text-black focus:outline-none">
+                    <button onClick={toggleUserMenu} className="text-black focus:outline-none relative right-5">
                     <FaBarsStaggered className="h-5 w-5 text-black" />
                     </button>
                     <div className={`absolute top-10 right-0 z-10 mt-2 py-2 bg-white rounded-lg shadow-md text-left ${isUserMenuOpen ? "block" : "hidden"}`}>
