@@ -1,16 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-//import 'swiper/css/pagination';
 
-//import './styles.css';
-
-// import required modules
 import { Pagination } from 'swiper/modules';
 import {Link} from "react-router-dom";
  
@@ -19,8 +13,6 @@ import useCart from '../../hooks/useCart';
 
 
 const BookCards = ({headLine,books, user}) => {
-    //console.log(books);
-
     
     const [wishlistBooks, setWishlistBooks] = useState([]);
     const [cartBooks, setCartBooks] = useState([]);
@@ -31,11 +23,10 @@ const BookCards = ({headLine,books, user}) => {
   useEffect(() => {
     if (!user) return;
     const userEmail = user.email;
-    // Fetch user data by email
     fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json", // Set content type header explicitly
+          "Content-Type": "application/json",
           authorization: `Bearer ${token}`,
         },
       })
@@ -43,13 +34,11 @@ const BookCards = ({headLine,books, user}) => {
           if (!res.ok) {
             return res.json().then(error => {
               console.error("Error fetching user data:", error);
-              // Handle the error (e.g., display a message to the user)
             });
           }
-          return res.json(); // Parse valid JSON response
+          return res.json(); 
         })
         .then(userData => {
-          // Get user ID from userData
           const userId = userData._id;
           fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/wishlist`, {
             method: "GET",
@@ -62,7 +51,6 @@ const BookCards = ({headLine,books, user}) => {
             if (!res.ok) {
               return res.json().then(error => {
                 console.error("Error fetching wishlist books:", error);
-                // Handle the error
               });
             }
             return res.json();
@@ -70,7 +58,6 @@ const BookCards = ({headLine,books, user}) => {
           .then(data => setWishlistBooks(data))
           .catch(error => {
             console.error("Error:", error);
-            // Handle unexpected errors
           });
 
           fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/cart`, {
@@ -84,7 +71,6 @@ const BookCards = ({headLine,books, user}) => {
             if (!res.ok) {
               return res.json().then(error => {
                 console.error("Error fetching cart books:", error);
-                // Handle the error
               });
             }
             return res.json();
@@ -92,15 +78,13 @@ const BookCards = ({headLine,books, user}) => {
           .then(data =>setCartBooks(data))
           .catch(error => {
             console.error("Error:", error);
-            // Handle unexpected errors
           });
           
         })
         .catch(error => {
           console.error("Error:", error);
-          // Handle unexpected errors
         });
-  }, [user]);
+  }, [user,token]);
   
     const isBookInWishlist = book => {
       return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
@@ -116,29 +100,25 @@ const BookCards = ({headLine,books, user}) => {
             console.error("Book object is undefined");
             return;
         }
-        // Fetch user data by email
         fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
           method: "GET",
           headers: {
-            "Content-Type": "application/json", // Set content type header explicitly
+            "Content-Type": "application/json", 
             authorization: `Bearer ${token}`,
           },
         })
           .then(res => {
             if (!res.ok) {
               return res.json().then(error => {
-                console.error("Error fetching user data:", error);// Handle the error (e.g., display a message to the user)
+                console.error("Error fetching user data:", error);
               });
             }
-            return res.json(); // Parse valid JSON response
+            return res.json();
           })
           .then(userData => {      
-            // // Get user ID from userData
             const userId = userData._id;         
         const bookId = book._id;
-        //console.log(bookId);
         if (!isBookInWishlist(book)) {
-          // Add book to the wishlist
           fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/add`,{
             method:"POST",
             headers:{
@@ -146,18 +126,16 @@ const BookCards = ({headLine,books, user}) => {
               authorization: `Bearer ${token}`,
               
             },
-            body: JSON.stringify(book) // Stringify the book object before sending
+            body: JSON.stringify(book) 
           }).then(res => res.json()).then(data => {
-            //alert("Book Uploaded to wishlist Successfully!!!");
             setWishlistBooks([...wishlistBooks, book]);
           })
           .catch(error => {
-            console.error("Error:", error);// Handle unexpected errors
+            console.error("Error:", error);
           });
           
         } else {
-            // Remove book from wishlist
-            //console.log(bookId);
+           
            fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/remove/${bookId}`, {
             method: "POST",
             headers: {
@@ -168,69 +146,62 @@ const BookCards = ({headLine,books, user}) => {
           })
             .then(res => res.json())
             .then(data => {
-              //console.log(data);
-              //alert("Book removed from wishlist successfully!");
+              
               setWishlistBooks(wishlistBooks.filter(wishlistBook => wishlistBook._id !== book._id));
             })
             .catch(error => {
-              console.error("Error:", error);// Handle unexpected errors
+              console.error("Error:", error);
             });
         }
       })
       .catch(error => {
-        console.error("Error:", error);// Handle unexpected errors
+        console.error("Error:", error);
       });
     };
       const handleCart = (event,book) => {
         event.preventDefault();
-        // if (!user) return;
         const userEmail = user?.email;
         if (!book) {
             console.error("Book object is undefined");
             return;
         }
-        // Fetch user data by email
         fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
           method: "GET",
           headers: {
-            "Content-Type": "application/json", // Set content type header explicitly
+            "Content-Type": "application/json", 
             authorization: `Bearer ${token}`,
           },
         })
           .then(res => {
             if (!res.ok) {
               return res.json().then(error => {
-                console.error("Error fetching user data:", error);// Handle the error (e.g., display a message to the user)
+                console.error("Error fetching user data:", error);
               });
             }
-            return res.json(); // Parse valid JSON response
+            return res.json();
           })
           .then(userData => {      
-            const userId = userData._id; // Get user ID from userData        
+            const userId = userData._id;        
         const bookId = book._id;
-        //console.log(bookId);
         if (!isBookInCart(book)) {
-          // Add book to the wishlist
           fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/add`,{
             method:"POST",
             headers:{
               "Content-type": "application/json",
               authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(book) // Stringify the book object before sending
+            body: JSON.stringify(book)
           }).then(res => res.json()).then(data => {
-            //alert("Book Uploaded to Cart Successfully!!!");
             setCartBooks([...cartBooks, book]);
             refetch()
             window.location.reload();
           })
           .catch(error => {
-            console.error("Error:", error);// Handle unexpected errors
+            console.error("Error:", error);
           });
           
         } else {
-            // Remove book from cart
-            //console.log(bookId);
+            
            fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/remove/${bookId}`, {
             method: "POST",
             headers: {
@@ -241,18 +212,17 @@ const BookCards = ({headLine,books, user}) => {
           })
             .then(res => res.json())
             .then(data => {
-              //console.log(data);
-              //alert("Book removed from Cart successfully!");
+              
               setCartBooks(cartBooks.filter(cartBook => cartBook._id !== book._id));
               refetch()
             })
             .catch(error => {
-              console.error("Error:", error);// Handle unexpected errors
+              console.error("Error:", error);
             });
         }
       })
       .catch(error => {
-        console.error("Error:", error);// Handle unexpected errors
+        console.error("Error:", error);
       });
     };
 
@@ -260,7 +230,6 @@ const BookCards = ({headLine,books, user}) => {
     <div className='my-16 px-4 lg:px-24 '>
       <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
       
-    {/* cards */}
       <div className='mt-12 ' > 
             <Swiper
                 slidesPerView={1}

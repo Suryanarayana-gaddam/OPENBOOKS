@@ -32,7 +32,6 @@ const useSessionManagement = () => {
         }
       };
   
-      // Log out user
       const logOutUser = async () => {
         await logOut();
         localStorage.removeItem('access-token');
@@ -41,26 +40,23 @@ const useSessionManagement = () => {
         navigate('/login', { replace: true });
       };
   
-      // Inactivity timer
       let inactivityTimer;
       const startInactivityTimer = () => {
         inactivityTimer = setTimeout(() => {
           alert('You have been inactive for too long. Logging out...');
           logOutUser();
-        }, 600000); // 10 minutes of inactivity
+        }, 600000); 
       };
   
       const resetInactivityTimer = () => {
         clearTimeout(inactivityTimer);
       };
   
-      // Add event listeners
       window.addEventListener('offline', handleNetworkChange);
       document.addEventListener('visibilitychange', handleVisibilityChange);
       window.addEventListener('mousemove', resetInactivityTimer);
       window.addEventListener('keydown', resetInactivityTimer);
   
-      // Clean up event listeners on component unmount
       return () => {
         window.removeEventListener('offline', handleNetworkChange);
         document.removeEventListener('visibilitychange', handleVisibilityChange);

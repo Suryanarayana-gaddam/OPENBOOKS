@@ -12,11 +12,10 @@ const Orders = () => {
 useEffect(() => {
     const userEmail = user?.user?.email;
 
-    // Fetch user data by email
     fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json", // Set content type header explicitly
+        "Content-Type": "application/json", 
         authorization: `Bearer ${token}`
       },
     })
@@ -24,17 +23,13 @@ useEffect(() => {
         if (!res.ok) {
           return res.json().then(error => {
             console.error("Error fetching user data:", error);
-            // Handle the error (e.g., display a message to the user)
           });
         }
-        return res.json(); // Parse valid JSON response
+        return res.json();
       })
       .then(userData => {
-        //console.log("User Data:", userData);
   
-        // Get user ID from userData
         const userId = userData._id;
-        //console.log(userId);
         fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/orders`, {
           method: "GET",
           headers: {
@@ -46,7 +41,6 @@ useEffect(() => {
           if (!res.ok) {
             return res.json().then(error => {
               console.error("Error fetching orders:", error);
-              // Handle the error
             });
           }
           return res.json();
@@ -57,14 +51,12 @@ useEffect(() => {
         })
         .catch(error => {
           console.error("Error:", error);
-          // Handle unexpected errors
         });
       })
       .catch(error => {
         console.error("Error:", error);
-        // Handle unexpected errors
       });
-  }, [user]);
+  }, [user,token]);
 
   return (
     <div className="container mx-auto px-4 lg:px-24 mt-16">
@@ -80,7 +72,7 @@ useEffect(() => {
               className="bg-white rounded-lg overflow-hidden shadow-md p-4 flex items-center justify-between"
               whileHover={{ scale: 1.05 }}
             >
-              <Link to={`/book/${order.bookId}`}> {/* Wrap the image with Link component */}
+              <Link to={`/book/${order.bookId}`}>
                 <img src={order.imageURL} alt={order.bookTitle} className="h-40 w-24 object-cover mr-8 cursor-pointer" />
               </Link>
               <div className="flex items-center">

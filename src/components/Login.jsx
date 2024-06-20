@@ -27,11 +27,9 @@ const Login = () => {
       const email = form.email.value;
       const password = form.password.value;
       login(email,password).then((userCredential) => {
-        // Signed in 
         const user = userCredential.user;
         navigate(from, { replace: true });
         const token = localStorage.getItem('access-token');
-        // Check if the user already exists in the database
         fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
             method: "GET",
             headers: {
@@ -43,16 +41,14 @@ const Login = () => {
             if (!res.ok) {
             return res.json().then(error => {
                 console.error("Error fetching user data:", error);
-                // Handle the error (e.g., display a message to the user)
             });
             }
-            return res.json(); // Parse valid JSON response
+            return res.json();
         })
         .then(Userdata => {
             setIsLoading(false);
             alert(`Welcome back ${Userdata.username}!`);
-            // console.log("userdata",Userdata);
-            // console.log("Welcome back:", Userdata.username);
+            
         })
       })
       .catch((error) => {
@@ -73,12 +69,11 @@ const handleRegister = () => {
         const userObj = {
             username: user.displayName,
             email: user.email,
-            password: "", // You can set a default password or leave it empty
-            googleSignIn: true // Add a flag to indicate Google sign-in
+            password: "",
+            googleSignIn: true 
         };
         setIsLoading(true);
-        //sessionStorage.setItem("username",user.displayName);
-        // Check if the user already exists in the database
+        
         const token = localStorage.getItem('access-token');
         fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
             method: "GET",
@@ -88,7 +83,6 @@ const handleRegister = () => {
             }
         }).then(res => {
             if (res.status === 404 || res.status == 401) {
-                // User does not exist, proceed with sign-up
                 fetch("https://book-store-api-theta.vercel.app/login", {
                     method: "POST",
                     headers: {
@@ -96,13 +90,10 @@ const handleRegister = () => {
                     },
                     body: JSON.stringify(userObj)
                 }).then(res => res.json()).then(data => {
-                    // console.log(data);
                     alert("Signed up Successfully!");
                     navigate(from, { replace: true });
-                    //sessionStorage.setItem('session-active', 'true');
                 });
             } else {
-                // User already exists
                 alert(`Welcome back , ${user.displayName} `);
                 navigate(from, { replace: true });
             }
@@ -111,7 +102,6 @@ const handleRegister = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         setError(errorMessage);
-        // Handle error
     });
 }
 

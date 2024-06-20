@@ -1,9 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-//import { Sidebar } from 'flowbite-react';
-
-
-//react icons
 import { FaBarsStaggered, FaBookAtlas, FaUser, FaXmark} from "react-icons/fa6"
 import { AuthContext } from '../context/AuthProvider';
 import Logout from './Logout';
@@ -19,11 +15,9 @@ const Navbar = () => {
     const [profilePic,setProfilePic] = useState(null)
     const {user} = useContext (AuthContext);
     const [cart,refetch] = useCart();
-    //console.log(cart)
     
     const token = localStorage.getItem('access-token');
 
-    //toggleMenu
     const toggleMenu = () => {
         setIsUserMenuOpen(false);
         setIsMenuOpen(!isMenuOpen);
@@ -39,14 +33,11 @@ const Navbar = () => {
     useEffect(() => {
         if (!user) return 
         const userEmail = user?.email;
-        //console.log("User Email:", userEmail);
-      
-      
-                            // Fetch user data by email
+        
                     fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
                     method: "GET",
                     headers: {
-                        "Content-Type": "application/json", // Set content type header explicitly
+                        "Content-Type": "application/json", 
                         authorization: `Bearer ${token}`
                     },
                     })
@@ -54,19 +45,16 @@ const Navbar = () => {
                     if (!res.ok) {
                     return res.json().then(error => {
                         console.error("Error fetching user data:", error);
-                        // Handle the error (e.g., display a message to the user)
                     });
                     }
-                    return res.json(); // Parse valid JSON response
+                    return res.json(); 
                 })
                 .then(userData => {
-                    //console.log("User Data:", userData);
-                    //console.log("User role :", userData.role);
+
                     {
                         userData.role == "admin" ?
                       (setIsAdmin(true)) : (setIsAdmin(false))
                       }
-                    // Get user ID from userData
                     setUsername(userData.username);                    
                     setProfilePic(userData.profilePic);
                 })
@@ -89,16 +77,13 @@ const Navbar = () => {
 
     },[user,token])
 
-    //nav items
     const navItems = [
         {link:"Home",path:"/"},
         {link:"Categories",path:"/bookcategories"},
         {link:"Shop",path:"/shop"},
         {link:"Admin",path: isAdmin ? "/admin/Dashboard" : "/login"},
     ]
-    //console.log(user)
-    //console.log("pic :",user?.photoURL)
-    //user menu items
+    
         const userMenuItems = user ? [
             { link: "Profile", path: "/userProfile" },
             { link: "Wishlist", path: "/wishlist" },
@@ -118,7 +103,7 @@ return (
         <nav className={`py-2 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
             <div className='flex justify-between items-center text-base gap-8'>
                 {/* logo */} 
-                <Link to="/" className='text-2x1 font-bold text-blue-700 flex items-center gap-2'><div className={`imglogo text-transparent ${isSticky ? "w-32 h-14" : "w-40 h-40"} rounded-full`}>Logo</div></Link>
+                <Link to="/" className='text-2x1 font-bold text-blue-700 flex items-center gap-2'><div className={`imglogo text-transparent ${isSticky ? "w-32 sm:w-14 sm:h-10 h-12 sm:ml-4" : "w-40 sm:w-24 sm:h-2 sm:ml-3 h-24"} rounded-full`}>Logo</div></Link>
                 {/*nav items for large device */}
                 <ul className='md:flex space-x-12 hidden'>
                     {
@@ -132,13 +117,15 @@ return (
                     {user?.displayName || username || user?.email}
                     <span>
                             {user ? (
-                                <Link to="/userProfile">
-                                    user.photoURL ? (
-                                        <img src={user.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full mr-0' />
+                                user.photoURL ? (
+                                        <Link to="/userProfile">
+                                            <img src={user.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full mr-0' />
+                                        </Link>
                                     ) : (
-                                        <img src={profilePic} alt="Profile" className='rounded-full h-10 w-10 ml-2' />
+                                        <Link to="/userProfile">
+                                            <img src={profilePic} alt="Profile" className='rounded-full h-10 w-10 ml-2' />
+                                        </Link>
                                     )
-                                </Link>
                             ) : (
                                 <FaUser className='p-0 mt-1 h-4 w-4 border-none rounded-full' />
                             )}

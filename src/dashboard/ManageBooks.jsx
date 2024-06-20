@@ -106,6 +106,9 @@ pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...mu
 if (!pageNumbers.includes(totalPages)) {
   pageNumbers.push(totalPages);
 }
+if (!pageNumbers.includes(1)) {
+  pageNumbers.unshift(1);
+}
 
 return pageNumbers.sort((a, b) => a - b);
 };

@@ -13,8 +13,7 @@ const Logout = () => {
       if (isConfirmed) {
         await logOut();
         localStorage.removeItem('access-token');
-        // Update sessionStorage to signal other tabs
-        //sessionStorage.setItem('session-active', JSON.stringify(false));
+
         alert('Sign-out successful!!!');
         navigate('/', { replace: true });
         window.location.reload()

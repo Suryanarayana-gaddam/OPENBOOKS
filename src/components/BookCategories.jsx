@@ -1,11 +1,8 @@
-// export default BookCategories;
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-//import BookList from './BookList'; // Import the BookList component
 import Shop from '../shop/Shop';
 import BookCards from './BookCards';
 import { AuthContext } from '../context/AuthProvider';
-
 
 const BookCategories = () => {
 
@@ -23,7 +20,6 @@ const BookCategories = () => {
 
   const fetchBooksByCategory = async (category) => {
     try {
-      //('Fetching books for category:', category);
       const response = await fetch(`https://book-store-api-theta.vercel.app/all-books/bycategory/?category=${category}`, {
         headers : {
             authorization: `Bearer ${token}`
@@ -33,7 +29,6 @@ const BookCategories = () => {
         throw new Error('Error fetching books by category');
       }
       const data = await response.json();
-      //console.log('Fetched books:', data); // Add this line to log the fetched books
       setBooks(data);
       setSelectedCategory(category);
     } catch (error) {

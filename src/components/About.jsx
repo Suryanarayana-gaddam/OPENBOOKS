@@ -11,7 +11,6 @@ const About = () => {
   console.log(allBooks);
 
   useEffect(() => {
-    // Fetch book count here
     fetch("https://book-store-api-theta.vercel.app/all-books-count", {
       method: "GET",
       headers: {
@@ -23,7 +22,6 @@ const About = () => {
       .then(data => setBookCount(data.booksCount))
       .catch(error => console.error("Error fetching book count:", error));
 
-    // Fetch user count
     fetch("https://book-store-api-theta.vercel.app/admin/all-users-count", {
       method: "GET",
       headers: {
@@ -35,7 +33,6 @@ const About = () => {
       .then(data => setUserCount(data.usercount))
       .catch(error => console.error("Error fetching user count:", error));
 
-    // Fetch order count
     fetch("https://book-store-api-theta.vercel.app/get/all-orders-count", {
       method: "GET",
       headers: {
@@ -47,7 +44,7 @@ const About = () => {
       .then(data => setOrderCount(data.ordersCount))
       .catch(error => console.error("Error fetching order count:", error))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [token]);
 
   return (
     <div className='pt-24 mx-5'>

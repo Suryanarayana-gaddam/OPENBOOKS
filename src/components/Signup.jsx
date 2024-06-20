@@ -50,7 +50,7 @@ const Signup = () => {
             };
 
             img.onload = () => {
-                const width = 300; // Set the desired width
+                const width = 300; 
                 const scaleFactor = width / img.width;
                 const height = img.height * scaleFactor;
 
@@ -76,11 +76,10 @@ const Signup = () => {
                 username: user.displayName,
                 email: user.email,               
                 profilePic: user.photoURL,
-                password: "", // You can set a default password or leave it empty
-                googleSignIn: true // Add a flag to indicate Google sign-in
+                password: "",
+                googleSignIn: true 
             };
             setIsLoading(true);
-            // Check if the user already exists in the database
             fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
                 method: "GET",
                 headers: {
@@ -88,7 +87,6 @@ const Signup = () => {
                 }
             }).then(res => {
                 if (res.status === 404) {
-                    // User does not exist, proceed with sign-up
                     fetch("https://book-store-api-theta.vercel.app/sign-up", {
                         method: "POST",
                         headers: {
@@ -96,13 +94,10 @@ const Signup = () => {
                         },
                         body: JSON.stringify(userObj)
                     }).then(res => res.json()).then(data => {
-                        // console.log(data);
                         alert("Signed up Successfully!");
                         navigate(from, { replace: true });
-                        //sessionStorage.setItem('session-active', JSON.stringify(true));
                     });
                 } else {
-                    // User already exists
                     setIsLoading(false);
                     alert(`Welcome back , ${user.displayName} `);
                     navigate(from, { replace: true });
@@ -112,7 +107,6 @@ const Signup = () => {
             const errorCode = error.code;
             const errorMessage = error.message;
             setError(errorMessage);
-            // Handle error
         });
     }
     
@@ -125,7 +119,6 @@ const Signup = () => {
         const email = form.email.value;
         const password = form.password.value;
       
-        // Check if the user already exists in the database
         fetch(`https://book-store-api-theta.vercel.app/userByEmail/${email}`, {
             method: "GET",
             headers: {
@@ -133,30 +126,25 @@ const Signup = () => {
             }
         }).then(res => {
             if (res.status === 404 || res.status === 401) {
-                // User does not exist, proceed with sign-up
                 const userObj = {
                     username,
                     email,
                     password,
                     profilePic,
-                    googleSignIn: false // Indicate non-Google sign-in
+                    googleSignIn: false
                 };
 
                 createUser(email,password).then((userCredential) => {
-                    // Signed up 
                     const user = userCredential.user;
                     alert("Signed up Successfully!");
                     navigate("/");
-                    // ...
                   })
                   .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     setError(errorMessage);
-                    // ..
                   });
                 
-                // Send data to database
                 fetch("https://book-store-api-theta.vercel.app/sign-up", {
                     method: "POST",
                     headers: {
@@ -167,10 +155,8 @@ const Signup = () => {
                     setIsLoading(false)
                     alert("Signed up Successfully!");
                     navigate(from, { replace: true });
-                    //sessionStorage.setItem('session-active', JSON.stringify(true));
                 });
             } else {
-                // User already exists
                 setIsLoading(false)
                 alert("User already exists!");
             }

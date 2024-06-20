@@ -30,7 +30,7 @@ const useCart = () => {
                 return []; 
             }
         },
-        enabled: !user,  // Only run the query if the user is available
+        enabled: !user,   
     });
 
     return [cart, refetch];

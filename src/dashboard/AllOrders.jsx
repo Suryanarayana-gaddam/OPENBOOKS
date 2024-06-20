@@ -56,15 +56,15 @@ const AllOrders = () => {
 
     let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
 
-    // Include multiples of 50
     const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
     pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
 
-    // Add last page if it's not already included
     if (!pageNumbers.includes(totalPages)) {
       pageNumbers.push(totalPages);
     }
-
+    if (!pageNumbers.includes(1)) {
+      pageNumbers.unshift(1);
+    }
     return pageNumbers.sort((a, b) => a - b);
   };
 
