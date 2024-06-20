@@ -153,7 +153,8 @@ const UserProfile = () => {
 
     return (
         <div className="lg:pt-24 text-center">
-            <div className="text-center p-8 max-w-lg mx-auto shadow-lg rounded-lg">
+            <h1>Profile Details :</h1>
+            <div className="text-center p-8 max-w-lg mx-auto shadow rounded-full sm:pt-10 sm:mr-4">
                 <img
                     className="h-36 w-36 rounded-full ml-36"
                     src={newProfilePic || profilePic}
