@@ -174,7 +174,7 @@ return (
                         {isMenuOpen ? <FaXmark className='h-5 w-5 text-black' /> : <FaBarsStaggered className='h-5 w-5 text-black text-3xl' />}
                     </button>
                 </div>
-                <div className='md:hidden sm:hidden flex w-5/6' >
+                <div className='md:hidden sm:hidden flex ' >
                 <Link to="/userProfile">
                 {user? (user.photoURL ? (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full' />) : <img src={profilePic} alt="Profile" className='p-0 mt-1 mr-1 h-8 w-8 border-none rounded-full' />
 ) : <FaUser className='p-0 mt-1 mr-1 h-4 w-4 border-none rounded-full' />}
