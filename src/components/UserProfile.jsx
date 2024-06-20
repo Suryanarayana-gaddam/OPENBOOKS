@@ -152,7 +152,7 @@ const UserProfile = () => {
     }
 
     return (
-        <div className="lg:pt-24 pt-24 text-center">
+        <div className="lg:pt-24 text-center">
             <div className="text-center p-8 max-w-lg mx-auto shadow-lg rounded-lg">
                 <img
                     className="h-36 w-36 rounded-full ml-36"
