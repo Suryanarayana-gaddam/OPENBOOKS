@@ -56,7 +56,13 @@ const About = () => {
       <p>Our bookstore offers a seamless browsing and shopping experience, with an extensive collection of books across various genres, including fiction, non-fiction, romance, mystery, science fiction, and more. With our user-friendly interface and intuitive search features, finding your next favorite read is just a few clicks away.</p>
       <p>At ReadIt, we prioritize user satisfaction and aim to create a community of book lovers where readers can discover new titles, share recommendations, and engage in meaningful discussions. Join us on our journey to celebrate the joy of reading and explore the vast world of literature!</p>
       {isLoading ? (
-        <div>Loading...</div>
+         <div className="flex items-center justify-center h-screen">
+        <div className="relative">
+            <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
+            <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
+            </div>
+        </div>
+    </div>
       ) : (
         
         <div className='flex justify-around mt-10 '>
