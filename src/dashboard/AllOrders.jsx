@@ -35,31 +35,50 @@ const AllOrders = () => {
           console.error("Error:", error); 
           // Handle unexpected errors
         });
-  }, [user]);
+  }, [user,currentPage]);
 
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
   const currentOrders = allOrders.slice(indexOfFirstOrder, indexOfLastOrder);
 
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // Calculate total number of pages
+  const totalPages = Math.ceil(allOrders.length / ordersPerPage);
 
-  // Go to previous page
+  // Generate array of page numbers to display
+  const getPageNumbers = () => {
+    let startPage = Math.max(1, currentPage - Math.floor(ordersPerPage / 2));
+    let endPage = Math.min(totalPages, startPage + ordersPerPage - 1);
+
+    // Adjust startPage when near the end of totalPages
+    if (endPage - startPage + 1 < ordersPerPage) {
+      startPage = Math.max(1, endPage - ordersPerPage + 1);
+    }
+
+    let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
+
+    // Include multiples of 50
+    const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
+    pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
+
+    // Add last page if it's not already included
+    if (!pageNumbers.includes(totalPages)) {
+      pageNumbers.push(totalPages);
+    }
+
+    return pageNumbers.sort((a, b) => a - b);
+  };
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   const goToPreviousPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
-  // Go to next page
   const goToNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
-
-  // Pagination buttons with page numbers
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(allOrders.length / ordersPerPage); i++) {
-    pageNumbers.push(i);
-  }
-
 
   return (
     <div className="container mx-auto px-4 lg:px-24 mt-16">
@@ -108,8 +127,8 @@ const AllOrders = () => {
       )}
     </div>
      {/* Pagination buttons at the bottom */}
-     <div className="flex justify-around mt-8 w-auto">
-          <div>
+     <div className={`flex justify-around mt-8 w-auto ${ allOrders.length>8 ? "block" : "hidden"}`}>
+        <div>
           <button
             onClick={goToPreviousPage}
             disabled={currentPage === 1}
@@ -117,30 +136,30 @@ const AllOrders = () => {
           >
             Previous
           </button>
-          </div>
-          <div>
-          {pageNumbers.map((number) => (
+        </div>
+        <div>
+          {getPageNumbers().map((number) => (
             <button
               key={number}
               onClick={() => paginate(number)}
               className={`px-3 py-1 rounded-full ${
-                currentPage === number ? "bg-blue-500 text-white" : "bg-gray-200"
+                currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200'
               } mr-2`}
             >
               {number}
             </button>
           ))}
-          </div>
-          <div>
+        </div>
+        <div>
           <button
             onClick={goToNextPage}
-            disabled={currentPage === Math.ceil(allOrders.length / ordersPerPage)}
-            className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2 "
+            disabled={currentPage === totalPages || totalPages === 0}
+            className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2"
           >
             Next
           </button>
-          </div>
         </div>
+      </div>
   </div>
   
   );

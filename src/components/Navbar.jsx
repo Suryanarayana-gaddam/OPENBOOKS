@@ -115,10 +115,10 @@ const Navbar = () => {
 
 return (
     <header className='w-full bg-transparent fixed top-0 left-0 right-0 transition-all ease-in duration-300'>
-        <nav className={`py-4 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
+        <nav className={`py-2 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
             <div className='flex justify-between items-center text-base gap-8'>
                 {/* logo */} 
-                <Link to="/" className='text-2x1 font-bold text-blue-700 flex items-center gap-2'><div className='imglogo text-transparent w-40 h-14 rounded-full'>Logo</div></Link>
+                <Link to="/" className='text-2x1 font-bold text-blue-700 flex items-center gap-2'><div className={`imglogo text-transparent ${isSticky ? "w-32 h-14" : "w-40 h-40"} rounded-full`}>Logo</div></Link>
                 {/*nav items for large device */}
                 <ul className='md:flex space-x-12 hidden'>
                     {
@@ -131,17 +131,17 @@ return (
                     {/* Use the img tag to display the user's photo */}
                     {user?.displayName || username || user?.email}
                     <span>
-                        <Link to="/userProfile">
                             {user ? (
-                                user.photoURL ? (
-                                    <img src={user.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full mr-0' />
-                                ) : (
-                                    <img src={profilePic} alt="Profile" className='rounded-full h-10 w-10 ml-2' />
-                                )
+                                <Link to="/userProfile">
+                                    user.photoURL ? (
+                                        <img src={user.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full mr-0' />
+                                    ) : (
+                                        <img src={profilePic} alt="Profile" className='rounded-full h-10 w-10 ml-2' />
+                                    )
+                                </Link>
                             ) : (
                                 <FaUser className='p-0 mt-1 h-4 w-4 border-none rounded-full' />
                             )}
-                        </Link>
                     </span>
                        {
                         user ? (

@@ -8,7 +8,8 @@ import useCart from "../../hooks/useCart";
 const Shop = ({showSearchBox}) => {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const booksPerPage = 15;
+  const booksPerPage = 10;
+  const maxPageNumbers = 10; 
 
   const [cart,refetch] = useCart();
 
@@ -105,7 +106,7 @@ const Shop = ({showSearchBox}) => {
         console.error("Error:", error);
         // Handle unexpected errors
       }); 
-    }, [user]);
+    }, [user,currentPage]);
   const isBookInWishlist = book => {
     return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
   };
@@ -338,24 +339,45 @@ const handleBuyCart = (event,book) => {
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
   const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
 
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // Calculate total number of pages
+  const totalPages = Math.ceil(books.length / booksPerPage);
 
-  // Go to previous page
-  const goToPreviousPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
+  // Generate array of page numbers to display
+  const getPageNumbers = () => {
+    let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
+    let endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
 
-  // Go to next page
-  const goToNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
+    // Adjust startPage when near the end of totalPages
+    if (endPage - startPage + 1 < maxPageNumbers) {
+      startPage = Math.max(1, endPage - maxPageNumbers + 1);
+    }
 
-  // Pagination buttons with page numbers
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(books.length / booksPerPage); i++) {
-    pageNumbers.push(i);
+  let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
+
+
+  // Include multiples of 50
+  const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
+  pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
+
+  // Add last page if it's not already included
+  if (!pageNumbers.includes(totalPages)) {
+    pageNumbers.push(totalPages);
   }
+
+  return pageNumbers.sort((a, b) => a - b);
+};
+
+const paginate = (pageNumber) => {
+  setCurrentPage(pageNumber);
+};
+
+const goToPreviousPage = () => {
+  setCurrentPage((prevPage) => prevPage - 1);
+};
+
+const goToNextPage = () => {
+  setCurrentPage((prevPage) => prevPage + 1);
+};
 
   return (
     <div className="px-4 my-24 lg:px-24">
@@ -439,37 +461,37 @@ const handleBuyCart = (event,book) => {
 
 
       {/* Pagination buttons at the bottom */}
-      <div className="flex justify-around mt-8 w-auto">
+      <div className={`flex justify-around mt-8 w-auto ${ books.length>10 ? "block" : "hidden"}`}>
         <div>
-        <button
-          onClick={goToPreviousPage}
-          disabled={currentPage === 1}
-          className="px-3 py-1 rounded-full bg-blue-500 text-white mr-2"
-        >
-          Previous
-        </button>
-        </div>
-        <div>
-        {pageNumbers.map((number) => (
           <button
-            key={number}
-            onClick={() => paginate(number)}
-            className={`px-3 py-1 rounded-full ${
-              currentPage === number ? "bg-blue-500 text-white" : "bg-gray-200"
-            } mr-2`}
+            onClick={goToPreviousPage}
+            disabled={currentPage === 1}
+            className="px-3 py-1 rounded-full bg-blue-500 text-white mr-2"
           >
-            {number}
+            Previous
           </button>
-        ))}
         </div>
         <div>
-        <button
-          onClick={goToNextPage}
-          disabled={currentPage === Math.ceil(books.length / booksPerPage)}
-          className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2"
-        >
-          Next
-        </button>
+          {getPageNumbers().map((number) => (
+            <button
+              key={number}
+              onClick={() => paginate(number)}
+              className={`px-3 py-1 rounded-full ${
+                currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200'
+              } mr-2`}
+            >
+              {number}
+            </button>
+          ))}
+        </div>
+        <div>
+          <button
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages || totalPages === 0}
+            className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2"
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>

@@ -16,6 +16,7 @@ const SearchedBooks = () => {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 10;
+  const maxPageNumbers = 10; // Maximum number of page buttons to display
 
   const [searchedBooks, setSearchedBooks] = useState([]);
   const user = useContext(AuthContext);
@@ -117,7 +118,7 @@ const SearchedBooks = () => {
           console.error('Error fetching searched books:', error);
         });
     }
-  }, [query,user]);
+  }, [query,user,currentPage]);
 
   const isBookInWishlist = book => {
     return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
@@ -329,30 +330,48 @@ const handleBuyCart = (event,book) => {
     const indexOfFirstBook = indexOfLastBook - booksPerPage;
     const currentBooks = searchedBooks.slice(indexOfFirstBook, indexOfLastBook);
   
-    // Change page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  
-    // Go to previous page
-    const goToPreviousPage = () => {
-      setCurrentPage((prevPage) => prevPage - 1);
-    };
-  
-    // Go to next page
-    const goToNextPage = () => {
-      setCurrentPage((prevPage) => prevPage + 1);
-    };
-  
-    // Pagination buttons with page numbers
-    const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(searchedBooks.length / booksPerPage); i++) {
-      pageNumbers.push(i);
+    // Calculate total number of pages
+  const totalPages = Math.ceil(searchedBooks.length / booksPerPage);
+
+  // Generate array of page numbers to display
+  const getPageNumbers = () => {
+    let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
+    let endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
+
+    // Adjust startPage when near the end of totalPages
+    if (endPage - startPage + 1 < maxPageNumbers) {
+      startPage = Math.max(1, endPage - maxPageNumbers + 1);
     }
+
+    let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
+
+    // Include multiples of 50
+    const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
+    pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
+
+    // Add last page if it's not already included
+    if (!pageNumbers.includes(totalPages)) {
+      pageNumbers.push(totalPages);
+    }
+
+    return pageNumbers.sort((a, b) => a - b);
+  };
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const goToPreviousPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
   
   return (
       <div className="my-16 px-4 lg:px-24">
-        <h2 className="text-3xl text-center text-bold text-black ">
-          Searched Books
-        </h2><br />
+        <br /><br />
         <div className=' flex'>
             <input
               type="text" name='search-input'
@@ -369,6 +388,10 @@ const handleBuyCart = (event,book) => {
               </button>
             </Link>            
           </div>
+          <br />
+          <h2 className="text-3xl text-center text-bold text-black ">
+          Searched Books
+        </h2>
         {/* Cards */}
         {currentBooks.length > 0 ? (
         <div className="mt-12">
@@ -426,8 +449,8 @@ const handleBuyCart = (event,book) => {
             ))}
           </div>
           {/* Pagination buttons at the bottom */}
-        <div className="flex justify-around mt-8 w-auto">
-          <div>
+      <div className={`flex justify-around mt-8 w-auto ${ searchedBooks.length>10 ? "block" : "hidden"}`}>
+        <div>
           <button
             onClick={goToPreviousPage}
             disabled={currentPage === 1}
@@ -435,30 +458,30 @@ const handleBuyCart = (event,book) => {
           >
             Previous
           </button>
-          </div>
-          <div>
-          {pageNumbers.map((number) => (
+        </div>
+        <div>
+          {getPageNumbers().map((number) => (
             <button
               key={number}
               onClick={() => paginate(number)}
               className={`px-3 py-1 rounded-full ${
-                currentPage === number ? "bg-blue-500 text-white" : "bg-gray-200"
+                currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200'
               } mr-2`}
             >
               {number}
             </button>
           ))}
-          </div>
-          <div>
+        </div>
+        <div>
           <button
             onClick={goToNextPage}
-            disabled={currentPage === Math.ceil(searchedBooks.length / booksPerPage)}
-            className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2 "
+            disabled={currentPage === totalPages || totalPages === 0}
+            className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2"
           >
             Next
           </button>
-          </div>
         </div>
+      </div>
         </div>
         
         
