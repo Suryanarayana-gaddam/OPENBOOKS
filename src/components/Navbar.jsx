@@ -103,7 +103,7 @@ return (
         <nav className={`py-2 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
             <div className='flex justify-between items-center text-base gap-8'>
                 {/* logo */} 
-                <Link to="/" ><div className={`imglogo text-transparent ${isSticky ? "w-28 sm:w-20 sm:h-10 h-12 ml-4" : "lg:w-40 sm:w-20 sm:h-10 lg:h-12"} rounded-full`}>Logo</div></Link>
+                <Link to="/" ><div className={`imglogo text-transparent ml-4 ${isSticky ? "lg:w-28 sm:w-20 sm:h-10 lg:h-12" : "lg:w-52 sm:w-28 sm:h-10 lg:h-12"} rounded-full`}>Logo</div></Link>
                 {/*nav items for large device */}
                 <ul className='md:flex space-x-12 hidden'>
                     {
