@@ -26,7 +26,7 @@ const ManageBooks = () => {
     setUsername(user?.user?.displayName);
     //console.log(user);
 
-    const userEmail = user.user.email;
+    const userEmail = user?.user?.email;
   //console.log("User Email:", userEmail);
 
   // Fetch user data by email
