@@ -8,7 +8,10 @@ const Users = () => {
     const [username, setUsername] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
     const user = useContext(AuthContext);
-  
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const booksPerPage = 10;
+    const maxPageNumbers = 10;
     const token = localStorage.getItem('access-token');
   
     useEffect (() => {
@@ -50,6 +53,16 @@ const Users = () => {
         // if(userData.role == 'admin'){setIsAdmin(true)}
       })
     },[user]);
+
+    if(isLoading){
+      return <div className="flex items-center justify-center h-screen">
+      <div className="relative">
+          <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
+          <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
+          </div>
+      </div>
+  </div>
+    }
   
   //delete user 
   const handleDeleteUser = (id) => {
@@ -133,7 +146,55 @@ const Users = () => {
         });
       }
     }
+    const indexOfLastBook = currentPage * booksPerPage;
+const indexOfFirstBook = indexOfLastBook - booksPerPage;
+const currentBooks = allUsers.slice(indexOfFirstBook, indexOfLastBook);
 
+
+// Calculate total number of pages
+const totalPages = Math.ceil(allUsers.length / booksPerPage);
+
+// Generate array of page numbers to display
+const getPageNumbers = () => {
+  let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
+  let endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
+
+  // Adjust startPage when near the end of totalPages
+  if (endPage - startPage + 1 < maxPageNumbers) {
+    startPage = Math.max(1, endPage - maxPageNumbers + 1);
+  }
+
+  
+
+let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
+
+
+// Include multiples of 50
+const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
+pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
+
+// Add last page if it's not already included
+if (!pageNumbers.includes(totalPages)) {
+  pageNumbers.push(totalPages);
+}
+if (!pageNumbers.includes(1)) {
+  pageNumbers.unshift(1);
+}
+
+return pageNumbers.sort((a, b) => a - b);
+};
+
+const paginate = (pageNumber) => {
+setCurrentPage(pageNumber);
+};
+
+const goToPreviousPage = () => {
+setCurrentPage((prevPage) => prevPage - 1);
+};
+
+const goToNextPage = () => {
+setCurrentPage((prevPage) => prevPage + 1);
+};
   
     return (
       <div className='px-4 my-12 sm:max-w-md md:max-w-lg lg:max-w-full'>
@@ -162,11 +223,6 @@ const Users = () => {
                   <Table.Cell>{userInfo.email}</Table.Cell>
                   <Table.Cell>{userInfo.role}</Table.Cell>
                   <Table.Cell>
-                    {/* <Link 
-                      className="font-medium text-cyan-600 hover:underline dark:text-cyan-500" 
-                      to={`/admin/dashboard/edit-users/${userInfo._id}`}>
-                      Edit
-                    </Link> */}
                     
                     {
                         userInfo.role == "admin" ?
@@ -194,6 +250,42 @@ const Users = () => {
   
   
         </Table>
+
+        {/* Pagination buttons at the bottom */}
+      <div className={`flex justify-around mt-8 w-auto ${ allUsers.length>10 ? "block" : "hidden"}`}>
+        <div>
+          <button
+            onClick={goToPreviousPage}
+            disabled={currentPage === 1}
+            className="px-3 py-1 rounded-full bg-blue-500 text-white mr-2"
+          >
+            Previous
+          </button>
+        </div>
+        <div>
+          {getPageNumbers().map((number) => (
+            <button
+              key={number}
+              onClick={() => paginate(number)}
+              className={`px-3 py-1 rounded-full ${
+                currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200'
+              } mr-2`}
+            >
+              {number}
+            </button>
+          ))}
+        </div>
+        <div>
+          <button
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages || totalPages === 0}
+            className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
       </div>
     )
   

@@ -29,9 +29,8 @@
     transform: translateY(-5px);
   }
   
-  .loading {
-    font-size: 20px;
-    text-align: center;
-    margin-top: 50px;
+  .text-blue {
+    color: blue;
+    font-weight: bold;
   }
   
