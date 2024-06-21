@@ -10,6 +10,7 @@ const ManageBooks = () => {
   const [currentPage, setCurrentPage] = useState(1);
     const booksPerPage = 10;
     const maxPageNumbers = 10;
+    const [isLoading, setIsLoading] = useState(true);
   const user = useContext(AuthContext);
 
   const token = localStorage.getItem('access-token');
@@ -21,6 +22,7 @@ const ManageBooks = () => {
         "Content-Type" : "application/json",
         authorization: `Bearer ${token}`
       }}).then(res => res.json()).then(data => setAllBooks(data));
+      setIsLoading(false);
     setUsername(user?.user?.displayName);
     //console.log(user);
 
@@ -52,6 +54,16 @@ const ManageBooks = () => {
       setUsername(userData.username);
     })
   },[user,currentPage]);
+
+  if(isLoading){
+    return <div className="flex items-center justify-center h-screen">
+    <div className="relative">
+        <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
+        <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
+        </div>
+    </div>
+</div>
+  }
 
 //delete a book 
 const handleDelete = (id) => {
