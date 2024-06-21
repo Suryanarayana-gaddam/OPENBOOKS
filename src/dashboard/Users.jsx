@@ -21,6 +21,7 @@ const Users = () => {
           "Content-Type" : "application/json",
           authorization: `Bearer ${token}`
         }}).then(res => res.json()).then(data => setAllUsers(data));
+        setIsLoading(false);
       setUsername(user?.user?.displayName);
       //console.log(user);
       

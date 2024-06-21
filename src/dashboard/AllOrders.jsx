@@ -31,7 +31,7 @@ const AllOrders = () => {
         })
         .then(data => {
             setAllOrders(data.reverse());
-
+            setIsLoading(false);
         })
         .catch(error => {
           console.error("Error:", error); 
