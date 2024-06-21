@@ -50,23 +50,21 @@ const Dashboard = () => {
       });
 
       setIsLoading(false);
-    
- 
-
   }, []);
+
+  if(isLoading){
+    return <div className="flex items-center justify-center h-screen">
+    <div className="relative">
+        <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
+        <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
+        </div>
+    </div>
+</div>
+  }
 
   return (
     <div className="dashboard-container">
       <h2 className="dashboard-heading">Welcome Admin!</h2>
-      {isLoading ? (
-         <div className="flex items-center justify-center h-screen">
-         <div className="relative">
-             <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
-             <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
-             </div>
-         </div>
-     </div>
-      ) : (
         <div className="dashboard-content">
           <div className="dashboard-card">
             <h3>Book Details</h3>
@@ -84,7 +82,6 @@ const Dashboard = () => {
             {/* Add more order details here */}
           </div>
         </div>
-      )}
     </div>
   );
 };
