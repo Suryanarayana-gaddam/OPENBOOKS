@@ -8,7 +8,6 @@ const UserProfile = () => {
     const [profilePic, setProfilePic] = useState(null);
     const [userId, setUserId] = useState(null);
     const [newUsername, setNewUsername] = useState('');
-    const [newProfilePic, setNewProfilePic] = useState(null);
     const [isNameChangeClicked, setIsNameChangeClicked] = useState(false);
 
     const token = localStorage.getItem('access-token');
@@ -52,8 +51,7 @@ const UserProfile = () => {
                 const resizedImage = await resizeImage(file);
                 const reader = new FileReader();
                 reader.onloadend = () => {
-                    setNewProfilePic(reader.result); 
-                    console.log(reader.result)
+                    localStorage.setItem("ProfilePic",reader.result);
                     handleUpdateProfile(); 
                 };
                 
@@ -101,11 +99,9 @@ const UserProfile = () => {
         if (newUsername.trim() !== '') {
             updateUserObj.username = newUsername;
         }
-        if (newProfilePic) {
-            updateUserObj.profilePic = newProfilePic;
-        }
-        //console.log("Updated User pic :",newProfilePic)
-        //console.log("Updated User Object :",updateUserObj)
+            updateUserObj.profilePic = localStorage.getItem("ProfilePic");
+            localStorage.removeItem("ProfilePic")
+
 
         if (Object.keys(updateUserObj).length === 0) {
             console.log('No changes to update.');
@@ -157,8 +153,8 @@ const UserProfile = () => {
             <div className="text-center p-8 max-w-lg mx-auto shadow rounded-lg sm:pr-5">
                 <img
                     className="h-36 w-36 rounded-full lg:ml-36 sm:ml-28"
-                    src={newProfilePic || profilePic}
-                    alt={`Profile picture of ${username}`}
+                    src={ profilePic || user?.user?.photoURL}
+                    alt={`Profile picture of ${username}`} 
                 />
                 <input
                     type="file"
