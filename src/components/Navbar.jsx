@@ -160,6 +160,7 @@ return (
                         </div>
                     </div>
                 </div>
+                <p className='relative left-10 top-8'>{TimeAndDate}</p>
 
                 <div className='md:hidden absolute top-6 left-1 '>
                     <button onClick={toggleMenu} className="text-black focus:outline-none">
@@ -185,7 +186,6 @@ return (
                 </div>
             
             </div> 
-            <p className='relative left-10 top-8'>{TimeAndDate}</p>
                     
                 {/* MENU BAR FOR THE MOBILE DEVICES */}
 
