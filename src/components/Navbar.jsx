@@ -15,6 +15,7 @@ const Navbar = () => {
     const [profilePic,setProfilePic] = useState(null)
     const {user} = useContext (AuthContext);
     const [cart,refetch] = useCart();
+    const TimeAndDate = new Date().toISOString();
     
     const token = localStorage.getItem('access-token');
 
@@ -28,6 +29,9 @@ const Navbar = () => {
     }
     const CloseUserMenu = () => {
         setIsUserMenuOpen(false);
+    }
+    const CloseMenu = () => {
+        setIsMenuOpen(false);
     }
 
     useEffect(() => {
@@ -105,9 +109,9 @@ return (
                 {/* logo */} 
                 <Link to="/" ><div className={`imglogo text-transparent ml-4 ${isSticky ? "w-32 h-10" : "w-52 h-12"} rounded-full`}>Logo</div></Link>
                 {/*nav items for large device */}
-                <ul className='md:flex space-x-12 hidden'>
+                <ul className='md:flex space-x-12 hidden' onClick={CloseMenu}>
                     {
-                        navItems.map(({link,path}) => <Link key={path} to={path} className={`block text-base text-black uppercase cursor-pointer hover:text-blue-700 ${activeItem === link ? 'font-bold text-md text-blue-700' : 'text-black'}` } onClick={() => setActiveItem(link)}> {link}</Link>)
+                        navItems.map(({link,path}) => <Link key={path} to={path}  className={`block text-base text-black uppercase cursor-pointer hover:text-blue-700 ${activeItem === link ? 'font-bold text-md text-blue-700' : 'text-black'}` } onClick={() => setActiveItem(link)}> {link}</Link>)
                     }
                 </ul>
 
@@ -149,7 +153,7 @@ return (
                         </button>
                         <div className={`absolute top-full right-0  z-10 mt-2 py-2 bg-white rounded-lg shadow-md text-left ${isUserMenuOpen ? "block" : "hidden"}`}>
                             {userMenuItems.map(({ link, path }) => (
-                                <Link key={path} to={path} className="block items-center w-28 p-0 py-1 text-center text-inherit text-black  bg-white hover:bg-gray-200 " >
+                                <Link key={path} to={path} onClick={CloseUserMenu} className="block items-center w-28 p-0 py-1 text-center text-inherit text-black  bg-white hover:bg-gray-200 " >
                                     {link}
                                 </Link>
                             ))}
@@ -181,13 +185,14 @@ return (
                 </div>
             
             </div> 
+            <p className='relative left-10 top-8'>{TimeAndDate}</p>
                     
                 {/* MENU BAR FOR THE MOBILE DEVICES */}
 
             {/* nav for sm devises */}
             <div className={`space-y-4 px-4 mt-16 py-7 bg-blue-700 text-white ${ isMenuOpen ? "block fixed top-0 right-0 left-0" : "hidden"}`}>
                 {
-                    navItems.map(({link,path}) => <Link key={path} to={path} className="block text-base text-white uppercase cursor-pointer "> {link}</Link>)
+                    navItems.map(({link,path}) => <Link key={path} to={path} onClick={CloseMenu} className="block text-base text-white uppercase cursor-pointer "> {link}</Link>)
                 }
             </div>
         </nav>
