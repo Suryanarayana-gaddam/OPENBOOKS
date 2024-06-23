@@ -107,7 +107,7 @@ return (
         <nav className={`py-2 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
             <div className='flex justify-between items-center text-base gap-8'>
                 {/* logo */} 
-                <Link to="/" ><div className={`imglogo text-transparent ml-4 ${isSticky ? "w-32 h-10" : "w-52 h-12"} rounded-full`}>Logo</div></Link>
+                <Link to="/" ><div className={`imglogo text-transparent ml-4 ${isSticky ? "w-32 h-10" : "w-40 h-12"} rounded-full`}>Logo</div></Link>
                 {/*nav items for large device */}
                 <ul className='md:flex space-x-12 hidden' onClick={CloseMenu}>
                     {
@@ -146,6 +146,7 @@ return (
                        </Link>
                         ) : null
                        }
+                                       <p className='relative left-10 top-8'>{TimeAndDate}</p>
                     
                     <div className="relative">
                         <button onClick={toggleUserMenu} className="text-black focus:outline-none">
@@ -160,7 +161,6 @@ return (
                         </div>
                     </div>
                 </div>
-                <p className='relative left-10 top-8'>{TimeAndDate}</p>
 
                 <div className='md:hidden absolute top-6 left-1 '>
                     <button onClick={toggleMenu} className="text-black focus:outline-none">
