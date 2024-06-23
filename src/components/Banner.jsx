@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 const Banner = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
+
   return (
     <div className='px-4 lg:px-24 bg-teal-100 flex items-center'>
         <div className='flex w-full flex-col md:flex-row justify-around items-center gap-12 pt-40 pb-20'>
