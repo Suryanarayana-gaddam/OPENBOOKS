@@ -63,7 +63,7 @@ const OtherBooks = () => {
     
   return (
         <div>
-            <BookCards books={books} headLine="Other Books" user={user.user}/>
+            <BookCards books={books} headLine="More Books" user={user.user}/>
         </div>
     )
 }
