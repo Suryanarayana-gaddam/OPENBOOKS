@@ -154,7 +154,7 @@ const UserProfile = () => {
                 <img
                     className="h-36 w-36 rounded-full lg:ml-36 sm:ml-28 text-center"
                     src={ profilePic || user?.user?.photoURL}
-                    alt={`Profile picture of ${username}`} 
+                    alt={`Profile pic of ${username}`} 
                 />
                 <input
                     type="file"

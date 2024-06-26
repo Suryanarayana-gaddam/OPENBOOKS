@@ -59,7 +59,7 @@ const FavBook = () => {
 
         <div className='md:w-1/2 space-y-6'>
          <h2 className='text-5xl font-bold my-5 md:w-3/4 leading-snug'>Find Your Favorite <span className='text-blue-700 '>Book Here!</span></h2>
-            <p className='mb-10 text-lg md:w-5/6'>Explore the vast world of literature at ReadIt Bookstore. With a diverse collection spanning various genres and topics, there&apos;s something for every reader. Dive into timeless classics, explore the latest bestsellers, or uncover hidden gems waiting to be discovered.</p>
+            <p className='mb-10 text-lg md:w-5/6'>Explore the vast world of literature at OPENBOOKS Bookstore. With a diverse collection spanning various genres and topics, there&apos;s something for every reader. Dive into timeless classics, explore the latest bestsellers, or uncover hidden gems waiting to be discovered.</p>
             <div className='flex flex-col sm:flex-row justify-between gap-6 md:w-3/4 my-14'>
               <div>
                 <h3 className='text-3xl font-bold '>{bookCount}</h3>
