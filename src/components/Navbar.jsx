@@ -146,7 +146,7 @@ return (
                        </Link>
                         ) : null
                        }
-                                       <p className='relative left-10 top-8'>{TimeAndDate}</p>
+                                       
                     
                     <div className="relative">
                         <button onClick={toggleUserMenu} className="text-black focus:outline-none">
