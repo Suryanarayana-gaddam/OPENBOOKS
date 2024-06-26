@@ -152,7 +152,7 @@ const UserProfile = () => {
             <h1 className='font-bold text-3xl'>Profile Details :</h1>
             <div className="text-center p-8 max-w-lg mx-auto shadow rounded-lg sm:pr-5">
                 <img
-                    className="h-36 w-36 rounded-full lg:ml-36 sm:ml-28"
+                    className="h-36 w-36 rounded-full lg:ml-36 sm:ml-28 text-center"
                     src={ profilePic || user?.user?.photoURL}
                     alt={`Profile picture of ${username}`} 
                 />
@@ -184,6 +184,12 @@ const UserProfile = () => {
                                 className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
                             >
                                 Save
+                            </button>
+                            <button
+                                onClick={() => setIsNameChangeClicked(false)}
+                                className="ml-2 bg-gray-400 hover:bg-red-500 text-white font-bold py-1 px-2 rounded"
+                            >
+                                Cancel
                             </button>
                         </span>
                     ) : (
