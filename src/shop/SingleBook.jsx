@@ -36,7 +36,7 @@ const SingleBook = () => {
   useEffect(() => {
 
     const userEmail = user?.user?.email;
-
+    window.location.reload();
     // Fetch user data by email
     fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
         method: "GET",
