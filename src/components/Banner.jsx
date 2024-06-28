@@ -1,61 +1,13 @@
 
 
 
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import BannerCard from '../home/BannerCard';
 import { Link } from 'react-router-dom';
-import useUser from '../../hooks/useUser';
-import { AuthContext } from '../context/AuthProvider';
 
 const Banner = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [username,refetch] = useUser();
-  console.log("uname: ",username);
-  const [uName,setUName] = useState(null)
-  const usernames = username;
-  const user = useContext(AuthContext);
-  const token = localStorage.getItem('access-token');
-
-    const userEmail = user?.user?.email;
-    const u = localStorage.getItem('alertToken')
-    if(u){
-    const alert = () => {
-      // Fetch user data by email
-    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json", // Set content type header explicitly
-        authorization: `Bearer ${token}`
-      },
-    })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(error => {
-            console.error("Error fetching user data:", error);
-            // Handle the error (e.g., display a message to the user)
-          });
-        }
-        return res.json(); // Parse valid JSON response
-      })
-      .then(userData => {
-        //console.log("User Data:", userData);
   
-        setUName(userData.username);
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        // Handle unexpected errors
-      });
-    }
-    setTimeout(alert,4000)
-     
-      const  alertname = () =>{
-          alert("Welcome back : ",usernames || uName);
-          console.log("UserName :",usernames || uName);
-        }
-        setTimeout(alertname,3000);
-        localStorage.removeItem('alertToken')
-      }
 
   return (
     <div className='px-4 lg:px-24 bg-teal-100 flex items-center'>
