@@ -6,7 +6,7 @@ const useCart = () => {
     const user = useContext(AuthContext);
     const token = localStorage.getItem("access-token");
 
-    const { refetch, data: username = [] } = useQuery({
+    const { refetch, data: username } = useQuery({
         
         queryKey: ['username', user?.user?.email],
         queryFn: async () => {
@@ -28,7 +28,7 @@ const useCart = () => {
                 return responseData.username; 
             } catch (error) {
                 console.error("Error fetching user data:", error);
-                return []; 
+                return null; 
             }
         },
     });
