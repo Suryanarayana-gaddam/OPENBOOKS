@@ -19,7 +19,7 @@ const Banner = () => {
   useEffect(() => {
     const userEmail = user?.user?.email;
     // Fetch user data by email
-    fetch(`http://localhost:5000/userByEmail/${userEmail}`, {
+    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Set content type header explicitly
