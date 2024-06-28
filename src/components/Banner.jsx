@@ -16,9 +16,9 @@ const Banner = () => {
   const user = useContext(AuthContext);
   const token = localStorage.getItem('access-token');
 
-  useEffect(() => {
     const userEmail = user?.user?.email;
-    // Fetch user data by email
+    const alert = () => {
+      // Fetch user data by email
     fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
       method: "GET",
       headers: {
@@ -44,7 +44,9 @@ const Banner = () => {
         console.error("Error:", error);
         // Handle unexpected errors
       });
-    },[user]);  
+    }
+    setTimeout(alert,4000)
+     
     if(localStorage.getItem('alertToken')){
       const  alertname = () =>{
           alert("Welcome back : ",usernames || uName);
