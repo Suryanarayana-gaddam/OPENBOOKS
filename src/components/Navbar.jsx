@@ -15,6 +15,7 @@ const Navbar = () => {
     const [profilePic,setProfilePic] = useState(null)
     const {user} = useContext (AuthContext);
     const [cart,refetch] = useCart();
+    const [timeDate,setTimeDate] = useState(null);
     //const TimeAndDate = new Date().toISOString();
     
     const token = localStorage.getItem('access-token');
@@ -33,6 +34,14 @@ const Navbar = () => {
     const CloseMenu = () => {
         setIsMenuOpen(false);
     }
+
+    setInterval(timefun,1000)
+    function timefun(){
+        let d = new Date();
+        setTimeDate(
+        d.getHours() + ":" +
+        d.getMinutes() + ":" +
+        d.getSeconds() )   }
 
     useEffect(() => {
         if (!user) return 
@@ -108,13 +117,14 @@ return (
             <div className='flex justify-between items-center text-base gap-8'>
                 {/* logo */} 
                 <Link to="/" ><div className={`imglogo text-transparent ml-4 ${isSticky ? "w-32 h-10" : "w-40 h-12"} rounded-full`}>Logo</div></Link>
+                <p className='fixed bottom-0 right-0 mr-2 mb-1 bg-white text-red-600'>{timeDate}</p>
                 {/*nav items for large device */}
                 <ul className='md:flex space-x-12 hidden' onClick={CloseMenu}>
                     {
                         navItems.map(({link,path}) => <Link key={path} to={path}  className={`block text-base text-black uppercase cursor-pointer hover:text-blue-700 ${activeItem === link ? 'font-bold text-md text-blue-700' : 'text-black'}` } onClick={() => setActiveItem(link)}> {link}</Link>)
                     }
                 </ul>
-
+ 
                 {/* btn for lg devices */}
                 <div className='space-x-5  hidden lg:flex sm:flex items-center mr-0'>
                     {/* Use the img tag to display the user's photo */}
