@@ -17,6 +17,8 @@ const Banner = () => {
   const token = localStorage.getItem('access-token');
 
     const userEmail = user?.user?.email;
+    const u = localStorage.getItem('alertToken')
+    if(u){
     const alert = () => {
       // Fetch user data by email
     fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
@@ -47,7 +49,6 @@ const Banner = () => {
     }
     setTimeout(alert,4000)
      
-    if(localStorage.getItem('alertToken')){
       const  alertname = () =>{
           alert("Welcome back : ",usernames || uName);
           console.log("UserName :",usernames || uName);
