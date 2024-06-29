@@ -89,9 +89,7 @@ const Navbar = () => {
             window.addEventListener("scroll",handleScroll);
         }
     },[user,token])
-    if(!user){
-        setUsername(null)
-    }
+    
 
     const navItems = [
         {link:"Home",path:"/"},

@@ -2,6 +2,7 @@ import { useContext, useEffect, useState, useRef } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { FaPen } from 'react-icons/fa';
 import pica from 'pica';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
     const [username, setUsername] = useState(null);
@@ -16,6 +17,10 @@ const UserProfile = () => {
 
     const fileInputRef = useRef(null);
     const picaInstance = pica();
+
+    const { logOut } = useContext(AuthContext);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         if (userEmail) {
@@ -43,6 +48,21 @@ const UserProfile = () => {
             });
         }
     }, [userEmail,user, token]);
+
+    const handleLogout = async () => {
+        try {
+          const isConfirmed = window.confirm("Are you sure, you want to logout ?");
+          if (isConfirmed) {
+            await logOut();
+            localStorage.removeItem('access-token');
+    
+            alert('Sign-out successful!!!');
+            navigate('/', { replace: true });
+          }
+        } catch (error) {
+          console.error('Error logging out:', error);
+        }
+      };
 
     const handleFileInputChange = async (event) => {
         const file = event.target.files[0];
@@ -207,6 +227,9 @@ const UserProfile = () => {
                     {userEmail}
                 </p>
             </div>
+            <button onClick={handleLogout} className="bg-red-700 px-8 py-2 text-white rounded">
+                Logout
+            </button>
         </div>
     );
 };
