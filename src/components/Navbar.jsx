@@ -73,6 +73,7 @@ const Navbar = () => {
                 })
             
         
+                refetch()
 
         const handleScroll = () => {
             if(window.scrollY > 100){
@@ -87,7 +88,6 @@ const Navbar = () => {
         return() => {
             window.addEventListener("scroll",handleScroll);
         }
-
     },[user,token])
 
     const navItems = [
