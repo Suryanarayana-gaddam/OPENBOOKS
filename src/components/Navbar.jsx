@@ -118,7 +118,7 @@ return (
             <div className='flex justify-between items-center text-base gap-8'>
                 {/* logo */} 
                 <Link to="/" ><div className={`imglogo text-transparent ml-4 ${isSticky ? "w-32 h-10" : "w-40 h-12"} rounded-full`}>Logo</div></Link>
-                <p className='fixed bottom-0 right-0 mr-2 mb-1 bg-white text-red-600'>{timeDate}</p>
+                <p className='fixed bottom-0 right-0 mr-2 mb-1 '>{timeDate}</p>
                 {/*nav items for large device */}
                 <ul className='md:flex space-x-12 hidden' onClick={CloseMenu}>
                     {
@@ -173,7 +173,7 @@ return (
                     </div>
                 </div>
 
-                <div className='md:hidden absolute top-6 left-1 '>
+                <div className='md:hidden absolute top-6 left-1 w-full mr-0 pr-0'>
                     <button onClick={toggleMenu} className="text-black focus:outline-none">
                         {isMenuOpen ? <FaXmark className='h-5 w-5 text-black' /> : <FaBarsStaggered className='h-5 w-5 text-black text-3xl' />}
                     </button>
