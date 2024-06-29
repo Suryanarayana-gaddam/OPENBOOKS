@@ -51,11 +51,13 @@ const SideBar = () => {
         </Link>
       </div>
       <div className="flex items-center pb-3">
+      <Link to="/userProfile">
         {user && user.photoURL !== null && user.photoURL !== undefined ? (
           <img src={user.photoURL} alt="User" className="w-8 h-8 rounded-full mr-2" />
         ) : (
           <img src={profilePic} alt="Profile" className='rounded-full h-10 w-10 ml-2' />
         )}
+        </Link>
         <span>{user ? user.displayName || userName : "Guest"}</span>
       </div>
       <Sidebar.Items>

@@ -159,7 +159,7 @@ setCurrentPage((prevPage) => prevPage + 1);
                   {indexOfFirstBook + index + 1} 
                 </Table.Cell>
                 <Table.Cell className=" font-medium text-gray-900 dark:text-white">
-                  {book.bookTitle}
+                <Link to={`/book/${book._id}`} className='text-blue-600'>{book.bookTitle}</Link>
                 </Table.Cell>
                 <Table.Cell>{book.authorName}</Table.Cell>
                 <Table.Cell>{book.category}</Table.Cell>
