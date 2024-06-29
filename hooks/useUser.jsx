@@ -6,9 +6,9 @@ const useCart = () => {
     const user = useContext(AuthContext);
     const token = localStorage.getItem("access-token");
 
-    const { refetch, data: username } = useQuery({
+    const { refetch, data: userData = { } } = useQuery({
         
-        queryKey: ['userName', user?.user?.email],
+        queryKey: ['userData', user?.user?.email],
         queryFn: async () => {
             try {
                 const response = await fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user?.user?.email}`, {
@@ -25,17 +25,17 @@ const useCart = () => {
 
                 const responseData = await response.json();
                 console.log("response: ",responseData.username,"resdata: ",responseData)
-                return responseData.username; 
+                return responseData; 
             } catch (error) {
                 console.error("Error fetching user data:", error);
-                return null; 
+                return { }; 
             }
         },
         enabled: !user,   
 
     });
 
-    return [username, refetch];
+    return [userData, refetch];
 };
 
 export default useCart;
