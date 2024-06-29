@@ -226,10 +226,10 @@ const UserProfile = () => {
                     <b>E-Mail : </b>
                     {userEmail}
                 </p>
+                <button onClick={handleLogout} className="bg-red-700 px-8 py-2 text-white rounded mt-4">
+                    Logout
+                </button>
             </div>
-            <button onClick={handleLogout} className="bg-red-700 px-8 py-2 text-white rounded">
-                Logout
-            </button>
         </div>
     );
 };
