@@ -22,7 +22,7 @@ const BookCards = ({headLine,books, user}) => {
 
   useEffect(() => {
     if (!user) return;
-    const userEmail = user.email;
+    const userEmail = user?.email;
     fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
         method: "GET",
         headers: {

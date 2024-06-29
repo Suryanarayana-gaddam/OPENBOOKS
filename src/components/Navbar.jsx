@@ -11,7 +11,7 @@ const Navbar = () => {
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [isSticky,setIsSticky] = useState(false);
     const [isAdmin,setIsAdmin] = useState(false);
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState(null);
     const [profilePic,setProfilePic] = useState(null)
     const {user} = useContext (AuthContext);
     const [cart,refetch] = useCart();
@@ -89,6 +89,9 @@ const Navbar = () => {
             window.addEventListener("scroll",handleScroll);
         }
     },[user,token])
+    if(!user){
+        setUsername(null)
+    }
 
     const navItems = [
         {link:"Home",path:"/"},
