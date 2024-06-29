@@ -194,7 +194,6 @@ const BookCards = ({headLine,books, user}) => {
           }).then(res => res.json()).then(data => {
             setCartBooks([...cartBooks, book]);
             refetch()
-            window.location.reload();
           })
           .catch(error => {
             console.error("Error:", error);
