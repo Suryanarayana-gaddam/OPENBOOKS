@@ -226,7 +226,7 @@ const UserProfile = () => {
                     <b>E-Mail : </b>
                     {userEmail}
                 </p>
-                <button onClick={handleLogout} className="bg-red-700 px-8 py-2 text-white rounded mt-4">
+                <button onClick={handleLogout} className="bg-red-700 px-8 py-2 text-white rounded mt-6">
                     Logout
                 </button>
             </div>
