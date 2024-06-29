@@ -129,7 +129,7 @@ const UserProfile = () => {
         } catch (error) {
             console.error('Error updating user profile:', error);
         }
-        window.location.reload()
+        window.location.reload();
     };
     
 

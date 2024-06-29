@@ -16,7 +16,6 @@ const Logout = () => {
 
         alert('Sign-out successful!!!');
         navigate('/', { replace: true });
-        window.location.reload()
       }
     } catch (error) {
       console.error('Error logging out:', error);
