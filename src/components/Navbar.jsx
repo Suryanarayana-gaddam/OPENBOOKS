@@ -117,7 +117,7 @@ return (
         <nav className={`py-2 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
             <div className='flex justify-between items-center text-base gap-8'>
                 {/* logo */} 
-                <Link to="/" ><div className={`imglogo lg:block text-transparent relative left-8 ${isSticky ? "w-32 h-14" : "w-52 h-20"}`}>Logo</div></Link>
+                <Link to="/" ><div className={`imglogo lg:block sm:hidden text-transparent relative left-8 ${isSticky ? "w-32 h-14" : "w-52 h-20"}`}>Logo</div></Link>
 
                 {/*nav items for large device */}
                 <ul className='md:flex space-x-12 hidden' onClick={CloseMenu}>
@@ -179,7 +179,7 @@ return (
                         {isMenuOpen ? <FaXmark className='h-5 w-5 text-black' /> : <FaBarsStaggered className='h-5 w-5 text-black text-3xl' />}
                     </button>
                 </div>
-                <div className='md:hidden sm:hidden flex ' >
+                <div className='md:hidden flex ' >
                 {/* <Link to="/userProfile" className='relative right-8'>
                 {user? (user.photoURL ? (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full' />) : <img src={profilePic} alt="Profile" className='p-0 h-8 w-8 border-none rounded-full' />
 ) : <FaUser className='p-0 mt-1 mr-1 h-4 w-4 border-none rounded-full' />}
