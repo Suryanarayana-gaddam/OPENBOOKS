@@ -114,6 +114,7 @@ const Cart = () => {
         book._id === bookId ? { ...book, quantity: (book.quantity || 1) + 1 } : book
       )
     );
+    refetch();
   };
 
   const decreaseQuantity = (bookId) => {
@@ -122,6 +123,7 @@ const Cart = () => {
         book._id === bookId && (book.quantity || 1) > 1 ? { ...book, quantity: (book.quantity || 1) - 1 } : book
       )
     );
+    refetch();
   };
 
   const handleOrderSubmit = (event) => {
