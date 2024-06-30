@@ -1,9 +1,9 @@
 .imglogo{
-    background-image: url("../assets/Open Books.jpg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    border: 1px solid red;
-    border-radius: 5px;
-    width: 50px;
-    
-  }
+  background-image: url("../assets/Open Books.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1px solid red;
+  border-radius: 5px;
+  width: 100px;
+
+}
