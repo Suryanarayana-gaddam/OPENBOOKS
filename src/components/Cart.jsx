@@ -7,17 +7,16 @@ import BookCards from './BookCards';
 
 const Cart = () => {
   const [cartBooks, setCartBooks] = useState([]);
-  const user = useContext(AuthContext);
   const [books,setBooks] = useState([]);
   const [userId,setUserId] = useState(null);
   const [userName,setUserName] = useState(null);
-
+  
   const token = localStorage.getItem('access-token');
   const headLine = "My Cart";
-  
   const [cart,refetch] = useCart();
-
-  const userEmail = user?.user?.email;
+  
+  const user = useContext(AuthContext);
+  const userEmail = user?.email;
 
   useEffect(() => {
 
