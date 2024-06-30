@@ -65,10 +65,6 @@ const Cart = () => {
       console.error("Error:", error);
     });
   })
-  .catch(error => {
-    console.error("Error:", error);
-  });
-
   GetCart();
   })
 
