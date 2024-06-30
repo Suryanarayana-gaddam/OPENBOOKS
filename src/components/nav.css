@@ -1,8 +1,7 @@
 .imglogo{
   background-image: url("../assets/Open Books.jpg");
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   border: 1px solid rgb(3, 80, 98);
   border-radius: 5px;
-
 }
