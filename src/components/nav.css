@@ -2,7 +2,8 @@
   background-image: url("../assets/Open Books.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  border: 1px solid rgb(10, 142, 163);
+  border: 1px solid rgb(3, 80, 98);
   border-radius: 5px;
+  width: 100%;
 
 }
