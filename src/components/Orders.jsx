@@ -92,7 +92,7 @@ useEffect(() => {
                   <p className="text-sm text-gray-600">Price: ₹{order.bookPrice}</p>
                   <p className="text-sm text-gray-600">Quantity: {order.quantity}</p>
                   <p className="text-sm text-gray-600">Total Price: ₹{order.totalPrice}</p>
-                  <p className="text-sm text-gray-600">Book URL: <a href={order.bookPDFURL} target='_blank'>{order.bookPDFURL}</a></p>
+                  <p className="text-sm text-gray-600">Book URL: <a href={order.bookPDFURL} target='_blank'><span className='text-blue-500'>{order.bookPDFURL}</span></a></p>
 
                 </div>
               </div>
