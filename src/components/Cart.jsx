@@ -28,65 +28,64 @@ const Cart = () => {
         authorization: `Bearer ${token}`
       },
     })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(error => {
-            console.error("Error fetching user data:", error);
-          });
-        }
-        return res.json(); 
-      })
-      .then(userData => {
-
-        setUserId(userData._id);
-        setUserName(userData.username);
-        
-  }, [user,token]);
-
-  const GetCart = (() => {
-    fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/cart`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`
-      },
-    })
     .then(res => {
       if (!res.ok) {
         return res.json().then(error => {
-          console.error("Error fetching cart books:", error);
+          console.error("Error fetching user data:", error);
         });
       }
-      return res.json();
+      return res.json(); 
     })
-    .then(data => setCartBooks(data.reverse()))
-    
-    .catch(error => {
-      console.error("Error:", error);
-    });
-  })
-  GetCart();
-  })
+    .then(userData => {
+      setUserId(userData._id);
+      setUserName(userData.username);
+    })
 
-  const fetchBooks = async () => {
-    try {
-      const response = await fetch("https://book-store-api-theta.vercel.app/all-books", {
-        headers: {
-          authorization: `Bearer ${token}`
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch("https://book-store-api-theta.vercel.app/all-books", {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Error fetching books');
         }
-      });
-      if (!response.ok) {
-        throw new Error('Error fetching books');
+        const data = await response.json();
+        const shuffledBooks = data.sort(() => 0.5 - Math.random());
+        setBooks(shuffledBooks.slice(0, 10));
+      } catch (error) {
+        console.error('Error:', error.message);
       }
-      const data = await response.json();
-      const shuffledBooks = data.sort(() => 0.5 - Math.random());
-      setBooks(shuffledBooks.slice(0, 10));
-    } catch (error) {
-      console.error('Error:', error.message);
-    }
-  };
+    };
+  
+    fetchBooks();
 
-  fetchBooks();
+    const GetCart = (() => {
+      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/cart`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`
+        },
+      })
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(error => {
+            console.error("Error fetching cart books:", error);
+          });
+        }
+        return res.json();
+      })
+      .then(data => setCartBooks(data.reverse()))
+      
+      .catch(error => {
+        console.error("Error:", error);
+      });
+    })
+    GetCart();
+
+  }, [user,token]);
 
   const handleRemoveFromCart = (event,book) => {
     event.preventDefault();
@@ -184,7 +183,7 @@ const Cart = () => {
         {cartBooks.length === 0 ? (
           <div className='lg:px-14'>
           <p className='px-4 lg:px-24 text-1xl text-center my-3'>Your Cart was Empty!</p>
-          <Link to="/orders"><button className='text-white bg-blue-500 border-solid mt-5 text-center'>Go To Orders</button></Link>
+          <Link to="/orders"><button className='text-white bg-blue-500 border-solid mt-5 text-center p-3'>Go To Orders</button></Link>
           <h1 className='text-center text-3xl relative top-8'>Suggested Books </h1>
           <BookCards books={books} user={user.user} className=''/>
         </div> 
