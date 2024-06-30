@@ -16,7 +16,9 @@ const Cart = () => {
   const [cart,refetch] = useCart();
   
   const user = useContext(AuthContext);
-  const userEmail = user?.user?.email;
+  const userEmail = user?.email;
+  console.log("User :",userEmail)
+  console.log("User? :",user?.userEmail)
 
   useEffect(() => {
 
