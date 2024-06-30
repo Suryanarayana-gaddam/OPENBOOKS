@@ -18,7 +18,6 @@ const Cart = () => {
   const user = useContext(AuthContext);
   const userEmail = user?.user?.email;
   console.log("User :",userEmail)
-  console.log("User? :",user?.userEmail)
 
   useEffect(() => {
 
