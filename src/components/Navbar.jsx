@@ -117,8 +117,8 @@ return (
         <nav className={`py-2 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
             <div className='flex justify-between items-center text-base gap-8'>
                 {/* logo */} 
-                <Link to="/" ><div className={`imglogo text-transparent relative left-6 ${isSticky ? " w-36 h-12 " : " w-48 h-20 "}`}>Logo</div></Link>
-                <p className='fixed bottom-0 right-0 mr-2 mb-1 '>{timeDate}</p>
+                <Link to="/" ><div className={`imglogo text-transparent relative left-6 ${isSticky ? "w-full h-12" : "w-full h-20"}`}>Logo</div></Link>
+                
                 {/*nav items for large device */}
                 <ul className='md:flex space-x-12 hidden' onClick={CloseMenu}>
                     {
@@ -126,6 +126,7 @@ return (
                     }
                 </ul>
  
+                    <p className='fixed bottom-0 right-0 mr-2 mb-1 '>{timeDate}</p>
                 {/* btn for lg devices */}
                 <div className='space-x-5  hidden lg:flex sm:flex items-center mr-0'>
                     {/* Use the img tag to display the user's photo */}
