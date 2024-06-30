@@ -181,9 +181,9 @@ const Cart = () => {
           <h2 className='text-3xl text-center text-bold text-black my-5'>{headLine}</h2>
       <div>
         {cartBooks.length === 0 ? (
-          <div className='lg:px-14'>
+          <div className='lg:px-14 text-center'>
           <p className='px-4 lg:px-24 text-1xl text-center my-3'>Your Cart was Empty!</p>
-          <Link to="/orders"><button className='text-white bg-blue-500 border-solid mt-5 text-center p-3'>Go To Orders</button></Link>
+          <Link to="/orders" className='text-center'><button className='text-white bg-blue-500 border-solid mt-5 p-3'>Go To Orders</button></Link>
           <h1 className='text-center text-3xl relative top-8'>Suggested Books </h1>
           <BookCards books={books} user={user.user} className=''/>
         </div> 
