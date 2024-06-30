@@ -87,7 +87,7 @@ const Cart = () => {
     })
     GetCart();
 
-  }, [user,token]);
+  }, [user,token,userName,userId]);
 
   const handleRemoveFromCart = (event,book) => {
     event.preventDefault();
