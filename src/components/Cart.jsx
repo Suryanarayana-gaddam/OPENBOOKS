@@ -37,6 +37,8 @@ const Cart = () => {
       return res.json(); 
     })
     .then(userData => {
+      console.log("user:",userData)
+      console.log("userId:",userData._id)
       setUserId(userData._id);
       setUserName(userData.username);
     })
