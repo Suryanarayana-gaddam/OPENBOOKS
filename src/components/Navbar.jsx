@@ -4,7 +4,7 @@ import { FaBarsStaggered, FaBookAtlas, FaUser, FaXmark} from "react-icons/fa6"
 import { AuthContext } from '../context/AuthProvider';
 import Logout from './Logout';
 import useCart from '../../hooks/useCart';
-import "../home/BannerCard.css"
+import "../nav.css"
 const Navbar = () => {
     const [activeItem, setActiveItem] = useState('');
     const [isMenuOpen,setIsMenuOpen] = useState(false);
