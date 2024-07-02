@@ -35,13 +35,17 @@ const Wishlist = () => {
   const headLine = "My Wishlist";
 
   const [userData,refetch] = useUser();
-  const [userId,setUserId] = useState()
-  console.log("User Hook User Id : ",userData._id)
-  setUserId(userData._id)
-  setCartBooks(userData.cart)
-  console.log("User Cart :",userData.cart)
+  const [userId,setUserId] = useState();
+  
   useEffect(() => {
     const userEmail = user?.user?.email;
+
+    if (userData) {
+      console.log("User Hook User Id : ",userData._id)
+      setUserId(userData._id)
+      setCartBooks(userData.cart)
+      console.log("User Cart :",userData.cart)
+    }
     // Fetch user data by email
     fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
         method: "GET",
@@ -111,7 +115,7 @@ const Wishlist = () => {
           console.error("Error:", error);
           // Handle unexpected errors
         });
-  }, [user]);
+  }, [user,userData]);
 
   const handleWishlist = (event,book) => {
     event.preventDefault();
