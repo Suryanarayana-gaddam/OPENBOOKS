@@ -18,7 +18,6 @@ import {Link} from "react-router-dom";
 import {FaCartShopping, FaHeart, FaLeftLong} from 'react-icons/fa6';
 
 import { AuthContext } from '../context/AuthProvider';
-import useCart from '../../hooks/useCart';
 //import BookCards from './BookCards';
 import useUser from '../../hooks/useUser'
 
@@ -40,9 +39,13 @@ const Wishlist = () => {
   useEffect(() => {
 
     if (userData) {
+
       setUserId(userData._id)
       setCartBooks(userData.cart)
       setWishlistBooks(userData.wishlist)
+      console.log("User Hook User Id : ", userData ? userData._id : null);
+      console.log("User Cart :", userData ? userData.cart : []);
+      console.log("User Wishlist :", userData ? userData.wishlist : []);
     }
     
   }, [user,userData]);
