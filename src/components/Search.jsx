@@ -1,7 +1,33 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../context/AuthProvider';
 
-const Search = ( ) => {
+const Search = ( {searchBooks}) => {
+    const searchParams = new URLSearchParams(location.search);
+    const query = searchParams.get('query');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchBooks, setSearchBooks] = useState([]);
+    const user = useContext(AuthContext);
+
+    const token = localStorage.getItem('access-token');
+
+    useEffect(( )=> {
+        if (query) {
+            fetch(`https://book-store-api-theta.vercel.app/all-books/searchedbooks?query=${encodeURIComponent(query)}`, {
+              headers : {
+                  authorization: `Bearer ${token}`
+              }
+          })
+              .then(res => res.json())
+              .then(data => {
+                setSearchBooks(data);
+                
+              })
+              .catch(error => {
+                console.error('Error fetching searched books:', error);
+              });
+          }
+    },[user,query])
 
   return (
     <div className='w-full text-center'>

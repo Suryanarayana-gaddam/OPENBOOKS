@@ -6,7 +6,6 @@ import { AuthContext } from '../context/AuthProvider';
 
 import { Card } from 'flowbite-react';
 import useCart from '../../hooks/useCart';
-import Search from './Search';
 
 const SearchedBooks = () => {
   const location = useLocation();
@@ -344,7 +343,22 @@ const handleBuyCart = (event,book) => {
   return (
       <div className="my-16 px-4 lg:px-24">
         <br /><br />
-        <Search searchQuery={searchQuery}/>
+        <div className=' flex'>
+            <input
+              type="search" name='search-input'
+              placeholder='Search a book'
+              className='py-2 px-2 rounded-s-sm outline-none lg:w-5/6 sm:w-4 text-center ml-10'
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+            />
+            <Link to={`/books/searchedbooks?query=${encodeURIComponent(searchQuery)}`}>
+              <button
+                className='bg-blue-700 px-6 py-2 text-white font-medium hover:bg-black transition-all ease-in duration-200'
+              >
+                Search
+              </button>
+            </Link>            
+          </div>
           <br />
           <h2 className="text-3xl text-center text-bold text-black ">
           Searched Books
