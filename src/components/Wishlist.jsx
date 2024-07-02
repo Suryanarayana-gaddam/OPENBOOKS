@@ -171,7 +171,7 @@ const Wishlist = () => {
               >
                   
                   {
-                      wishlistBooks.map(book => <SwiperSlide key={book._id}>
+                      wishlistBooks && wishlistBooks.map(book => <SwiperSlide key={book._id}>
                         <Link to={`/book/${book._id}`}>
                               <div className='relative'>
                                   <img src={book.imageURL} alt={book.bookTitle} className=' object-cover w-full h-full'/>
