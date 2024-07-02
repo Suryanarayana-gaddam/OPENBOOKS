@@ -54,6 +54,7 @@ const Login = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        setIsLoading(false)
         setError(errorMessage);
       });
      
