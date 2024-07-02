@@ -196,11 +196,8 @@ return (
                             ))}
                         </div>
                 </div>
-            
             </div> 
-                    
                 {/* MENU BAR FOR THE MOBILE DEVICES */}
-
             {/* nav for sm devises */}
             <div className={`space-y-4 px-4 mt-16 py-7 bg-blue-700 text-white ${ isMenuOpen ? "block fixed top-0 right-0 left-0" : "hidden"}`}>
                 {
