@@ -38,10 +38,10 @@ const Wishlist = () => {
   const [userId,setUserId] = useState()
   console.log("User Hook User Id : ",userData._id)
   setUserId(userData._id)
+  setCartBooks(userData.cart)
+  console.log("User Cart :",userData.cart)
   useEffect(() => {
     const userEmail = user?.user?.email;
-    setCartBooks(userData.cart)
-    console.log("User Cart :",userData.cart)
     // Fetch user data by email
     fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
         method: "GET",
