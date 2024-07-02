@@ -76,7 +76,6 @@ const useCart = () => {
         queryFn: fetchUserData,
         enabled: !!user,
     });
-    console.log("User Data from hook:",userData)
     return [userData, refetch];
 };
 

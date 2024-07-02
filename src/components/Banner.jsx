@@ -4,12 +4,10 @@
 import { useState } from 'react';
 import BannerCard from '../home/BannerCard';
 import { Link } from 'react-router-dom';
-import useUser from '../../hooks/useUser'
 const Banner = () => {
   const [searchQuery, setSearchQuery] = useState('');
   
-  const [Userdata,refetch] = useUser();
-  console.log("User Hook : ",Userdata)
+
 
   return (
     <div className='px-4 lg:px-24 bg-teal-100 flex items-center'>

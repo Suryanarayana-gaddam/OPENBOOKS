@@ -20,6 +20,8 @@ import {FaCartShopping, FaHeart, FaLeftLong} from 'react-icons/fa6';
 import { AuthContext } from '../context/AuthProvider';
 import useCart from '../../hooks/useCart';
 //import BookCards from './BookCards';
+import useUser from '../../hooks/useUser'
+
 
 const token = localStorage.getItem('access-token');
 
@@ -33,6 +35,10 @@ const Wishlist = () => {
   const user = useContext(AuthContext);
   const headLine = "My Wishlist";
 
+  const [Userdata,refetch] = useUser();
+  const [userId,serUserId] = useState()
+  console.log("User Hook User Id : ",Userdata._id)
+  setUserId(Userdata._id)
   useEffect(() => {
     const userEmail = user?.user?.email;
     // Fetch user data by email
@@ -139,7 +145,7 @@ const Wishlist = () => {
         //console.log("User Data:", userData);
   
         // Get user ID from userData
-        const userId = userData._id;
+        // const userId = userData._id;
         const bookId = book._id;
         //delete book from the wish list
         fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/remove/${bookId}`, {
