@@ -174,7 +174,7 @@ return (
                     </div>
                 </div>
 
-                <div className='md:hidden absolute top-6 left-1 w-full mr-0 pr-0'>
+                <div className='md:hidden absolute top-6 left-2 w-full mr-0 pr-0'>
                     <button onClick={toggleMenu} className="text-black focus:outline-none">
                         {isMenuOpen ? <FaXmark className='h-5 w-5 text-black' /> : <FaBarsStaggered className='h-5 w-5 text-black text-3xl' />}
                     </button>
@@ -184,7 +184,7 @@ return (
                 {user? (user.photoURL ? (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full' />) : <img src={profilePic} alt="Profile" className='p-0 h-8 w-8 border-none rounded-full' />
 ) : <FaUser className='p-0 mt-1 mr-1 h-4 w-4 border-none rounded-full' />}
                 </Link> */}
-                    <button onClick={toggleUserMenu} className="text-black focus:outline-none relative right-2">
+                    <button onClick={toggleUserMenu} className="text-black focus:outline-none relative right-1">
                     {user? (user.photoURL ? (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full' />) : <img src={profilePic} alt="Profile" className='p-0 h-8 w-8 border-none rounded-full' />
 ) : <FaUser className='p-0 mt-1 mr-1 h-4 w-4 border-none rounded-full' />}
                     </button>
