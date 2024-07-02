@@ -30,17 +30,18 @@ const Wishlist = () => {
   const [wishlistBooks, setWishlistBooks] = useState([]);
   const [cartBooks, setCartBooks] = useState([]);
 
-  const [cart,refetch] = useCart();
 
   const user = useContext(AuthContext);
   const headLine = "My Wishlist";
 
-  const [Userdata,refetch] = useUser();
-  const [userId,serUserId] = useState()
-  console.log("User Hook User Id : ",Userdata._id)
-  setUserId(Userdata._id)
+  const [userData,refetch] = useUser();
+  const [userId,setUserId] = useState()
+  console.log("User Hook User Id : ",userData._id)
+  setUserId(userData._id)
   useEffect(() => {
     const userEmail = user?.user?.email;
+    setCartBooks(userData.cart)
+    console.log("User Cart :",userData.cart)
     // Fetch user data by email
     fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
         method: "GET",
@@ -216,8 +217,7 @@ const Wishlist = () => {
           body: JSON.stringify(book) // Stringify the book object before sending
         }).then(res => res.json()).then(data => {
           //alert("Book Uploaded to Cart Successfully!!!");
-          setCartBooks([...cartBooks, book]);
-          refetch()
+          
         })
         .catch(error => {
           console.error("Error:", error);// Handle unexpected errors
