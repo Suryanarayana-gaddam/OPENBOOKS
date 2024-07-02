@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Search = ( {searchQuery} ) => {
-    const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <div className='w-full text-center'>
