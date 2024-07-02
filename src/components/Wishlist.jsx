@@ -47,7 +47,6 @@ const Wishlist = () => {
     
   }, [user,userData]);
 
-  const userEmail = user.user.email;
   const handleWishlist = (event,book) => {
     event.preventDefault();
     if (!book) {
