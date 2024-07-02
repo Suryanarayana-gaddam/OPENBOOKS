@@ -389,7 +389,7 @@ const goToNextPage = () => {
         All Books Here
       </h2><br />
       {showSearchBox && (
-        <Search />
+        <Search searchQuery={searchQuery}/>
       )}
 
       {/* Cards */}

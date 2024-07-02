@@ -344,7 +344,7 @@ const handleBuyCart = (event,book) => {
   return (
       <div className="my-16 px-4 lg:px-24">
         <br /><br />
-        <Search/>
+        <Search searchQuery={searchQuery}/>
           <br />
           <h2 className="text-3xl text-center text-bold text-black ">
           Searched Books
