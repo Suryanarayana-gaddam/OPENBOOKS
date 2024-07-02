@@ -20,7 +20,7 @@ const Banner = () => {
               </p>
               <div>
             <input
-              type="text" name='search-input'
+              type="search" name='search-input'
               placeholder='Search a book'
               className='py-2 px-2 rounded-s-sm outline-none'
               value={searchQuery}
