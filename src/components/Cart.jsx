@@ -197,13 +197,13 @@ const Cart = () => {
                 className="bg-white rounded-lg overflow-hidden shadow-md mb-4"
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="flex items-center justify-evenly lg:px-24 sm:px-52">
+                <div className="lg:flex items-center justify-evenly lg:px-24 sm:px-52">
                 <div>
                 <Link to={`/book/${book._id}`}> 
                 <img src={book.imageURL} alt={book.bookTitle} className=" w-32 object-cover cursor-pointer" />
               </Link>
                 </div>
-                  <div className="flex-grow px-4 ml-32">
+                  <div className="flex-grow px-4 lg:ml-32">
                     <h2 className="lg:text-lg font-bold text-gray-800">{book.bookTitle}</h2>
                     <p className="text-sm text-gray-600">Author: {book.authorName}</p>
                     <div className="flex items-center space-x-2">

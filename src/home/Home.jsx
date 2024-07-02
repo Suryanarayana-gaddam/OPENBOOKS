@@ -33,7 +33,7 @@ if ("geolocation" in navigator) {
 }
 
   return (
-    <div>
+    <div className='overflow-x-hidden'>
       <Banner/>
       <BestSellerBooks/> 
       <FavBook/>
