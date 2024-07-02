@@ -131,7 +131,7 @@ const Wishlist = () => {
       }
   };
 
-    if(wishlistBooks.length === 0){
+    if(wishlistBooks && wishlistBooks.length === 0){
       return (
         <div className='my-16 px-4 lg:px-24'>
           <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
