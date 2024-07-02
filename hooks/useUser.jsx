@@ -48,10 +48,10 @@ import { useQuery } from "@tanstack/react-query";
 const useCart = () => {
     const user = useContext(AuthContext);
     const token = localStorage.getItem("access-token");
-
+    const userEmail = user?.user?.email || user?.email ;
     const fetchUserData = async () => {
         try {
-            const response = await fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user?.user?.email}`, {
+            const response = await fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
