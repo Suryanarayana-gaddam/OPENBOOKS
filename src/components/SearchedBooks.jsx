@@ -9,13 +9,13 @@ import { Card } from 'flowbite-react';
 import useUser from '../../hooks/useUser';
 
 const SearchedBooks = () => {
+  const [userData,refetch] = useUser();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('query');
   const [searchQuery, setSearchQuery] = useState('');
   const [userId, setUserId] = useState(null);
 
-  const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 10;
   const maxPageNumbers = 10; 
@@ -28,7 +28,6 @@ const SearchedBooks = () => {
 
   const token = localStorage.getItem('access-token');
 
-  const [userData,refetch] = useUser();
 
 
   useEffect(() => {
