@@ -27,6 +27,7 @@ const BookCards = ({headLine,books, user}) => {
       setCartBooks(userData.cart)
       setWishlistBooks(userData.wishlist.reverse())
     }
+    refetch()
   }, [user,userData]);
   
     const isBookInWishlist = book => {

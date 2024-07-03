@@ -3,24 +3,18 @@ import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { FaCartShopping, FaHeart } from "react-icons/fa6";
 import { AuthContext } from "../context/AuthProvider";
-import useCart from "../../hooks/useCart";
+import useUser from "../../hooks/useUser";
 
 const Shop = ({showSearchBox}) => {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 10;
   const maxPageNumbers = 10; 
-
-  const [cart,refetch] = useCart();
+  const [userId,setUserId] = useState();
+  const [userData,refetch] = useUser();
 
   const [searchQuery, setSearchQuery] = useState('');
 
-
-  // useEffect(() => {
-    // fetch("http://localhost:5000/all-books")
-    //   .then((res) => res.json())
-    //   .then((data) => setBooks(data));
-  // }, []);
   const user = useContext(AuthContext);
     
     const [wishlistBooks, setWishlistBooks] = useState([]);
@@ -28,8 +22,6 @@ const Shop = ({showSearchBox}) => {
     const token = localStorage.getItem('access-token');
 
   useEffect(() => {
-    const userEmail = user?.user?.email;
-
     fetch("https://book-store-api-theta.vercel.app/all-books", {
       headers : {
           authorization: `Bearer ${token}`
@@ -37,76 +29,13 @@ const Shop = ({showSearchBox}) => {
   })
     .then((res) => res.json())
     .then((data) => setBooks(data));
-
-    // Fetch user data by email
-    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json", // Set content type header explicitly
-          authorization: `Bearer ${token}`
-        },
-      })
-        .then(res => {
-          if (!res.ok) {
-            return res.json().then(error => {
-              console.error("Error fetching user data:", error);
-              // Handle the error (e.g., display a message to the user)
-            });
-          }
-          return res.json(); // Parse valid JSON response
-        })
-        .then(userData => {
-          // Get user ID from userData
-          const userId = userData._id;
-          fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/wishlist`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              authorization: `Bearer ${token}`
-            },
-          })
-          .then(res => {
-            if (!res.ok) {
-              return res.json().then(error => {
-                console.error("Error fetching wishlist books:", error);
-                // Handle the error
-              });
-            }
-            return res.json();
-          })
-          .then(data => setWishlistBooks(data))
-          .catch(error => {
-            console.error("Error:", error);
-            // Handle unexpected errors
-          });
-
-          fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/cart`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`
-          },
-        })
-        .then(res => {
-          if (!res.ok) {
-            return res.json().then(error => {
-              console.error("Error fetching cart books:", error);
-              // Handle the error
-            });
-          }
-          return res.json();
-        })
-        .then(data => setCartBooks(data))
-        .catch(error => {
-          console.error("Error:", error);
-          // Handle unexpected errors
-        });
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        // Handle unexpected errors
-      }); 
-    }, [user,currentPage]);
+    if (userData && userData.wishlist && userData.cart ) {
+      setUserId(userData._id)
+      setCartBooks(userData.cart)
+      setWishlistBooks(userData.wishlist.reverse())
+    }
+    refetch()
+    }, [user,userData,currentPage,token]);
   const isBookInWishlist = book => {
     return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
   };
@@ -114,108 +43,65 @@ const Shop = ({showSearchBox}) => {
     return cartBooks.some(cartBook => cartBook._id === book._id);
   };
 
-      const handleWishlist = (event,book) => {
-        event.preventDefault();
-        const userEmail = user?.user?.email;
-        if (!book) {
-            console.error("Book object is undefined");
-            return;
-        }
-        // Fetch user data by email
-        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json", // Set content type header explicitly
-            authorization: `Bearer ${token}`
-          },
-        })
-          .then(res => {
-            if (!res.ok) {
-              return res.json().then(error => {
-                console.error("Error fetching user data:", error);
-                // Handle the error (e.g., display a message to the user)
-              });
-            }
-            return res.json(); // Parse valid JSON response
-          })
-          .then(userData => {      
-            // // Get user ID from userData
-            const userId = userData._id;         
-        const bookId = book._id;
-        //console.log(bookId);
-        if (!isBookInWishlist(book)) {
-          // Add book to the wishlist
-          fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/add`,{
-            method:"POST",
-            headers:{
-              "Content-type": "application/json",
-              authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(book) // Stringify the book object before sending
-          }).then(res => res.json()).then(data => {
-            //alert("Book Uploaded to wishlist Successfully!!!");
-            setWishlistBooks([...wishlistBooks, book]); // Update wishlistBooks state
-          })
-          .catch(error => {
-            console.error("Error:", error);
-            // Handle unexpected errors
-          });
-          
-        } else {
-            // Remove book from wishlist
-            //console.log(bookId);
-           fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/remove/${bookId}`, {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json",
-              authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify({bookId: book._id}),
-          })
-            .then(res => res.json())
-            .then(data => {
-              //console.log(data);
-              //alert("Book removed from wishlist successfully!");
-               // Update wishlistBooks state by filtering out the removed book
-              setWishlistBooks(wishlistBooks.filter(wishlistBook => wishlistBook._id !== book._id));
-            })
-            .catch(error => {
-              console.error("Error:", error);
-              // Handle unexpected errors
-            });
-        }
+  const handleWishlist = (event,book) => {
+    event.preventDefault();
+    if (!book) {
+        console.error("Book object is undefined");
+        return;
+    }
+    const bookId = book._id;
+    //console.log(bookId);
+    if (!isBookInWishlist(book)) {
+      // Add book to the wishlist
+      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/add`,{
+        method:"POST",
+        headers:{
+          "Content-type": "application/json",
+          authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(book) // Stringify the book object before sending
+      }).then(res => res.json()).then(data => {
+        //alert("Book Uploaded to wishlist Successfully!!!");
+        setWishlistBooks([...wishlistBooks, book]); // Update wishlistBooks state
+        refetch()
       })
       .catch(error => {
         console.error("Error:", error);
         // Handle unexpected errors
       });
+      
+    } else {
+        // Remove book from wishlist
+        //console.log(bookId);
+        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/remove/${bookId}`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({bookId: book._id}),
+      })
+      .then(res => res.json())
+      .then(data => {
+        //console.log(data);
+        //alert("Book removed from wishlist successfully!");
+          // Update wishlistBooks state by filtering out the removed book
+        setWishlistBooks(wishlistBooks.filter(wishlistBook => wishlistBook._id !== book._id));
+        refetch()
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        // Handle unexpected errors
+      });
+    }
   };
 
   const handleCart = (event,book) => {
     event.preventDefault();
-    const userEmail = user?.user?.email;
     if (!book) {
         console.error("Book object is undefined");
         return;
     }
-    // Fetch user data by email
-    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json", // Set content type header explicitly
-        authorization: `Bearer ${token}`
-      },
-    })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(error => {
-            console.error("Error fetching user data:", error);// Handle the error (e.g., display a message to the user)
-          });
-        }
-        return res.json(); // Parse valid JSON response
-      })
-      .then(userData => {      
-        const userId = userData._id; // Get user ID from userData        
     const bookId = book._id;
     //console.log(bookId);
     if (!isBookInCart(book)) {
@@ -247,93 +133,45 @@ const Shop = ({showSearchBox}) => {
         },
         body: JSON.stringify({bookId: book._id}),
       })
-        .then(res => res.json())
-        .then(data => {
-          //console.log(data);
-          //alert("Book removed from Cart successfully!");
-          setCartBooks(cartBooks.filter(cartBook => cartBook._id !== book._id));
-          refetch()
-        })
-        .catch(error => {
-          console.error("Error:", error);// Handle unexpected errors
-        });
+      .then(res => res.json())
+      .then(data => {
+        //console.log(data);
+        //alert("Book removed from Cart successfully!");
+        setCartBooks(cartBooks.filter(cartBook => cartBook._id !== book._id));
+        refetch()
+      })
+      .catch(error => {
+        console.error("Error:", error);// Handle unexpected errors
+      });
     }
-  })
-  .catch(error => {
-    console.error("Error:", error);// Handle unexpected errors
-  });
-};
-// handling buy cart
-const handleBuyCart = (event,book) => {
-  event.preventDefault();
-  const userEmail = user?.user?.email;
-  if (!book) {
-      console.error("Book object is undefined");
-      return;
-  }
-  // Fetch user data by email
-  fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json", // Set content type header explicitly
-      authorization: `Bearer ${token}`
-    },
-  })
-    .then(res => {
-      if (!res.ok) {
-        return res.json().then(error => {
-          console.error("Error fetching user data:", error);// Handle the error (e.g., display a message to the user)
-        });
-      }
-      return res.json(); // Parse valid JSON response
-    })
-    .then(userData => {      
-      const userId = userData._id; // Get user ID from userData        
-  const bookId = book._id;
-  //console.log(bookId);
-  if (!isBookInCart(book)) {
-    // Add book to the wishlist
-    fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/add`,{
-      method:"POST",
-      headers:{
-        "Content-type": "application/json",
-        authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(book) // Stringify the book object before sending
-    }).then(res => res.json()).then(data => {
-      //alert("Book Uploaded to Cart Successfully!!!");
-      setCartBooks([...cartBooks, book]);
-      refetch()
-    })
-    .catch(error => {
-      console.error("Error:", error);// Handle unexpected errors
-    });
-    
-  // } else {
-  //     // Remove book from cart
-  //     console.log(bookId);
-  //    fetch(`http://localhost:5000/user/${userId}/cart/remove/${bookId}`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-type": "application/json",
-  //     },
-  //     body: JSON.stringify({bookId: book._id}),
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       console.log(data);
-  //       alert("Book removed from Cart successfully!");
-  //       setCartBooks(cartBooks.filter(cartBook => cartBook._id !== book._id));
-  //     })
-  //     .catch(error => {
-  //       console.error("Error:", error);// Handle unexpected errors
-  //     });
-  }
-})
-.catch(error => {
-  console.error("Error:", error);// Handle unexpected errors
-});
-};
+  };
+
+  const handleBuyCart = (event,book) => {
+    event.preventDefault();
+    if (!book) {
+        console.error("Book object is undefined");
+        return;
+    }
+    if (!isBookInCart(book)) {
+      // Add book to the wishlist
+      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/add`,{
+        method:"POST",
+        headers:{
+          "Content-type": "application/json",
+          authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(book) // Stringify the book object before sending
+      }).then(res => res.json()).then(data => {
+        //alert("Book Uploaded to Cart Successfully!!!");
+        setCartBooks([...cartBooks, book]);
+        refetch()
+      })
+      .catch(error => {
+        console.error("Error:", error);// Handle unexpected errors
+      });
+    }
+  };
+
   // Logic to paginate books
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
@@ -409,7 +247,7 @@ const goToNextPage = () => {
       {/* Cards */}
       <div className="mt-12">
         <div className="grid gap-4 lg:w-[1100px] sm:w-[220px] md:w-[800px] my-10 lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-4 grid-cols-2 p-0">
-          {currentBooks.map((book) => (
+          { currentBooks && currentBooks.map((book) => (
             <Card key={book._id} className="p-0 m-0 ">
               <Link to={`/book/${book._id}`}>
                 {/* <img

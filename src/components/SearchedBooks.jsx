@@ -9,6 +9,7 @@ import { Card } from 'flowbite-react';
 import useUser from '../../hooks/useUser';
 
 const SearchedBooks = () => {
+  const user = useContext(AuthContext);
   const [userData,refetch] = useUser();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -21,7 +22,6 @@ const SearchedBooks = () => {
   const maxPageNumbers = 10; 
 
   const [searchedBooks, setSearchedBooks] = useState([]);
-  const user = useContext(AuthContext);
     
   const [wishlistBooks, setWishlistBooks] = useState([]);
   const [cartBooks, setCartBooks] = useState([]);
@@ -38,6 +38,7 @@ const SearchedBooks = () => {
       setCartBooks(userData.cart)
       setWishlistBooks(userData.wishlist)
     }
+    refetch()
 
     if (query) {
       fetch(`https://book-store-api-theta.vercel.app/all-books/searchedbooks?query=${encodeURIComponent(query)}`, {
@@ -54,7 +55,6 @@ const SearchedBooks = () => {
           console.error('Error fetching searched books:', error);
         });
     }
-
   }, [query,user,userData,currentPage,token]);
 
   const isBookInWishlist = book => {

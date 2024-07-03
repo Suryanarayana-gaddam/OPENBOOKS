@@ -47,7 +47,7 @@ const Wishlist = () => {
     }
     refetch()
     
-  }, [userData]);
+  }, [userData,user]);
 
   // const handleWishlist = (event,book) => {
   //   event.preventDefault();
