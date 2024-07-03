@@ -9,82 +9,26 @@ import { Pagination } from 'swiper/modules';
 import {Link} from "react-router-dom";
  
 import {FaCartShopping, FaHeart} from 'react-icons/fa6';
-import useCart from '../../hooks/useCart';
 
+import useUser from '../../hooks/useUser'
 
 const BookCards = ({headLine,books, user}) => {
     
     const [wishlistBooks, setWishlistBooks] = useState([]);
     const [cartBooks, setCartBooks] = useState([]);
-    const [cart,refetch] = useCart();
 
     const token = localStorage.getItem('access-token');
-
+    const [userData,refetch] = useUser();
+    const [userId,setUserId] = useState();
   useEffect(() => {
     if (!user) return;
-    const userEmail = user?.email;
-    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-      })
-        .then(res => {
-          if (!res.ok) {
-            return res.json().then(error => {
-              console.error("Error fetching user data:", error);
-            });
-          }
-          return res.json(); 
-        })
-        .then(userData => {
-          const userId = userData._id;
-          fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/wishlist`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              authorization: `Bearer ${token}`,
-            },
-          })
-          .then(res => {
-            if (!res.ok) {
-              return res.json().then(error => {
-                console.error("Error fetching wishlist books:", error);
-              });
-            }
-            return res.json();
-          })
-          .then(data => setWishlistBooks(data))
-          .catch(error => {
-            console.error("Error:", error);
-          });
-
-          fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/cart`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              authorization: `Bearer ${token}`,
-            },
-          })
-          .then(res => {
-            if (!res.ok) {
-              return res.json().then(error => {
-                console.error("Error fetching cart books:", error);
-              });
-            }
-            return res.json();
-          })
-          .then(data =>setCartBooks(data))
-          .catch(error => {
-            console.error("Error:", error);
-          });
-          
-        })
-        .catch(error => {
-          console.error("Error:", error);
-        });
-  }, [user,token]);
+      setUserId(userData._id)
+      setCartBooks(userData.cart)
+      setWishlistBooks(userData.wishlist.reverse())
+      console.log("User Hook User Id : ", userData ? userData._id : null);
+      console.log("User Cart :", userData ? userData.cart : []);
+      console.log("User Wishlist :", userData ? userData.wishlist : []);
+  }, [user,userData]);
   
     const isBookInWishlist = book => {
       return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
@@ -93,137 +37,96 @@ const BookCards = ({headLine,books, user}) => {
       return cartBooks.some(cartBook => cartBook._id === book._id);
     };
 
-      const handleWishlist = (event,book) => {
-        event.preventDefault();
-        const userEmail = user?.email;
-        if (!book) {
-            console.error("Book object is undefined");
-            return;
-        }
-        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json", 
-            authorization: `Bearer ${token}`,
-          },
-        })
-          .then(res => {
-            if (!res.ok) {
-              return res.json().then(error => {
-                console.error("Error fetching user data:", error);
-              });
-            }
-            return res.json();
-          })
-          .then(userData => {      
-            const userId = userData._id;         
-        const bookId = book._id;
-        if (!isBookInWishlist(book)) {
-          fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/add`,{
-            method:"POST",
-            headers:{
-              "Content-type": "application/json",
-              authorization: `Bearer ${token}`,
-              
-            },
-            body: JSON.stringify(book) 
-          }).then(res => res.json()).then(data => {
-            setWishlistBooks([...wishlistBooks, book]);
-          })
-          .catch(error => {
-            console.error("Error:", error);
-          });
+  const handleWishlist = (event,book) => {
+    event.preventDefault();
+    if (!book) {
+        console.error("Book object is undefined");
+        return;
+    }
+    const bookId = book._id;
+    if (!isBookInWishlist(book)) {
+      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/add`,{
+        method:"POST",
+        headers:{
+          "Content-type": "application/json",
+          authorization: `Bearer ${token}`,
           
-        } else {
-           
-           fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/remove/${bookId}`, {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json",
-              authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({bookId: book._id}),
-          })
-            .then(res => res.json())
-            .then(data => {
-              
-              setWishlistBooks(wishlistBooks.filter(wishlistBook => wishlistBook._id !== book._id));
-            })
-            .catch(error => {
-              console.error("Error:", error);
-            });
-        }
+        },
+        body: JSON.stringify(book) 
+      }).then(res => res.json()).then(data => {
+        setWishlistBooks([...wishlistBooks, book]);
+        refetch()
       })
       .catch(error => {
         console.error("Error:", error);
       });
-    };
-      const handleCart = (event,book) => {
-        event.preventDefault();
-        const userEmail = user?.email;
-        if (!book) {
-            console.error("Book object is undefined");
-            return;
-        }
-        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json", 
-            authorization: `Bearer ${token}`,
-          },
-        })
-          .then(res => {
-            if (!res.ok) {
-              return res.json().then(error => {
-                console.error("Error fetching user data:", error);
-              });
-            }
-            return res.json();
-          })
-          .then(userData => {      
-            const userId = userData._id;        
-        const bookId = book._id;
-        if (!isBookInCart(book)) {
-          fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/add`,{
-            method:"POST",
-            headers:{
-              "Content-type": "application/json",
-              authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(book)
-          }).then(res => res.json()).then(data => {
-            setCartBooks([...cartBooks, book]);
-            refetch()
-          })
-          .catch(error => {
-            console.error("Error:", error);
-          });
+      
+    } else {
+        
+        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/remove/${bookId}`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({bookId: book._id}),
+      })
+        .then(res => res.json())
+        .then(data => {
           
-        } else {
-            
-           fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/remove/${bookId}`, {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json",
-              authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({bookId: book._id}),
-          })
-            .then(res => res.json())
-            .then(data => {
-              
-              setCartBooks(cartBooks.filter(cartBook => cartBook._id !== book._id));
-              refetch()
-            })
-            .catch(error => {
-              console.error("Error:", error);
-            });
-        }
+          setWishlistBooks(wishlistBooks.filter(wishlistBook => wishlistBook._id !== book._id));
+          refetch()
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+    }
+  };
+
+  const handleCart = (event,book) => {
+    event.preventDefault();
+    if (!book) {
+        console.error("Book object is undefined");
+        return;
+    }
+    const bookId = book._id;
+    if (!isBookInCart(book)) {
+      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/add`,{
+        method:"POST",
+        headers:{
+          "Content-type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(book)
+      }).then(res => res.json()).then(data => {
+        setCartBooks([...cartBooks, book]);
+        refetch()
       })
       .catch(error => {
         console.error("Error:", error);
       });
-    };
+      
+    } else {
+        
+        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/remove/${bookId}`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({bookId: book._id}),
+      })
+        .then(res => res.json())
+        .then(data => {
+          
+          setCartBooks(cartBooks.filter(cartBook => cartBook._id !== book._id));
+          refetch()
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+    }
+  };
 
   return (
     <div className='my-16 px-4 lg:px-24 '>
