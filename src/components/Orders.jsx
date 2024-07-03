@@ -2,71 +2,54 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import useUser from '../../hooks/useUser'
 
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [userId, setUserId] = useState(null);
   const user = useContext(AuthContext);
   const token = localStorage.getItem('access-token');
+  const [userData,refetch] = useUser();
 
-useEffect(() => {
-    const userEmail = user?.user?.email;
-
-    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json", 
-        authorization: `Bearer ${token}`
-      },
-    })
+  useEffect(() => {
+    if(userData && userData._id){
+      setUserId(userData._id)
+    
+      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/orders`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`
+        },
+      })
       .then(res => {
         if (!res.ok) {
           return res.json().then(error => {
-            console.error("Error fetching user data:", error);
+            console.error("Error fetching orders:", error);
           });
         }
         return res.json();
       })
-      .then(userData => {
-  
-        const userId = userData._id;
-        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/orders`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`
-          },
-        })
-        .then(res => {
-          if (!res.ok) {
-            return res.json().then(error => {
-              console.error("Error fetching orders:", error);
-            });
-          }
-          return res.json();
-        })
-        .then(data => {
-            setOrders(data.reverse());
-
-        })
-        .catch(error => {
-          console.error("Error:", error);
-        });
+      .then(data => {
+          setOrders(data.reverse());
       })
       .catch(error => {
         console.error("Error:", error);
       });
-  }, [user,token]);
+    }
+    refetch()
+  }, [user,userData,token]);
 
   return (
     <div className="container mx-auto px-4 lg:px-24 mt-16">
     <h1 className="text-3xl font-bold text-gray-800 mt-4 md:mt-0">My Orders</h1>
     <div>
-      {orders.length === 0 ? (
+      {orders && orders.length === 0 ? (
         <p className="text-gray-600">You have no orders</p>
       ) : (
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-          {orders.map((order) => (
+          {orders && orders.map((order) => (
             <motion.div
               key={order._id}
               className="bg-white rounded-lg overflow-hidden shadow-md p-4 flex items-center justify-between"
@@ -87,7 +70,9 @@ useEffect(() => {
                       hour: 'numeric',
                       minute: 'numeric',
                       second: 'numeric'
-                    })}</p>                  <p className="text-lg font-bold text-gray-800">{order.bookTitle}</p>
+                    })}
+                    </p>                  
+                  <p className="text-lg font-bold text-gray-800">{order.bookTitle}</p>
                   <p className="text-sm text-gray-600">Author: {order.authorName}</p>
                   <p className="text-sm text-gray-600">Price: ₹{order.bookPrice}</p>
                   <p className="text-sm text-gray-600">Quantity: {order.quantity}</p>

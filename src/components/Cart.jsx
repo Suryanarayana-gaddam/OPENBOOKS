@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { motion } from 'framer-motion'; 
 import { Link } from 'react-router-dom';
-import useCart from '../../hooks/useCart';
+import useUser from '../../hooks/useUser';
 import BookCards from './BookCards';
 
 const Cart = () => {
@@ -13,79 +13,39 @@ const Cart = () => {
   
   const token = localStorage.getItem('access-token');
   const headLine = "My Cart";
-  const [cart,refetch] = useCart();
+  const [userData,refetch] = useUser();
   
   const user = useContext(AuthContext);
-  const userEmail = user?.user?.email;
-  console.log("User :",userEmail)
 
   useEffect(() => {
-
-    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`
-      },
-    })
-    .then(res => {
-      if (!res.ok) {
-        return res.json().then(error => {
-          console.error("Error fetching user data:", error);
-        });
-      }
-      return res.json(); 
-    })
-    .then(userData => {
       setUserId(userData._id);
       setUserName(userData.username);
-    })
 
-    const fetchBooks = async () => {
-      try {
-        const response = await fetch("https://book-store-api-theta.vercel.app/all-books", {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        });
-        if (!response.ok) {
-          throw new Error('Error fetching books');
-        }
-        const data = await response.json();
-        const shuffledBooks = data.sort(() => 0.5 - Math.random());
-        setBooks(shuffledBooks.slice(0, 10));
-      } catch (error) {
-        console.error('Error:', error.message);
-      }
-    };
-  
-    fetchBooks();
-
-    const GetCart = (() => {
-      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/cart`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`
-        },
-      })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(error => {
-            console.error("Error fetching cart books:", error);
+      const fetchBooks = async () => {
+        try {
+          const response = await fetch("https://book-store-api-theta.vercel.app/all-books", {
+            headers: {
+              authorization: `Bearer ${token}`
+            }
           });
+          if (!response.ok) {
+            throw new Error('Error fetching books');
+          }
+          const data = await response.json();
+          const shuffledBooks = data.sort(() => 0.5 - Math.random());
+          setBooks(shuffledBooks.slice(0, 10));
+        } catch (error) {
+          console.error('Error:', error.message);
         }
-        return res.json();
-      })
-      .then(data => setCartBooks(data.reverse()))
-      
-      .catch(error => {
-        console.error("Error:", error);
-      });
-    })
-    GetCart();
+      };
+    
+      fetchBooks();
 
-  }, [user,token,userName,userId]);
+      if(userData && userData.cart){
+      setCartBooks(userData.cart.reverse())
+      }
+      refetch()
+  }, [user,userData,token]);
 
   const handleRemoveFromCart = (event,book) => {
     event.preventDefault();
@@ -182,7 +142,7 @@ const Cart = () => {
     <div className="container mx-auto px-4 mt-16">
           <h2 className='text-3xl text-center text-bold text-black my-5'>{headLine}</h2>
       <div>
-        {cartBooks.length === 0 ? (
+        {cartBooks && cartBooks.length === 0 ? (
           <div className='lg:px-14 text-center'>
           <p className='px-4 lg:px-24 text-1xl text-center my-3'>Your Cart was Empty!</p>
           <Link to="/orders" className='text-center'><button className='text-white bg-blue-500 border-solid mt-5 p-3'>Go To Orders</button></Link>
@@ -191,7 +151,7 @@ const Cart = () => {
         </div> 
         ) : (
           <div className='p-10 mb-5'>
-            {cartBooks.map(book => (
+            {cartBooks && cartBooks.map(book => (
               <motion.div
                 key={book._id}
                 className="bg-white rounded-lg overflow-hidden shadow-md mb-4"

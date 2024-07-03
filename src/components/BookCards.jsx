@@ -26,9 +26,6 @@ const BookCards = ({headLine,books, user}) => {
       setUserId(userData._id)
       setCartBooks(userData.cart)
       setWishlistBooks(userData.wishlist.reverse())
-      console.log("User Hook User Id : ", userData ? userData._id : null);
-      console.log("User Cart :", userData ? userData.cart : []);
-      console.log("User Wishlist :", userData ? userData.wishlist : []);
     }
   }, [user,userData]);
   
@@ -160,10 +157,10 @@ const BookCards = ({headLine,books, user}) => {
             >
                 
                 {
-                    books.map(book => <SwiperSlide key={book._id}>
+                    books && books.map(book => <SwiperSlide key={book._id}>
                        <Link to={`/book/${book._id}`}>
                             <div className='relative'>
-                                <img src={book.imageURL} alt="" className="w-full h-full object-cover"/>
+                                <img src={book.imageURL} alt="" className="object-cover w-full h-full"/>
                                 <button onClick={event => handleCart(event, book)} className={`absolute top-2 right-2  bg-white p-2 rounded-full ${
                                   isBookInCart(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
                                 }`}

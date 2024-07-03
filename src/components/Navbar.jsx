@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaBarsStaggered, FaBookAtlas, FaUser, FaXmark} from "react-icons/fa6"
 import { AuthContext } from '../context/AuthProvider';
 import Logout from './Logout';
-import useCart from '../../hooks/useCart';
+import useUser from '../../hooks/useUser';
 import "./nav.css"
 const Navbar = () => {
     const [activeItem, setActiveItem] = useState('');
@@ -14,7 +14,7 @@ const Navbar = () => {
     const [username, setUsername] = useState(null);
     const [profilePic,setProfilePic] = useState(null)
     const {user} = useContext (AuthContext);
-    const [cart,refetch] = useCart();
+    const [userData,refetch] = useUser();
     const [timeDate,setTimeDate] = useState(null);
     //const TimeAndDate = new Date().toISOString();
     
@@ -45,35 +45,16 @@ const Navbar = () => {
 
     useEffect(() => {
         if (!user) return 
-        const userEmail = user?.email;
+        if(userData && userData.role){
+            {
+                userData.role == "admin" ?
+            (setIsAdmin(true)) : (setIsAdmin(false))
+            }
+            setUsername(userData.username);                    
+            setProfilePic(userData.profilePic);
+        }   
         
-                    fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json", 
-                        authorization: `Bearer ${token}`
-                    },
-                    })
-                .then(res => {
-                    if (!res.ok) {
-                    return res.json().then(error => {
-                        console.error("Error fetching user data:", error);
-                    });
-                    }
-                    return res.json(); 
-                })
-                .then(userData => {
-
-                    {
-                        userData.role == "admin" ?
-                      (setIsAdmin(true)) : (setIsAdmin(false))
-                      }
-                    setUsername(userData.username);                    
-                    setProfilePic(userData.profilePic);
-                })
-            
-        
-                refetch()
+        refetch()
 
         const handleScroll = () => {
             if(window.scrollY > 100){
@@ -88,7 +69,7 @@ const Navbar = () => {
         return() => {
             window.addEventListener("scroll",handleScroll);
         }
-    },[user,token])
+    },[user,userData,token])
     
 
     const navItems = [
@@ -152,7 +133,7 @@ return (
                        <label tabIndex={0} role='button' className="btn btn-ghost btn-circle relative top-4">
                         <div className="indicator">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                        <span className="badge badge-sm indicator-item relative bottom-9 left-4">{cart?.length}</span>
+                        <span className="badge badge-sm indicator-item relative bottom-9 left-4">{userData.cart?.length}</span>
                         </div>
                         </label>
                        </Link>
