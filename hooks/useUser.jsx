@@ -72,7 +72,7 @@ const useUser = () => {
     };
 
     const { refetch, data: userData = {} } = useQuery({
-        queryKey: ['userData', user?.user?.email],
+        queryKey: ['userData', userEmail],
         queryFn: fetchUserData,
         enabled: !!user,
     });
