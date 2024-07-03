@@ -45,7 +45,7 @@ import { useContext } from "react";
 import { AuthContext } from "../src/context/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 
-const useCart = () => {
+const useUser = () => {
     const user = useContext(AuthContext);
     const token = localStorage.getItem("access-token");
     const userEmail = user?.user?.email || user?.email ;
@@ -79,4 +79,4 @@ const useCart = () => {
     return [userData, refetch];
 };
 
-export default useCart;
+export default useUser;
