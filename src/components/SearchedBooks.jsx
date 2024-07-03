@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { HiSearch } from 'react-icons/hi';
-import { FaCartShopping, FaHeart} from 'react-icons/fa';
+import { FaCartShopping, FaHeart} from 'react-icons/fa6';
 import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
 
