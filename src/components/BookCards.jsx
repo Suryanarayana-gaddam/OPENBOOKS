@@ -22,7 +22,7 @@ const BookCards = ({headLine,books, user}) => {
     const [userId,setUserId] = useState();
   useEffect(() => {
     if (!user) return;
-    if (userData) {
+    if (userData && userData.wishlist) {
       setUserId(userData._id)
       setCartBooks(userData.cart)
       setWishlistBooks(userData.wishlist.reverse())
