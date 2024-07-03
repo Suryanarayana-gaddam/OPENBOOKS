@@ -35,7 +35,7 @@ const SearchedBooks = () => {
 
     if (!user) return;
     if (userData && userData.wishlist && userData.cart) {
-      setCartBooks(userData._id)
+      setUserId(userData._id)
       setCartBooks(userData.cart)
       setWishlistBooks(userData.wishlist)
     }
