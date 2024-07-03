@@ -38,7 +38,7 @@ const Wishlist = () => {
   
   useEffect(() => {
 
-    if (userData) {
+    if (userData && userData.wishlist) {
 
       //setUserId(userData._id)
       //setCartBooks(userData.cart)
