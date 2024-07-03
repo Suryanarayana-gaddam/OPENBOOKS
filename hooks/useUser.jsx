@@ -60,7 +60,7 @@ const useUser = () => {
             });
 
             if (!response.ok) {
-                throw new Error("Failed to fetch cart data");
+                throw new Error("Failed to fetch user data");
             }
 
             const responseData = await response.json();
