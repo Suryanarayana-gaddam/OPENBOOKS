@@ -42,7 +42,7 @@ const Wishlist = () => {
 
       //setUserId(userData._id)
       //setCartBooks(userData.cart)
-      setWishlistBooks(userData.wishlist.reverse())
+      setWishlistBooks(userData.wishlist)
       
     }
     refetch()
