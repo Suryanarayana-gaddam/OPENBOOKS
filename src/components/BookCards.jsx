@@ -22,12 +22,14 @@ const BookCards = ({headLine,books, user}) => {
     const [userId,setUserId] = useState();
   useEffect(() => {
     if (!user) return;
+    if (userData) {
       setUserId(userData._id)
       setCartBooks(userData.cart)
       setWishlistBooks(userData.wishlist.reverse())
       console.log("User Hook User Id : ", userData ? userData._id : null);
       console.log("User Cart :", userData ? userData.cart : []);
       console.log("User Wishlist :", userData ? userData.wishlist : []);
+    }
   }, [user,userData]);
   
     const isBookInWishlist = book => {
