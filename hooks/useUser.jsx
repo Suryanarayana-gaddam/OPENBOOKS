@@ -49,6 +49,7 @@ const useUser = () => {
     const user = useContext(AuthContext);
     const token = localStorage.getItem("access-token");
     const userEmail = user?.user?.email || user?.email ;
+    console.log("UserEmail :",userEmail)
     const fetchUserData = async () => {
         try {
             const response = await fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
