@@ -13,7 +13,7 @@ const Wishlist = () => {
   useEffect(() => {
 
     if (userData && userData.wishlist) {
-      setWishlistBooks(userData.wishlist.reverse())
+      setWishlistBooks(userData.wishlist)
     }
   }, [userData]);
 
