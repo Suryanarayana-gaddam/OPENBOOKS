@@ -37,8 +37,7 @@ const SingleBook = () => {
       setWishlistBooks(userData.wishlist)
     }
   }, [userData]); 
-  fetchBooksByCategory(category); 
-
+  
   const isBookInWishlist = book => {
     return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
   };
@@ -51,9 +50,9 @@ const SingleBook = () => {
       const response = await fetch(`https://book-store-api-theta.vercel.app/all-books/bycategory/?category=${category}`, {
         headers : {
             authorization: `Bearer ${token}`
-        }
-    });
-      if (!response.ok) {
+          }
+        });
+        if (!response.ok) {
         throw new Error('Error fetching books by category');
       }
       const data = await response.json();
@@ -64,6 +63,7 @@ const SingleBook = () => {
     }
   }
   ,[category,token])
+  fetchBooksByCategory(category); 
 
   const addToWishlist = (event,book) => {
     event.preventDefault();
