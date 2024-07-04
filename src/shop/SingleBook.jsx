@@ -21,9 +21,8 @@ const SingleBook = () => {
 
   const token = localStorage.getItem('access-token');
   
-  // Function to shuffle an array
   function shuffleArray(array) {
-    const shuffledArray = array.slice(); // Create a copy of the array
+    const shuffledArray = array.slice(); 
     for (let i = shuffledArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
@@ -37,8 +36,8 @@ const SingleBook = () => {
       setCartBooks(userData.cart)
       setWishlistBooks(userData.wishlist)
     }
-    fetchBooksByCategory(category); 
-  }, [category,user,userData]); 
+  }, [userData]); 
+  fetchBooksByCategory(category); 
 
   const isBookInWishlist = book => {
     return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
