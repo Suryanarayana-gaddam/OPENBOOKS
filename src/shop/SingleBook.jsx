@@ -1,5 +1,5 @@
 //16-04-2024 18:58
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import BookList from '../components/BookList';
 import BookCards from '../components/BookCards';
@@ -46,7 +46,7 @@ const SingleBook = () => {
     return cartBooks.some(cartBook => cartBook._id === book._id);
   };
 
-  const fetchBooksByCategory = async (category) => {
+  const fetchBooksByCategory = useMemo( async () => {
     try {
       const response = await fetch(`https://book-store-api-theta.vercel.app/all-books/bycategory/?category=${category}`, {
         headers : {
@@ -62,7 +62,8 @@ const SingleBook = () => {
     } catch (error) {
       console.error('Error:', error.message);
     }
-  };
+  }
+  ,[category,token])
 
   const addToWishlist = (event,book) => {
     event.preventDefault();
