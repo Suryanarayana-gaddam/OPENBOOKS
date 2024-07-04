@@ -12,8 +12,6 @@ import useUser from '../../hooks/useUser';
 const SingleBook = () => {
   const { _id, createrId, bookTitle, imageURL, category, bookDescription, authorName,bookPrice } = useLoaderData();
   const [books, setBooks] = useState([]);
-  // const [wishlist, setWishlist] = useState([]);
-  // const [cart, setCart] = useState([]);
   const user = useContext(AuthContext);
   const [wishlistBooks, setWishlistBooks] = useState([]);
   const [cartBooks, setCartBooks] = useState([]);
@@ -39,9 +37,8 @@ const SingleBook = () => {
       setCartBooks(userData.cart)
       setWishlistBooks(userData.wishlist)
     }
-    refetch()
-    fetchBooksByCategory(category); // Fetch books by the category of the current book on component mount
-  }, [category,user,userData]); // Re-fetch books when category changes
+    fetchBooksByCategory(category); 
+  }, [category,user,userData]); 
 
   const isBookInWishlist = book => {
     return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
@@ -52,7 +49,6 @@ const SingleBook = () => {
 
   const fetchBooksByCategory = async (category) => {
     try {
-      //console.log('Fetching books for category:', category);
       const response = await fetch(`https://book-store-api-theta.vercel.app/all-books/bycategory/?category=${category}`, {
         headers : {
             authorization: `Bearer ${token}`
@@ -62,8 +58,6 @@ const SingleBook = () => {
         throw new Error('Error fetching books by category');
       }
       const data = await response.json();
-      //console.log('Fetched books:', data);
-      // Shuffle the fetched books and select the first 15
       const shuffledBooks = shuffleArray(data).slice(0, 15);
       setBooks(shuffledBooks);
     } catch (error) {
@@ -78,27 +72,22 @@ const SingleBook = () => {
         return;
     }
     const bookId = book._id;
-    //console.log(bookId);
     if (!isBookInWishlist(book)) {
-      // Add book to the wishlist
       fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/add`,{
         method:"POST",
         headers:{
           "Content-type": "application/json",
         },
-        body: JSON.stringify(book) // Stringify the book object before sending
+        body: JSON.stringify(book) 
       }).then(res => res.json()).then(data => {
-        //alert("Book Uploaded to wishlist Successfully!!!");
         setWishlistBooks([...wishlistBooks, book]);
         refetch()
       })
       .catch(error => {
-        console.error("Error:", error);// Handle unexpected errors
+        console.error("Error:", error);
       });
       
     } else {
-        // Remove book from wishlist
-        //console.log(bookId);
        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/remove/${bookId}`, {
         method: "POST",
         headers: {
@@ -108,13 +97,11 @@ const SingleBook = () => {
       })
         .then(res => res.json())
         .then(data => {
-          //console.log(data);
-          //("Book removed from wishlist successfully!");
           setWishlistBooks(wishlistBooks.filter(wishlistBook => wishlistBook._id !== book._id));
           refetch()
         })
         .catch(error => {
-          console.error("Error:", error);// Handle unexpected errors
+          console.error("Error:", error);
         });
     }
   };
@@ -125,26 +112,23 @@ const SingleBook = () => {
         return;
     }
     if (!isBookInCart(book)) {
-      // Add book to the wishlist
       fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/add`,{
         method:"POST",
         headers:{
           "Content-type": "application/json",
           authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(book) // Stringify the book object before sending
+        body: JSON.stringify(book) 
       }).then(res => res.json()).then(data => {
-        // alert("Book Uploaded to Cart Successfully!!!");
         setCartBooks([...cartBooks, book]);
         refetch()
       })
       .catch(error => {
-        console.error("Error:", error);// Handle unexpected errors
+        console.error("Error:", error);
       });
     }
   };
 
-//console.log('cartBooks', cartBooks)
   return (
     <div className="container mx-auto px-4 lg:px-24 mt-16 ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
