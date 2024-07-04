@@ -2,18 +2,19 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Table } from "flowbite-react";
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
+import useUser from '../../hooks/useUser';
 
 
 const ManageBooks = () => {
   const [allBooks,setAllBooks] = useState([]);
   const [username, setUsername] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-    const booksPerPage = 10;
-    const maxPageNumbers = 10;
-    const [isLoading, setIsLoading] = useState(true);
+  const booksPerPage = 10;
+  const maxPageNumbers = 10;
+  const [isLoading, setIsLoading] = useState(true);
   const user = useContext(AuthContext);
-
   const token = localStorage.getItem('access-token');
+  const [userData,refetch] = useUser();
 
   useEffect (() => {
     fetch("https://book-store-api-theta.vercel.app/all-books",{
@@ -21,39 +22,12 @@ const ManageBooks = () => {
       headers: {
         "Content-Type" : "application/json",
         authorization: `Bearer ${token}`
-      }}).then(res => res.json()).then(data => setAllBooks(data));
-      setIsLoading(false);
-    setUsername(user?.user?.displayName);
-    //console.log(user);
-
-    const userEmail = user?.user?.email;
-  //console.log("User Email:", userEmail);
-
-  // Fetch user data by email
-  fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json", // Set content type header explicitly
-      authorization: `Bearer ${token}`
-
-    },
-  })
-    .then(res => {
-      if (!res.ok) {
-        return res.json().then(error => {
-          console.error("Error fetching user data:", error);
-          // Handle the error (e.g., display a message to the user)
-        });
-      }
-      return res.json(); // Parse valid JSON response
-    })
-    .then(userData => {
-      //console.log("User Data:", userData);
-
-      // Get user ID from userData
-      setUsername(userData.username);
-    })
-  },[user,currentPage]);
+      }})
+    .then(res => res.json())
+    .then(data => setAllBooks(data));
+    setIsLoading(false);
+    setUsername(userData.username);
+  },[user,userData,currentPage,token]);
 
   if(isLoading){
     return <div className="flex items-center justify-center h-screen">
@@ -62,85 +36,71 @@ const ManageBooks = () => {
         <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
         </div>
     </div>
-</div>
-  }
+    </div>
+  }  
 
-//delete a book 
-const handleDelete = (id) => {
-  // Display confirmation dialog
-  const isConfirmed = window.confirm("Are you sure you want to delete this book?");
-  if (isConfirmed) {
-    // If confirmed, proceed with the deletion
-    fetch(`https://book-store-api-theta.vercel.app/book/delete/${id}`, {
-      method: "DELETE",
+  const handleDelete = (id) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this book?");
+    if (isConfirmed) {
+      fetch(`https://book-store-api-theta.vercel.app/book/delete/${id}`, {
+          method: "DELETE",
+        }
+      )
+      .then(res => res.json())
+      .then(data => {
+        alert("Book is deleted successfully!");
+      })
+      .catch(error => {
+        console.error("Error deleting book:", error);
+      });
     }
-  )
-    .then(res => res.json())
-    .then(data => {
-      // Update UI or perform any other actions after successful deletion
-      alert("Book is deleted successfully!");
-      //setAllBooks(data);
-    })
-    .catch(error => {
-      console.error("Error deleting book:", error);
-    });
   }
-}
 
-const indexOfLastBook = currentPage * booksPerPage;
-const indexOfFirstBook = indexOfLastBook - booksPerPage;
-const currentBooks = allBooks.slice(indexOfFirstBook, indexOfLastBook);
+  const indexOfLastBook = currentPage * booksPerPage;
+  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+  const currentBooks = allBooks.slice(indexOfFirstBook, indexOfLastBook);
 
 
-// Calculate total number of pages
-const totalPages = Math.ceil(allBooks.length / booksPerPage);
+  const totalPages = Math.ceil(allBooks.length / booksPerPage);
 
-// Generate array of page numbers to display
-const getPageNumbers = () => {
+  const getPageNumbers = () => {
   let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
   let endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
 
-  // Adjust startPage when near the end of totalPages
   if (endPage - startPage + 1 < maxPageNumbers) {
     startPage = Math.max(1, endPage - maxPageNumbers + 1);
   }
 
-  
+  let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
 
-let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
+  const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
+  pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
 
+  if (!pageNumbers.includes(totalPages)) {
+    pageNumbers.push(totalPages);
+  }
+  if (!pageNumbers.includes(1)) {
+    pageNumbers.unshift(1);
+  }
+  return pageNumbers.sort((a, b) => a - b);
+  };
 
-// Include multiples of 50
-const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
-pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
-// Add last page if it's not already included
-if (!pageNumbers.includes(totalPages)) {
-  pageNumbers.push(totalPages);
-}
-if (!pageNumbers.includes(1)) {
-  pageNumbers.unshift(1);
-}
+  const goToPreviousPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
 
-return pageNumbers.sort((a, b) => a - b);
-};
+  const goToNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
 
-const paginate = (pageNumber) => {
-setCurrentPage(pageNumber);
-};
-
-const goToPreviousPage = () => {
-setCurrentPage((prevPage) => prevPage - 1);
-};
-
-const goToNextPage = () => {
-setCurrentPage((prevPage) => prevPage + 1);
-};
   return (
     <div className='px-4 my-12 sm:max-w-md md:max-w-lg lg:max-w-full'>
       <h2 className='mb-8 text-3xl font-bold'>Manage All Books</h2>
       <h2 className='mb-2'>Welcome <b>{username}</b> you can manage a book here !</h2>
-      {/* Table for book data */}
       <Table className='lg:w-[1000px]'>
         <Table.Head>
           <Table.HeadCell>No.</Table.HeadCell>
@@ -176,10 +136,7 @@ setCurrentPage((prevPage) => prevPage + 1);
               </Table.Row>
           </Table.Body>
         )}
-
-
       </Table>
-      {/* Pagination buttons at the bottom */}
       <div className={`flex justify-around mt-8 w-auto ${ allBooks.length>10 ? "block" : "hidden"}`}>
         <div>
           <button
@@ -214,8 +171,8 @@ setCurrentPage((prevPage) => prevPage + 1);
         </div>
       </div>
             
-        </div>
-    )
+    </div>
+  )
 }
 
 export default ManageBooks

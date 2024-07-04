@@ -1,47 +1,25 @@
 import { Sidebar } from 'flowbite-react';
 import { BiBuoy } from 'react-icons/bi';
 import { HiCash, HiChartPie, HiInbox, HiOutlineCloudUpload, HiTable, HiUser } from 'react-icons/hi';
-
-//import userImg from "../assets/profile.jpg"
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
 import { IoArrowBack } from 'react-icons/io5';
-import { FaPerson, FaUser } from 'react-icons/fa6';
-
+import useUser from '../../hooks/useUser';
 
 const SideBar = () => {
   const {user} = useContext(AuthContext);
-  const token = localStorage.getItem('access-token');
   const [profilePic,setProfilePic] = useState(null);
   const [userName, setUserName] = useState('');
+  const [userData,refetch] = useUser();
 
   useEffect(() => {
-    const userEmail = user?.email;
-        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json", // Set content type header explicitly
-                        authorization: `Bearer ${token}`
-                    },
-                    })
-                .then(res => {
-                    if (!res.ok) {
-                    return res.json().then(error => {
-                        console.error("Error fetching user data:", error);
-                        // Handle the error (e.g., display a message to the user)
-                    });
-                    }
-                    return res.json(); // Parse valid JSON response
-                })
-                .then(userData => {
-                    //console.log("User Data:", userData);
-                    // Get user ID from userData
-                    setUserName(userData.username);                    
-                    setProfilePic(userData.profilePic);
-                })
-  },[user])
-  //console.log(user)
+    if(userData){
+      setUserName(userData.username);
+      setProfilePic(userData.profilePic);
+    }
+  }, [userData]);
+
   return (
     <Sidebar aria-label="Sidebar with content separator example">
       <div className="flex items-center pb-2">

@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthProvider';
 import { FaPen } from 'react-icons/fa';
 import pica from 'pica';
 import { useNavigate } from 'react-router-dom';
+import useUser from '../../hooks/useUser';
 
 const UserProfile = () => {
     const [username, setUsername] = useState(null);
@@ -12,42 +13,21 @@ const UserProfile = () => {
     const [isNameChangeClicked, setIsNameChangeClicked] = useState(false);
 
     const token = localStorage.getItem('access-token');
-    const user = useContext(AuthContext);
-    const userEmail = user?.user?.email;
-
     const fileInputRef = useRef(null);
     const picaInstance = pica();
 
     const { logOut } = useContext(AuthContext);
     const navigate = useNavigate();
-
+    const [userData,refetch] = useUser();
+    const user = useContext(AuthContext);
 
     useEffect(() => {
-        if (userEmail) {
-            fetch(`https://book-store-api-theta.vercel.app/userByEmail/${userEmail}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    authorization: `Bearer ${token}`,
-                },
-            })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error('Failed to fetch user data');
-                }
-                return res.json();
-            })
-            .then(userData => {
-                setUsername(userData.username);
-                setProfilePic(userData.profilePic);
-                setUserId(userData._id);
-            })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
-                // Handle the error (e.g., display a message to the user)
-            });
+        if(userData){
+            setUsername(userData.username);
+            setProfilePic(userData.profilePic);
+            setUserId(userData._id);
         }
-    }, [userEmail,user, token]);
+    }, [userData]);
 
     const handleLogout = async () => {
         try {
@@ -62,7 +42,7 @@ const UserProfile = () => {
         } catch (error) {
           console.error('Error logging out:', error);
         }
-      };
+    };
 
     const handleFileInputChange = async (event) => {
         const file = event.target.files[0];
@@ -82,7 +62,6 @@ const UserProfile = () => {
         }
     };
     
-
     const resizeImage = (file) => {
         return new Promise((resolve, reject) => {
             const img = document.createElement('img');
@@ -224,7 +203,7 @@ const UserProfile = () => {
                 </h1>
                 <p className="text-gray">
                     <b>E-Mail : </b>
-                    {userEmail}
+                    {userData.email}
                 </p>
                 <button onClick={handleLogout} className="bg-red-700 px-8 py-2 text-white rounded mt-6">
                     Logout
