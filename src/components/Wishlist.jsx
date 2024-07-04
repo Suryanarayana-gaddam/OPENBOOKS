@@ -13,7 +13,7 @@ const Wishlist = () => {
   useEffect(() => {
 
     if (userData && userData.wishlist) {
-      setWishlistBooks(userData.wishlist)
+      setWishlistBooks(userData.wishlist.reverse())
     }
   }, [userData]);
 
@@ -28,7 +28,7 @@ const Wishlist = () => {
       return (
         <div className='my-16 px-4 lg:px-14'>
           <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
-          <BookCards books={wishlistBooks.reverse()} user={user?.user}/>
+          <BookCards books={wishlistBooks} user={user?.user}/>
         </div>
       )
     }
