@@ -1,5 +1,5 @@
 //16-04-2024 18:58
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import BookList from '../components/BookList';
 import BookCards from '../components/BookCards';
@@ -36,8 +36,7 @@ const SingleBook = () => {
       setCartBooks(userData.cart)
       setWishlistBooks(userData.wishlist)
     }
-    fetchBooksByCategory(category); 
-  }, [category,userData]); 
+  }, [userData]); 
 
   const isBookInWishlist = book => {
     return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
@@ -46,23 +45,26 @@ const SingleBook = () => {
     return cartBooks.some(cartBook => cartBook._id === book._id);
   };
 
-  const fetchBooksByCategory = async (category) => {
-    try {
-      const response = await fetch(`https://book-store-api-theta.vercel.app/all-books/bycategory/?category=${category}`, {
-        headers : {
-            authorization: `Bearer ${token}`
+  useMemo(() =>{ 
+    const fetchBookByCategory =  async () => {
+        try {
+          const response = await fetch(`https://book-store-api-theta.vercel.app/all-books/bycategory/?category=${category}`, {
+            headers : {
+                authorization: `Bearer ${token}`
+            }
+          });
+          if (!response.ok) {
+            throw new Error('Error fetching books by category');
+          }
+          const data = await response.json();
+          const shuffledBooks = shuffleArray(data).slice(0, 15);
+          setBooks(shuffledBooks);
+        } catch (error) {
+          console.error('Error:', error.message);
         }
-    });
-      if (!response.ok) {
-        throw new Error('Error fetching books by category');
-      }
-      const data = await response.json();
-      const shuffledBooks = shuffleArray(data).slice(0, 15);
-      setBooks(shuffledBooks);
-    } catch (error) {
-      console.error('Error:', error.message);
-    }
-  };
+    };
+    fetchBookByCategory()
+  },[category,token])
 
   const addToWishlist = (event,book) => {
     event.preventDefault();
