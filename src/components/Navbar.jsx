@@ -92,7 +92,7 @@ const Navbar = () => {
 
 return (
     <header className='w-full bg-transparent fixed top-0 left-0 right-0 transition-all ease-in duration-300'>
-        <nav className={`py-2 mb-3 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
+        <nav className={`py-2 mb-10 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
             <div className='flex justify-between items-center text-base gap-8'>
                 {/* logo */} 
                 <Link to="/" ><div className={`imglogo lg:block md:hidden text-transparent relative left-8 ${isSticky ? "w-28 h-10 lg:w-40 lg:h-16" : "lg:w-44 lg:h-20 w-32 h-12"}`}>Logo</div></Link>
