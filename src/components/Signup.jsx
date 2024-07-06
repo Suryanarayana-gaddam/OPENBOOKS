@@ -14,6 +14,48 @@ const Signup = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
+
+    const [password, setPassword] = useState('');
+    const [strengthMessage, setStrengthMessage] = useState('');
+    const [messageColor, setMessageColor] = useState('');
+    const [pwdInstruction,setPwdInstruction] = useState(null)
+  const handlePasswordChange = (event) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+    evaluatePasswordStrength(newPassword);
+  };
+  const handleFocus = ((e) => {
+    evaluatePasswordStrength(e.target.value)
+})
+
+  const evaluatePasswordStrength = (newPassword) => {
+    // Define your password strength criteria here
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(newPassword);
+    const hasLowerCase = /[a-z]/.test(newPassword);
+    const hasDigit = /\d/.test(newPassword);
+    const hasSpecialChar = /[!@#$%^&*()_+}{:;'?/.,~[\]-]/.test(newPassword);
+    
+    if(newPassword.length < minLength){
+        setPwdInstruction('* Password should be at least 8 characters long.');
+        setStrengthMessage('Weak');
+        setMessageColor('red')
+    }
+    if (newPassword.length >= minLength) {
+        setPwdInstruction('* Password should have uppercase, lowercase, numeric and special chars');
+        setStrengthMessage('Medium');
+        setMessageColor('orange')
+    }
+    if (hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar) {
+        setPwdInstruction("")
+        setStrengthMessage('Strong');
+        setMessageColor('green')
+    }
+  }
+    const handlePaste = (event) => {
+        event.preventDefault();
+        window.alert("Paste is not allowed in Password!")
+    }
     
     const from = location.state?.from?.pathname || "/";
 
@@ -177,16 +219,19 @@ const Signup = () => {
                     <div className="divide-y divide-gray-200">
                         <form onSubmit={handleSignup} className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
                             <div className="relative">
-                                <input onChange={(e) => {e.target.value = e.target.value.toUpperCase()}} autoComplete='off' autoFocus  id="username" name="username" type="text" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="User Name" />
+                                <input autoComplete='off' autoFocus onChange={(e) => {e.target.value = e.target.value.toUpperCase()}} id="username" name="username" type="text" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="*User Name" required/>
                                 
                             </div>
                             <div className="relative">
-                                <input onChange={(e) => {e.target.value = e.target.value.toLowerCase()}} id="email" name="email" type="text" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" pattern='/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/'/>
+                                <input  autoComplete='off' onChange={(e) => {e.target.value = e.target.value.toLowerCase()}} id="email" name="email" type="text" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="*Email address" required pattern='/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/'/>
                                 
                             </div>
                             <div className="relative">
-                                <input id="password" name="password" type="password" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Password" autoComplete='off' />
-                                
+                                <input onPaste={handlePaste} id="password" name="password" type="password" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="*Password" value={password}
+                                onChange={handlePasswordChange} onFocus={handleFocus} onBlur={() => {setPwdInstruction("")
+                                    setStrengthMessage('');}} required/>
+                                <span style={{fontSize:'13px'}}>{pwdInstruction}</span>
+                                <div style={{ color: messageColor,margin:"0px" }}>{strengthMessage}</div>
                             </div>
                             <div className="relative">
                                 <label htmlFor="profilePic" className="block">Profile Picture:</label>
