@@ -3,15 +3,12 @@ import React, { useContext, useState } from 'react'
 import { Link , useLocation , useNavigate } from 'react-router-dom';
 import {AuthContext} from '../context/AuthProvider';
 import googleLogo from "../assets/google-logo.svg"
-import useUser from '../../hooks/useUser';
 
 const Login = () => {
   const [isLoading,setIsLoading] = useState(false)
   const {login,loginWithGoogle} = useContext(AuthContext);
   const [error,setError] = useState("");
   
-  const [userData,refetch] = useUser()
-
   const location = useLocation();
   const navigate = useNavigate();
   if(isLoading){
@@ -32,15 +29,34 @@ const Login = () => {
       login(email,password).then((userCredential) => {
         const user = userCredential.user;
         navigate(from, { replace: true });
-        alert(`Welcome back ${userData.username}!`);
-        setIsLoading(false)
-    })
-    .catch((error) => {
+        const token = localStorage.getItem('access-token');
+        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                authorization: `Bearer ${token}`,
+
+            }
+        }).then(res => {
+            if (!res.ok) {
+            return res.json().then(error => {
+                console.error("Error fetching user data:", error);
+            });
+            }
+            return res.json();
+        })
+        .then(Userdata => {
+            setIsLoading(false);
+            alert(`Welcome back ${Userdata.username}!`);
+            
+        })
+      })
+      .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        setError(errorMessage);
         setIsLoading(false)
-    });
+        setError(errorMessage);
+      });
      
   }
   const from = location.state?.from?.pathname || "/";
