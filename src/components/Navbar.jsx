@@ -108,7 +108,7 @@ return (
                 {/* btn for lg devices */}
                 <div className='space-x-5  hidden lg:flex sm:flex items-center mr-0'>
                     {/* Use the img tag to display the user's photo */}
-                    {user?.displayName || username || user?.email}
+                    {user?.displayName || user ? username : "" || user?.email}
                     <span>
                             {user ? (
                                 user.photoURL ? (
