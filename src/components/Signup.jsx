@@ -3,6 +3,7 @@ import { Link , useLocation , useNavigate } from 'react-router-dom';
 import {AuthContext} from '../context/AuthProvider';
 import googleLogo from "../assets/google-logo.svg"
 import pica from "pica";
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
 const Signup = () => {
     const {createUser,loginWithGoogle} = useContext(AuthContext);
@@ -20,14 +21,21 @@ const Signup = () => {
     const [messageColor, setMessageColor] = useState('');
     const [pwdInstruction,setPwdInstruction] = useState(null)
     const [proceed,setProceed] = useState(false)
-  const handlePasswordChange = (event) => {
-    const newPassword = event.target.value;
-    setPassword(newPassword);
-    evaluatePasswordStrength(newPassword);
-  };
-  const handleFocus = ((e) => {
-    evaluatePasswordStrength(e.target.value)
-})
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handlePasswordChange = (event) => {
+        const newPassword = event.target.value;
+        setPassword(newPassword);
+        evaluatePasswordStrength(newPassword);
+    };
+    const handleFocus = ((e) => {
+        evaluatePasswordStrength(e.target.value)
+    })
 
   const evaluatePasswordStrength = (newPassword) => {
     // Define your password strength criteria here
@@ -236,6 +244,9 @@ const Signup = () => {
                                 <input onPaste={handlePaste} id="password" name="password" type="password" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="*Password" value={password}
                                 onChange={handlePasswordChange} onFocus={handleFocus} onBlur={() => {setPwdInstruction("")
                                     setStrengthMessage('');}} required/>
+                                <button type="button" className='relative bottom-9 left-96' onClick={togglePasswordVisibility}>
+                                    {showPassword ? <FaEyeSlash/> : <FaEye/>}
+                                </button>
                                 <span style={{fontSize:'13px'}}>{pwdInstruction}</span>
                                 <div style={{ color: messageColor,margin:"0px" }}>{strengthMessage}</div>
                             </div>

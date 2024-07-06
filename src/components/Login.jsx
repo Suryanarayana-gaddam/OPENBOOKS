@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import { Link , useLocation , useNavigate } from 'react-router-dom';
 import {AuthContext} from '../context/AuthProvider';
 import googleLogo from "../assets/google-logo.svg"
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
 const Login = () => {
   const [isLoading,setIsLoading] = useState(false)
@@ -11,6 +12,18 @@ const Login = () => {
   
   const location = useLocation();
   const navigate = useNavigate();
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+  };
+
+    const handlePasswordChange = (event) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+    };
+
   if(isLoading){
     return <div className="flex items-center justify-center h-screen">
     <div className="relative">
@@ -104,12 +117,14 @@ const handleRegister = () => {
                     <div className="divide-y divide-gray-200">
                         <form onSubmit={handleLogin} className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7 transition-4s">
                             <div className="relative">
-                                <input  id="email" name="email" type="email" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" />
+                                <input  id="email" name="email" type="email" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" required/>
                                 
                             </div>
                             <div className="relative">
-                                <input id="password" name="password" type="password" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Password" />
-                                
+                                <input id="password" name="password" type={showPassword ? 'text' : 'password'} onChange={handlePasswordChange} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Password" value={password} required />
+                                <button type="button" className='relative bottom-9 left-96' onClick={togglePasswordVisibility}>
+                                    {showPassword ? <FaEyeSlash/> : <FaEye/>}
+                                </button>
                             </div>
 
                             { error ? <p className='text-red-600 text-base'>Email or Password is incorrect !</p> : "" }
