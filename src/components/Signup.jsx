@@ -229,7 +229,13 @@ const Signup = () => {
                                 
                             </div>
                             <div className="relative">
-                                <input  autoComplete='off' onChange={(e) => {e.target.value = e.target.value.toLowerCase()}} id="email" name="email" type="email" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="*Email address" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"/>
+                                <input  autoComplete='off' onChange={(e) => {e.target.value = e.target.value.toLowerCase()
+                                    if(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/.test(e.target.value)){
+                                        setProceed(true)
+                                    }else{
+                                        setProceed(false)
+                                    }
+                                }} id="email" name="email" type="email" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="*Email address" required />
                                 
                             </div>
                             <div className="relative">
