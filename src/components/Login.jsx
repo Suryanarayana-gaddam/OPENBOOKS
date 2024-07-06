@@ -30,7 +30,7 @@ const Login = () => {
         const user = userCredential.user;
         navigate(from, { replace: true });
         const token = localStorage.getItem('access-token');
-        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
+        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${email}`, {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
