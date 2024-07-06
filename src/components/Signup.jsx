@@ -19,6 +19,7 @@ const Signup = () => {
     const [strengthMessage, setStrengthMessage] = useState('');
     const [messageColor, setMessageColor] = useState('');
     const [pwdInstruction,setPwdInstruction] = useState(null)
+    const [proceed,setProceed] = useState(false)
   const handlePasswordChange = (event) => {
     const newPassword = event.target.value;
     setPassword(newPassword);
@@ -50,6 +51,7 @@ const Signup = () => {
         setPwdInstruction("")
         setStrengthMessage('Strong');
         setMessageColor('green')
+        setProceed(true)
     }
   }
     const handlePaste = (event) => {
@@ -112,6 +114,7 @@ const Signup = () => {
     }; 
 
     const handleRegister = () => {
+        
         loginWithGoogle().then((result) => {
             const user = result.user;
             const userObj = {
@@ -155,6 +158,9 @@ const Signup = () => {
     
     const handleSignup = (event) => {
         event.preventDefault();
+        if( !proceed ){
+            return window.alert("Please enter a valid password!");
+        }
         const form = event.target;
         setIsLoading(true)
         const username = form.username.value; 
