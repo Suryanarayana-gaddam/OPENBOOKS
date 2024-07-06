@@ -27,9 +27,13 @@ const Login = () => {
       const email = form.email.value;
       const password = form.password.value;
       login(email,password).then((userCredential) => {
+        // Signed in 
         const user = userCredential.user;
+        console.log("user:",user)
         navigate(from, { replace: true });
+
         setIsLoading(false)
+        // ...
       })
       .catch((error) => {
         const errorCode = error.code;
