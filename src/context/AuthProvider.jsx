@@ -22,17 +22,10 @@ const AuthProvider = ({children}) => {
       return signInWithPopup (auth,googleProvider);
     }
 
-    const login = async (email, password) => {
-    setLoading(true);
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      console.error('Error logging in:', error.message);
-      throw error;
-    } finally {
-      setLoading(false);
+    const login = (email,password) => {
+      setLoading(true);
+      return signInWithEmailAndPassword(auth,email,password)
     }
-  };
 
     const logOut = () => {
       return signOut(auth);
