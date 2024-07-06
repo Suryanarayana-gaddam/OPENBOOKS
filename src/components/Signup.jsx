@@ -16,6 +16,7 @@ const Signup = () => {
     const navigate = useNavigate();
 
     const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
     const [strengthMessage, setStrengthMessage] = useState('');
     const [messageColor, setMessageColor] = useState('');
     const [pwdInstruction,setPwdInstruction] = useState(null)
@@ -70,6 +71,17 @@ const Signup = () => {
         </div>
     </div>
     }
+
+    const handleEmailChange = (e) => {
+        const inputValue = e.target.value.toLowerCase();
+        setEmail(inputValue); // Update email state
+    
+        if (/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/.test(inputValue)) {
+          setProceed(true); // Update proceed state if email format is valid
+        } else {
+          setProceed(false); // Ensure proceed state is false if email format is invalid
+        }
+      };
 
     const handleProfilePicChange = async (e) => {
         const file = e.target.files[0];
@@ -229,13 +241,7 @@ const Signup = () => {
                                 
                             </div>
                             <div className="relative">
-                                <input  autoComplete='off' onChange={(e) => {e.target.value = e.target.value.toLowerCase()
-                                    if(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/.test(e.target.value)){
-                                        setProceed(true)
-                                    }else{
-                                        setProceed(false)
-                                    }
-                                }} id="email" name="email" type="email" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="*Email address" required />
+                                <input  autoComplete='off' onChange={handleEmailChange} id="email" name="email" type="email" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" value={email} placeholder="*Email address" required />
                                 
                             </div>
                             <div className="relative">
