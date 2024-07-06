@@ -16,7 +16,7 @@ function App() {
     <>
       <Navbar updateCartLength={updateCartLength} cartLength={cartLength}/>
       <div className='min-h-screen mt-5'>
-          <Outlet/>
+          <Outlet className='mt-5'/>
       </div>
       <MyFooter/>
     </>
