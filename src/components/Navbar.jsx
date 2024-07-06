@@ -54,8 +54,6 @@ const Navbar = () => {
             setProfilePic(userData.profilePic);
         }   
         
-        refetch()
-
         const handleScroll = () => {
             if(window.scrollY > 100){
                 setIsSticky(true);
@@ -70,7 +68,6 @@ const Navbar = () => {
             window.addEventListener("scroll",handleScroll);
         }
     },[user,userData,token])
-    
 
     const navItems = [
         {link:"Home",path:"/"},
@@ -78,24 +75,24 @@ const Navbar = () => {
         {link:"Shop",path:"/shop"},
         {link:"Admin",path: isAdmin ? "/admin/Dashboard" : "/login"},
     ]
-    
-        const userMenuItems = user ? [
-            { link: "Profile", path: "/userProfile" },
-            { link: "Wishlist", path: "/wishlist" },
-            { link: "Cart", path: "/cart" },
-            { link: "Upload Book", path: "/user/upload-book" },
-            { link: "My Books", path: "/uploaded-books" },
-            { link: "Orders", path: "/orders" },
-            { link: <Logout/>,path:"#" },
-        ] : [
-            { link: "Signup", path: "/sign-up" },
-            { link: "Login", path: "/login" }
-        ];
+
+    const userMenuItems = user ? [
+        { link: "Profile", path: "/userProfile" },
+        { link: "Wishlist", path: "/wishlist" },
+        { link: "Cart", path: "/cart" },
+        { link: "Upload Book", path: "/user/upload-book" },
+        { link: "My Books", path: "/uploaded-books" },
+        { link: "Orders", path: "/orders" },
+        { link: <Logout/>,path:"#" },
+    ] : [
+        { link: "Signup", path: "/sign-up" },
+        { link: "Login", path: "/login" }
+    ];
 
 
 return (
     <header className='w-full bg-transparent fixed top-0 left-0 right-0 transition-all ease-in duration-300'>
-        <nav className={`py-2 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
+        <nav className={`py-8 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
             <div className='flex justify-between items-center text-base gap-8'>
                 {/* logo */} 
                 <Link to="/" ><div className={`imglogo lg:block md:hidden text-transparent relative left-8 ${isSticky ? "w-28 h-10 lg:w-40 lg:h-16" : "lg:w-44 lg:h-20 w-32 h-12"}`}>Logo</div></Link>
