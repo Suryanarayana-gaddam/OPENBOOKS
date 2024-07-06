@@ -241,10 +241,10 @@ const Signup = () => {
                                 
                             </div>
                             <div className="relative">
-                                <input onPaste={handlePaste} id="password" name="password" type="password" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="*Password" value={password}
+                                <input onPaste={handlePaste} id="password" name="password" type={showPassword ? 'text' : 'password'} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="*Password" value={password}
                                 onChange={handlePasswordChange} onFocus={handleFocus} onBlur={() => {setPwdInstruction("")
                                     setStrengthMessage('');}} required/>
-                                <button type="button" className='relative bottom-9 left-96' onClick={togglePasswordVisibility}>
+                                <button type="button" className='relative bottom-9 left-80' onClick={togglePasswordVisibility}>
                                     {showPassword ? <FaEyeSlash/> : <FaEye/>}
                                 </button>
                                 <span style={{fontSize:'13px'}}>{pwdInstruction}</span>
