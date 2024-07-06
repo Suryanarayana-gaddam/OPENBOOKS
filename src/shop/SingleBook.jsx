@@ -131,7 +131,7 @@ const SingleBook = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 lg:px-24 mt-16 ">
+    <div className="container mx-auto px-4 lg:px-24 mt-28 ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
         <div className="max-w-lg mx-auto relative ">
           <img src={imageURL} alt={bookTitle} className="rounded-lg shadow-lg object-cover w-full h-full" />
