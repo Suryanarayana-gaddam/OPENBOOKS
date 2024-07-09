@@ -96,7 +96,7 @@ return (
         <nav className={`py-2 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
             <div className='flex justify-between items-center text-base gap-8'>
                 {/* logo */} 
-                <Link to="/" ><img src={image} alt='logo' width={200} height={60} className={`${isSticky ? "w-14 h-14" : "w-28 h-28 "} ml-4 rounded-full `}/></Link>
+                <Link to="/" ><img src={image} alt='logo' width={100} height={100} className={`${isSticky ? "w-14 h-14" : "w-24 h-24 "} ml-4 rounded-full `}/></Link>
 
                 {/*nav items for large device */}
                 <ul className='md:flex space-x-12 hidden' onClick={CloseMenu}>
