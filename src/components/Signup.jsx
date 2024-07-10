@@ -247,11 +247,11 @@ const Signup = () => {
                                 <button type="button" className='absolute right-3 top-2' onClick={togglePasswordVisibility}>
                                     {showPassword ? <FaEyeSlash/> : <FaEye/>}
                                 </button>
-                            <div className='absolute '>
+                            <div >
                                 <span style={{fontSize:'13px'}}>{pwdInstruction}</span>
-                                <p style={{ color: messageColor , position:"relative",bottom:"8px"}}>{strengthMessage}</p>
+                                <p style={{ color: messageColor }}>{strengthMessage}</p>
                                 </div>
-                            </div><br />
+                            </div>
                             <div className="relative">
                                 <label htmlFor="profilePic" className="block">Profile Picture:</label>
                                 <input id="profilePic" name="profilePic" type="file" accept=".jpeg, .png, .jpg" onChange={handleProfilePicChange} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" />
