@@ -5,7 +5,7 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.FIREBASE_API_KEY,
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "mern-book-inventory-app.firebaseapp.com",
   projectId: "mern-book-inventory-app",
   storageBucket: "mern-book-inventory-app.appspot.com",
