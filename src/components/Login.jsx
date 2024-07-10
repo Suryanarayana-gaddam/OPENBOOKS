@@ -122,12 +122,12 @@ const handleRegister = () => {
                             </div>
                             <div className="relative">
                                 <input id="password" name="password" type={showPassword ? 'text' : 'password'} onChange={handlePasswordChange} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Password" value={password} required />
-                                <button type="button" className='relative bottom-9 left-72' onClick={togglePasswordVisibility}>
+                                <button type="button" className='absolute right-3 top-2' onClick={togglePasswordVisibility}>
                                     {showPassword ? <FaEyeSlash/> : <FaEye/>}
                                 </button>
                             </div>
+                            { error ? <p className='text-red-600 text-base '>Email or Password is incorrect !</p> : "" }
 
-                            { error ? <p className='text-red-600 text-base'>Email or Password is incorrect !</p> : "" }
 
                             <p>If you haven&apos;t an account. Please <Link to="/sign-up" className="text-blue-700 underline">Sign Up</Link></p>
                             <div className="relative">
