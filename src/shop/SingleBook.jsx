@@ -50,7 +50,7 @@ const SingleBook = () => {
         try {
           const response = await fetch(`https://book-store-api-theta.vercel.app/all-books/bycategory/?category=${category}`, {
             headers : {
-                authorization: `Bearer ${token}`
+                authorization: `Bearer ${token}`,
             }
           });
           if (!response.ok) {
@@ -78,6 +78,7 @@ const SingleBook = () => {
         method:"POST",
         headers:{
           "Content-type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(book) 
       }).then(res => res.json()).then(data => {
@@ -93,6 +94,7 @@ const SingleBook = () => {
         method: "POST",
         headers: {
           "Content-type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({bookId: book._id}),
       })
