@@ -101,7 +101,7 @@ const ManageBooks = () => {
     <div className='px-4 my-12 sm:max-w-md md:max-w-lg lg:max-w-full'>
       <h2 className='mb-8 text-3xl font-bold'>Manage All Books</h2>
       <h2 className='mb-2'>Welcome <b>{username}</b> you can manage a book here !</h2>
-      <Table className='lg:w-[1000px]'>
+      <Table className='overflow-auto sm:p-3 felx flex-wrap'>
         <Table.Head>
           <Table.HeadCell>No.</Table.HeadCell>
           <Table.HeadCell>Book Name</Table.HeadCell>
@@ -115,7 +115,7 @@ const ManageBooks = () => {
         {
           currentBooks.map( (book,index) => <Table.Body className='divide-y' key={book._id}>
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {indexOfFirstBook + index + 1} 
                 </Table.Cell>
                 <Table.Cell className=" font-medium text-gray-900 dark:text-white">
@@ -124,7 +124,7 @@ const ManageBooks = () => {
                 <Table.Cell>{book.authorName}</Table.Cell>
                 <Table.Cell>{book.category}</Table.Cell>
                 <Table.Cell>₹{book.bookPrice}</Table.Cell>
-                <Table.Cell className='whitespace-nowrap'>
+                <Table.Cell className=''>
                   <Link 
                     className="font-medium text-cyan-600 hover:underline dark:text-cyan-500" 
                     to={`/admin/Dashboard/edit-books/${book._id}`}>
