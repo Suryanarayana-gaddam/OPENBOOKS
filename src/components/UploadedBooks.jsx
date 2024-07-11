@@ -119,7 +119,7 @@ const UploadedBooks = () => {
         uploadedBooks && Array.isArray(uploadedBooks) && uploadedBooks.length > 0 ? (
           <div className=''>
             {/* Table for book data */}
-      <Table className='sm:overflow-auto p-3 flex flex-wrap'>
+      <Table className='sm:overflow-auto p-3 sm:flex sm:flex-wrap'>
         <Table.Head>
           <Table.HeadCell>No.</Table.HeadCell>
           <Table.HeadCell>Book Name</Table.HeadCell>
