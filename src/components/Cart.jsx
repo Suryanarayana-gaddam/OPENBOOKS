@@ -44,7 +44,7 @@ const Cart = () => {
       if(userData && userData.cart){
       setCartBooks(userData.cart.reverse())
       }
-      refetch()
+      
   }, [user,userData,token]);
 
   const handleRemoveFromCart = (event,book) => {
