@@ -182,7 +182,7 @@ const Users = () => {
                 <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {userInfo.username}
                 </Table.Cell>
-                <Table.Cell className='flex flex-wrap'>{userInfo.email}</Table.Cell>
+                <Table.Cell className='overflow-auto'>{userInfo.email}</Table.Cell>
                 <Table.Cell>{userInfo.role}</Table.Cell>
                 <Table.Cell>
                   
