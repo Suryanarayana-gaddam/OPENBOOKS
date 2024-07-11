@@ -4,7 +4,7 @@ import { FaBarsStaggered, FaBookAtlas, FaUser, FaXmark} from "react-icons/fa6"
 import { AuthContext } from '../context/AuthProvider';
 import Logout from './Logout';
 import useUser from '../../hooks/useUser';
-// import "./nav.css"
+import "./nav.css"
 import image from "../assets/Open Books.jpg"
 const Navbar = () => {
     const [activeItem, setActiveItem] = useState('');
