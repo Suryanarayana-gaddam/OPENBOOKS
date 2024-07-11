@@ -176,10 +176,10 @@ const Users = () => {
         {
           allUsers.map( (userInfo,index) => <Table.Body className='divide-y sm:max-w-md md:max-w-lg lg:max-w-full' key={userInfo._id}>
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {index + 1} 
                 </Table.Cell>
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {userInfo.username}
                 </Table.Cell>
                 <Table.Cell>{userInfo.email}</Table.Cell>
