@@ -113,13 +113,13 @@ const UploadedBooks = () => {
   };
   
   return (
-    <div className='lg:pl-20 my-24 sm:w-96 lg:w-full'>
+    <div className='lg:pl-20 my-24 sm:w-96 w-full lg:w-full'>
       <h2 className='mb-8 text-3xl font-bold text-center'>Manage Your Books</h2>
       {
         uploadedBooks && Array.isArray(uploadedBooks) && uploadedBooks.length > 0 ? (
           <div className=''>
             {/* Table for book data */}
-      <Table className='overflow-auto p-3 max-w-full flex flex-wrap'>
+      <Table className='overflow-auto p-3 flex flex-wrap'>
         <Table.Head>
           <Table.HeadCell>No.</Table.HeadCell>
           <Table.HeadCell>Book Name</Table.HeadCell>
