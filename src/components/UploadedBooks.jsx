@@ -119,7 +119,7 @@ const UploadedBooks = () => {
         uploadedBooks && Array.isArray(uploadedBooks) && uploadedBooks.length > 0 ? (
           <div className=''>
             {/* Table for book data */}
-      <Table className='overflow-auto sm:p-3 flex flex-wrap'>
+      <Table className='overflow-auto p-3 max-w-full flex flex-wrap'>
         <Table.Head>
           <Table.HeadCell>No.</Table.HeadCell>
           <Table.HeadCell>Book Name</Table.HeadCell>
@@ -131,7 +131,7 @@ const UploadedBooks = () => {
           </Table.HeadCell>
         </Table.Head>
         {
-          currentBooks && Array.isArray(currentBooks) && currentBooks.map( (book,index) => <Table.Body className='divide-y lg:w-[1080px]' key={book._id}>
+          currentBooks && Array.isArray(currentBooks) && currentBooks.map( (book,index) => <Table.Body className='divide-y ' key={book._id}>
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 ">
                 <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {indexOfFirstBook + index + 1} 

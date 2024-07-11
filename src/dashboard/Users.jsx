@@ -174,7 +174,7 @@ const Users = () => {
           </Table.HeadCell>
         </Table.Head>
         {
-          allUsers.map( (userInfo,index) => <Table.Body className='divide-y ' key={userInfo._id}>
+          allUsers.map( (userInfo,index) => <Table.Body className='divide-y overflow-auto flex flex-wrap' key={userInfo._id}>
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {index + 1} 
@@ -182,7 +182,7 @@ const Users = () => {
                 <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {userInfo.username}
                 </Table.Cell>
-                <Table.Cell>{userInfo.email}</Table.Cell>
+                <Table.Cell className='flex flex-wrap'>{userInfo.email}</Table.Cell>
                 <Table.Cell>{userInfo.role}</Table.Cell>
                 <Table.Cell>
                   
