@@ -141,7 +141,7 @@ const SingleBook = () => {
             onClick={event => addToWishlist(event,book)}
             className={`absolute top-8 right-3 bg-white p-2 rounded-full ${
               isBookInWishlist(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
-            }`}
+            } transition-none`}
           >
             <FaHeart className=" mt-0 w-5 h-5" />
           </button>

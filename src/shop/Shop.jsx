@@ -257,7 +257,7 @@ const goToNextPage = () => {
                 /> */}
                 <div className='relative text-center'>
                                 <img src={book.imageURL} alt="" className="w-full h-full object-cover"/>
-                                <button onClick={event => handleCart(event, book)} className={`absolute top-2 right-2  bg-white p-2 rounded-full ${
+                                <button onClick={event => handleCart(event, book)} className={`absolute top-2 right-2  bg-white p-2 rounded-full transition-none ${
                                   isBookInCart(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
                                 }`}
                                 >
@@ -269,7 +269,7 @@ const goToNextPage = () => {
                                 </button> */}
                                 <button
                                 onClick={event => handleWishlist(event, book)}
-                                className={`absolute top-12 right-2 bg-white hover:bg-white p-2 rounded-full ${
+                                className={`absolute top-12 right-2 bg-white hover:bg-white p-2 rounded-full transition-none ${
                                   isBookInWishlist(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
                                 }`}                                 
                               >

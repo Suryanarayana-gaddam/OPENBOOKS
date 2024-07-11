@@ -161,7 +161,7 @@ const BookCards = ({headLine,books, user}) => {
                                 <img src={book.imageURL} alt="" className="object-cover w-full h-full"/>
                                 <button onClick={event => handleCart(event, book)} className={`absolute top-2 right-2  bg-white p-2 rounded-full ${
                                   isBookInCart(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
-                                } duration-0`}
+                                } transition-none`}
                                 >
                                     <FaCartShopping className='w-5 h-5 '/>
                                 </button>
@@ -173,7 +173,7 @@ const BookCards = ({headLine,books, user}) => {
                                 onClick={event => handleWishlist(event, book)}
                                 className={`absolute top-12 right-2 bg-white p-2 rounded-full ${
                                   isBookInWishlist(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
-                                } duration-0`}
+                                } transition-none `}
                               >
                                 <FaHeart className=" mt-0 w-5 h-5" />
                               </button>
