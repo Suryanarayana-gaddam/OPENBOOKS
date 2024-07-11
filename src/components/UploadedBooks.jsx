@@ -113,7 +113,7 @@ const UploadedBooks = () => {
   };
   
   return (
-    <div className='lg:pl-20 my-24 sm:w-96 w-full lg:w-full'>
+    <div className='lg:pl-20 my-24 sm:w-96 lg:w-full'>
       <h2 className='mb-8 text-3xl font-bold text-center'>Manage Your Books</h2>
       {
         uploadedBooks && Array.isArray(uploadedBooks) && uploadedBooks.length > 0 ? (
@@ -131,7 +131,7 @@ const UploadedBooks = () => {
           </Table.HeadCell>
         </Table.Head>
         {
-          currentBooks && Array.isArray(currentBooks) && currentBooks.map( (book,index) => <Table.Body className='divide-y ' key={book._id}>
+          currentBooks && Array.isArray(currentBooks) && currentBooks.map( (book,index) => <Table.Body className='divide-y lg:w-[1080px]' key={book._id}>
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 ">
                 <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {indexOfFirstBook + index + 1} 

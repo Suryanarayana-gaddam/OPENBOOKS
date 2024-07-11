@@ -174,7 +174,7 @@ const Users = () => {
           </Table.HeadCell>
         </Table.Head>
         {
-          allUsers.map( (userInfo,index) => <Table.Body className='divide-y' key={userInfo._id}>
+          allUsers.map( (userInfo,index) => <Table.Body className='divide-y lg:w-[1150px]' key={userInfo._id}>
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {index + 1} 
