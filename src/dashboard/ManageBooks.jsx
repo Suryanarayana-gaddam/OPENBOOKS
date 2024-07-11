@@ -98,8 +98,8 @@ const ManageBooks = () => {
   };
 
   return (
-    <div className='px-4 my-12 l'>
-      <h2 className='mb-8 text-3xl font-bold'>Manage All Books</h2>
+    <div className='px-4 my-12 '>
+      <h2 className='mb-8 text-3xl font-bold text-center'>Manage All Books</h2>
       <h2 className='mb-2'>Welcome <b>{username}</b> you can manage a book here !</h2>
       <Table className='overflow-auto sm:p-3 felx flex-wrap sm:max-w-md md:max-w-lg lg:max-w-full'>
         <Table.Head>
@@ -113,7 +113,7 @@ const ManageBooks = () => {
           </Table.HeadCell>
         </Table.Head>
         {
-          currentBooks.map( (book,index) => <Table.Body className='divide-y' key={book._id}>
+          currentBooks.map( (book,index) => <Table.Body className='divide-y sm:max-w-md md:max-w-lg lg:max-w-full' key={book._id}>
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {indexOfFirstBook + index + 1} 
