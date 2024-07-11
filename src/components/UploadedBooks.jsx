@@ -73,7 +73,7 @@ const UploadedBooks = () => {
 
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  const currentBooks =  uploadedBooks.slice(indexOfFirstBook, indexOfLastBook)
+  const currentBooks =  uploadedBooks?.slice(indexOfFirstBook, indexOfLastBook)
 
   const totalPages = Math.ceil(uploadedBooks.length / booksPerPage);
 
