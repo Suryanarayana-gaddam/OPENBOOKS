@@ -43,7 +43,7 @@ const Orders = () => {
 
   return (
     <div className="container mx-auto px-4 lg:px-24 mt-16">
-    <h1 className="text-3xl font-bold text-gray-800 mt-4 md:mt-0">My Orders</h1>
+    <h1 className="text-3xl font-bold text-gray-800 mt-4 md:mt-0 text-center">My Orders</h1>
     <div>
       {orders && orders.length === 0 ? (
         <p className="text-gray-600">You have no orders</p>

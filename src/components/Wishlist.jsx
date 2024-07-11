@@ -7,7 +7,7 @@ const Wishlist = () => {
 
   const [wishlistBooks, setWishlistBooks] = useState([]);
   const user = useContext(AuthContext);
-  const headLine = "My Wishlist";
+  const headLine = "Wishlist";
   const [userData,refetch] = useUser();
   
   useEffect(() => {
