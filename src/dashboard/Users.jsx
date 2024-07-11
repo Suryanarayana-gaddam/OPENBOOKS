@@ -117,10 +117,10 @@ const Users = () => {
 
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  const currentBooks = allUsers.slice(indexOfFirstBook, indexOfLastBook);
+  const currentUsers = allUsers.slice(indexOfFirstBook, indexOfLastBook);
 
 
-  const totalPages = Math.ceil(allUsers.length / booksPerPage);
+  const totalPages = Math.ceil(currentUsers.length / booksPerPage);
 
   const getPageNumbers = () => {
     let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
@@ -163,7 +163,7 @@ const Users = () => {
       <h2 className='mb-8 text-3xl font-bold'>Manage Your Users</h2>
       <h2 className='mb-2'>Welcome Mr. &nbsp;<b>{username}</b> &nbsp;you can manage a users here !</h2>
 
-      <Table className='lg:w-[1000px]'>
+      <Table className='sm:max-w-md md:max-w-lg lg:max-w-full'>
         <Table.Head>
           <Table.HeadCell>No.</Table.HeadCell>
           <Table.HeadCell>User Name</Table.HeadCell>
