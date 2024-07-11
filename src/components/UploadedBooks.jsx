@@ -114,12 +114,12 @@ const UploadedBooks = () => {
   
   return (
     <div className='pl-20 my-24 sm:w-96 lg:w-full'>
-      <h2 className='mb-8 text-3xl font-bold'>Manage Your Books</h2>
+      <h2 className='mb-8 text-3xl font-bold text-center'>Manage Your Books</h2>
       {
         uploadedBooks && Array.isArray(uploadedBooks) && uploadedBooks.length > 0 ? (
           <div className=''>
             {/* Table for book data */}
-      <Table className='overflow-hidden'>
+      <Table className='overflow-hidden flex flex-wrap'>
         <Table.Head>
           <Table.HeadCell>No.</Table.HeadCell>
           <Table.HeadCell>Book Name</Table.HeadCell>
