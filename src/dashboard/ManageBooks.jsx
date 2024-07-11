@@ -98,10 +98,10 @@ const ManageBooks = () => {
   };
 
   return (
-    <div className='px-4 my-12 '>
+    <div className='px-4 my-12 sm:max-w-md md:max-w-lg lg:max-w-full'>
       <h2 className='mb-8 text-3xl font-bold text-center'>Manage All Books</h2>
       <h2 className='mb-2'>Welcome <b>{username}</b> you can manage a book here !</h2>
-      <Table className='overflow-auto sm:p-3 felx flex-wrap sm:max-w-md md:max-w-lg lg:max-w-full'>
+      <Table className='overflow-auto sm:p-3 felx flex-wrap '>
         <Table.Head>
           <Table.HeadCell>No.</Table.HeadCell>
           <Table.HeadCell>Book Name</Table.HeadCell>
