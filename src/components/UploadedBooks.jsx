@@ -113,7 +113,7 @@ const UploadedBooks = () => {
   };
   
   return (
-    <div className='lg:pl-20 my-24 sm:w-96 w-full lg:w-full'>
+    <div className='lg:pl-20 my-24 sm:w-96 '>
       <h2 className='mb-8 text-3xl font-bold text-center'>Manage Your Books</h2>
       {
         uploadedBooks && Array.isArray(uploadedBooks) && uploadedBooks.length > 0 ? (
