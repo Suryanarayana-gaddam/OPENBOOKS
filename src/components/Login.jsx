@@ -58,9 +58,6 @@ const Login = () => {
   }
   const from = location.state?.from?.pathname || "/";
 
-
-
-
 const handleRegister = () => {
     loginWithGoogle().then((result) => {
         const user = result.user;
@@ -103,6 +100,11 @@ const handleRegister = () => {
     });
 }
 
+const handlePaste = (event) => {
+    event.preventDefault();
+    window.alert("Paste is not allowed in Password!")
+}
+
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12 lg:pb-2">
         <div className="relative py-3 sm:max-w-xl sm:mx-auto">
@@ -121,7 +123,7 @@ const handleRegister = () => {
                                 
                             </div>
                             <div className="relative">
-                                <input id="password" name="password" type={showPassword ? 'text' : 'password'} onChange={handlePasswordChange} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Password" value={password} required />
+                                <input id="password" name="password" type={showPassword ? 'text' : 'password'} onPaste={handlePaste} onChange={handlePasswordChange} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Password" value={password} required />
                                 <button type="button" className='absolute right-3 top-2' onClick={togglePasswordVisibility}>
                                     {showPassword ? <FaEyeSlash/> : <FaEye/>}
                                 </button>

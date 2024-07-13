@@ -1,7 +1,7 @@
 {
-  "name": "mern-client",
+  "name": "Open Books Online Book Store Web Application",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
