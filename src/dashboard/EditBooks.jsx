@@ -60,7 +60,7 @@ const updateBookObj = {
           <span className="ml-2">Back</span>
         </Link>
         <h2 className='mb-8 text-3xl font-bold'>Update the book data</h2>
-        <div className='w-auto block border sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
+        <div className=' block w-full border sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
         <form className="flex max-w-full w-auto flex-col flex-wrap" onSubmit={handleUpdate}>
           {/* First Row */}
           {/* Book Name */}
