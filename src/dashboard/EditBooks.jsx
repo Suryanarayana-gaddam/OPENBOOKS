@@ -60,8 +60,8 @@ const updateBookObj = {
           <span className="ml-2">Back</span>
         </Link>
         <h2 className='mb-8 text-3xl font-bold'>Update the book data</h2>
-
-        <form className="flex flex-col flex-wrap w-auto border sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]" onSubmit={handleUpdate}>
+        <div className='w-auto border sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
+        <form className="flex flex-col flex-wrap" onSubmit={handleUpdate}>
           {/* First Row */}
           {/* Book Name */}
           <div className='flex gap-8'>
@@ -127,6 +127,8 @@ const updateBookObj = {
           </div>
           <Button type='submit' className='mt-5'>Update Book</Button>
         </form>
+        </div>
+        
     </div>
   )
 
