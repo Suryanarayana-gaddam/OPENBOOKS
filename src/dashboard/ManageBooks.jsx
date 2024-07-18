@@ -101,7 +101,7 @@ const ManageBooks = () => {
     <div className='px-4 my-12'>
       <h2 className='mb-8 text-3xl font-bold text-center'>Manage All Books</h2>
       <h2 className='mb-2'>Welcome <b>{username}</b> you can manage a book here !</h2>
-      <Table className='w-auto overflow-auto border border-collapse sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px] '>
+      <Table className='w-auto border border-collapse sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px] '>
         <Table.Head>
           <Table.HeadCell>No.</Table.HeadCell>
           <Table.HeadCell>Book Name</Table.HeadCell>
@@ -113,8 +113,8 @@ const ManageBooks = () => {
           </Table.HeadCell>
         </Table.Head>
         {
-          currentBooks.map( (book,index) => <Table.Body className='divide-y ' key={book._id}>
-              <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+          currentBooks.map( (book,index) => <Table.Body className='divide-y sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px] w-auto' key={book._id}>
+              <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 w-auto">
                 <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {indexOfFirstBook + index + 1} 
                 </Table.Cell>
