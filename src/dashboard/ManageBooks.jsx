@@ -115,16 +115,16 @@ const ManageBooks = () => {
         {
           currentBooks.map( (book,index) => <Table.Body className='divide-y sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px] w-auto' key={book._id}>
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 w-auto">
-                <Table.Cell className=" font-medium text-gray-900 dark:text-white">
+                <Table.Cell className=" w-auto font-medium text-gray-900 dark:text-white">
                   {indexOfFirstBook + index + 1} 
                 </Table.Cell>
-                <Table.Cell className=" font-medium text-gray-900 dark:text-white">
+                <Table.Cell className="w-auto font-medium text-gray-900 dark:text-white">
                 <Link to={`/book/${book._id}`} className='text-blue-600'>{book.bookTitle}</Link>
                 </Table.Cell>
-                <Table.Cell>{book.authorName}</Table.Cell>
-                <Table.Cell>{book.category}</Table.Cell>
-                <Table.Cell>₹{book.bookPrice}</Table.Cell>
-                <Table.Cell className=''>
+                <Table.Cell className='w-auto'>{book.authorName}</Table.Cell>
+                <Table.Cell className='w-auto'>{book.category}</Table.Cell>
+                <Table.Cell className='w-auto'>₹{book.bookPrice}</Table.Cell>
+                <Table.Cell className='w-auto'>
                   <Link 
                     className="font-medium text-cyan-600 hover:underline dark:text-cyan-500" 
                     to={`/admin/Dashboard/edit-books/${book._id}`}>
