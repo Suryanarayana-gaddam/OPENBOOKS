@@ -163,7 +163,7 @@ const Users = () => {
       <h2 className='mb-8 text-3xl font-bold'>Manage Your Users</h2>
       <h2 className='mb-2'>Welcome Mr. &nbsp;<b>{username}</b> &nbsp;you can manage a users here !</h2>
 
-      <Table className=' '>
+      <Table >
         <Table.Head>
           <Table.HeadCell>No.</Table.HeadCell>
           <Table.HeadCell>User Name</Table.HeadCell>
@@ -182,7 +182,7 @@ const Users = () => {
                 <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                   {userInfo.username}
                 </Table.Cell>
-                <Table.Cell >{userInfo.email}</Table.Cell>
+                <Table.Cell ><span>{userInfo.email}</span></Table.Cell>
                 <Table.Cell>{userInfo.role}</Table.Cell>
                 <Table.Cell>
                   
