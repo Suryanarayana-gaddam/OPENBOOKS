@@ -13,6 +13,7 @@ const SingleBook = () => {
   const { _id, createrId, bookTitle, imageURL, category, bookDescription, authorName,bookPrice } = useLoaderData();
   const [books, setBooks] = useState([]);
   const user = useContext(AuthContext);
+  const [wishlistColor,setWishlistColor] = useState("text-gray-400");
   const [wishlistBooks, setWishlistBooks] = useState([]);
   const [cartBooks, setCartBooks] = useState([]);
   const book = { _id, createrId, bookTitle, imageURL, category, bookDescription, authorName,bookPrice };
@@ -41,6 +42,11 @@ const SingleBook = () => {
   const isBookInWishlist = book => {
     return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
   };
+  if(isBookInWishlist){
+    setWishlistColor("text-red-500");
+  }else{
+    setWishlistColor("text-gray-400");
+  }
   const isBookInCart = book => {
     return cartBooks.some(cartBook => cartBook._id === book._id);
   };
@@ -68,6 +74,7 @@ const SingleBook = () => {
 
   const addToWishlist = (event,book) => {
     event.preventDefault();
+    
     if (!book) {
         console.error("Book object is undefined");
         return;
@@ -137,17 +144,12 @@ const SingleBook = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
         <div className="max-w-lg mx-auto relative ">
           <img src={imageURL} alt={bookTitle} className="rounded-lg shadow-lg object-cover w-full h-full" />
-          { isBookInWishlist(book) ?
-            (<button onClick={event => addToWishlist(event,book)} style={{transition:"none",transitionDuration:"0s"}} className={`absolute top-8 right-3 p-2 rounded-full text-red-500 bg-white `}><FaHeart className=" mt-0 w-5 h-5" />
-            </button>)    
-            :
-            (<button
-              onClick={event => addToWishlist(event,book)} style={{transition:"none",transitionDuration:"0s"}}
-              className={`absolute top-8 right-3 bg-white p-2 rounded-full text-gray-400 border-collapse`} 
-            >
-              <FaHeart className=" mt-0 w-5 h-5" />
-            </button>)
-          }
+          <button
+            onClick={event => addToWishlist(event,book)}
+            className={`absolute top-8 right-3 bg-white p-2 rounded-full ${wishlistColor} transition-none`}
+          >
+            <FaHeart className=" mt-0 w-5 h-5" />
+          </button>
         </div>
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mt-4 md:mt-0">{bookTitle}</h1>
