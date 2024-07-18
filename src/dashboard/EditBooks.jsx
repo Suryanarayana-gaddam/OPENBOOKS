@@ -61,11 +61,11 @@ const updateBookObj = {
         </Link>
         <h2 className='mb-8 text-3xl font-bold'>Update the book data</h2>
 
-        <form className="flex flex-col flex-wrap w-auto overflow-auto border border-collapse sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px] " onSubmit={handleUpdate}>
+        <form className="flex flex-col flex-wrap w-auto border sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]" onSubmit={handleUpdate}>
           {/* First Row */}
           {/* Book Name */}
           <div className='flex gap-8'>
-          <div className='lg:w-1/2'>
+          <div className='w-1/2'>
             <div className="mb-2 block">
               <Label htmlFor="bookTitle" value="Book Title" />
             </div>

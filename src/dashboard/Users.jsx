@@ -159,7 +159,7 @@ const Users = () => {
   };
   
   return (
-    <div className='px-4 my-12 sm:max-md:w-[760px] md:max-lg:w-[1014px] lg:max-xl:w-[1270px] '>
+    <div className='px-4 my-12 '>
       <h2 className='mb-8 text-3xl font-bold'>Manage Your Users</h2>
       <h2 className='mb-2'>Welcome Mr. &nbsp;<b>{username}</b> &nbsp;you can manage a users here !</h2>
 
