@@ -61,10 +61,10 @@ const updateBookObj = {
         </Link>
         <h2 className='mb-8 text-3xl font-bold'>Update the book data</h2>
         <div className=' sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
-        <form className=" max-w-full w-auto inline-block" onSubmit={handleUpdate}>
+        <form className=" inline-block" onSubmit={handleUpdate}>
           {/* First Row */}
           {/* Book Name */}
-          <div className='flex gap-8 border sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
+          <div className='flex gap-8 sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
           <div className='w-1/2'>
             <div className="mb-2 block">
               <Label htmlFor="bookTitle" value="Book Title" />
@@ -81,7 +81,7 @@ const updateBookObj = {
           </div>
           {/* 2 nd Row */}
           {/* Image URL */}
-          <div className='flex gap-8 border sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
+          <div className='flex gap-8 sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
             <div className='w-1/2'>
               <div className="mb-2 block"> 
                 <Label htmlFor="imageURL" value=" Book Image URL" /> 
@@ -105,21 +105,21 @@ const updateBookObj = {
           </div>
           {/* Thrd Row */}
           {/* Book Description */}
-          <div className=' border sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
+          <div className=' sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
             <div className="mb-2 block">
               <Label htmlFor="bookDescription" value="Book Description" />
             </div>
             <Textarea id="bookDescription" name='bookDescription' placeholder="Write your Book Description..." required className='w-full' rows={6} defaultValue={bookDescription} />
           </div>
           {/* Book Pdf URL */}
-          <div className=' border sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
+          <div className=' sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
             <div className="mb-2 block">
               <Label htmlFor="bookPDFURL" value="Book PDF URL" />
             </div>
             <TextInput id="bookPDFURL" name='bookPDFURL' type="text" placeholder="book pdf url" required defaultValue={bookPDFURL} />
           </div>
           {/* Book Price*/}
-          <div className=' border sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
+          <div className=' sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
             <div className="mb-2 block">
               <Label htmlFor="bookPrice" value="Book Price" />
             </div>
