@@ -137,14 +137,17 @@ const SingleBook = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
         <div className="max-w-lg mx-auto relative ">
           <img src={imageURL} alt={bookTitle} className="rounded-lg shadow-lg object-cover w-full h-full" />
-          <button
-            onClick={event => addToWishlist(event,book)}
-            className={`absolute top-8 right-3 bg-white p-2 rounded-full ${
-              isBookInWishlist(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
-            } transition-none`}
-          >
-            <FaHeart className=" mt-0 w-5 h-5" />
-          </button>
+          { isBookInWishlist(book) ?
+            (<button onClick={event => addToWishlist(event,book)} className={`absolute top-8 right-3 p-2 rounded-full text-red-500 bg-white transition-none`}><FaHeart className=" mt-0 w-5 h-5" />
+            </button>)    
+            :
+            (<button
+              onClick={event => addToWishlist(event,book)}
+              className={`absolute top-8 right-3 bg-white p-2 rounded-full text-gray-400 border-collapse transition-none`} 
+            >
+              <FaHeart className=" mt-0 w-5 h-5" />
+            </button>)
+          }
         </div>
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mt-4 md:mt-0">{bookTitle}</h1>

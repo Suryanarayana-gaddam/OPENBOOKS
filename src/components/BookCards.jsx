@@ -159,7 +159,7 @@ const BookCards = ({headLine,books, user}) => {
                        <Link to={`/book/${book._id}`}>
                             <div className='relative'>
                                 <img src={book.imageURL} alt="" className="object-cover w-full h-full"/>
-                                <button onClick={event => handleCart(event, book)} className={`absolute top-2 right-2  bg-white p-2 rounded-full ${
+                                <button onClick={event => handleCart(event, book)} className={`transition-none duration-0 absolute top-2 right-2  bg-white p-2 rounded-full ${
                                   isBookInCart(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
                                 } transition-none`}
                                 >

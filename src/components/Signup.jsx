@@ -245,7 +245,7 @@ const Signup = () => {
                                 onChange={handlePasswordChange} onFocus={handleFocus} onBlur={() => {setPwdInstruction("")
                                     setStrengthMessage('');}} required/>
                                 <button type="button" className='absolute right-3 top-2' onClick={togglePasswordVisibility}>
-                                    {showPassword ? <FaEyeSlash/> : <FaEye/>}
+                                {showPassword ? <FaEyeSlash title='Hide'/> : <FaEye title='view'/>}
                                 </button>
                             <div >
                                 <span style={{fontSize:'13px'}}>{pwdInstruction}</span>
