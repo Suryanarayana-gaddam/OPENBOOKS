@@ -163,7 +163,7 @@ const Users = () => {
       <h2 className='mb-8 text-3xl font-bold'>Manage Your Users</h2>
       <h2 className='mb-2'>Welcome Mr. &nbsp;<b>{username}</b> &nbsp;you can manage a users here !</h2>
 
-      <Table className='w-full overflow-auto border border-collapse sm:max-md:max-w-[760px] md:max-lg:max-w-[1014px] lg:max-xl:max-w-[1270px] '>
+      <Table className='w-full overflow-auto border border-collapse sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px] '>
         <Table.Head>
           <Table.HeadCell>No.</Table.HeadCell>
           <Table.HeadCell>User Name</Table.HeadCell>
