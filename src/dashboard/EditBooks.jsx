@@ -64,15 +64,15 @@ const updateBookObj = {
         <form className=" inline-block" onSubmit={handleUpdate}>
           {/* First Row */}
           {/* Book Name */}
-          <div className='flex gap-8 sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
-          <div className='w-1/2'>
+          <div className=' gap-8 sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
+          <div className=''>
             <div className="mb-2 block">
               <Label htmlFor="bookTitle" value="Book Title" />
             </div>
             <TextInput id="bookTitle" name="bookTitle" type="text" placeholder="Enter the Book Name" required defaultValue={bookTitle} />
           </div>
           {/* Author Name */}
-          <div className='w-1/2'>
+          <div className=''>
             <div className="mb-2 block">
               <Label htmlFor="authorName" value="Author Name" />
             </div>
@@ -81,15 +81,15 @@ const updateBookObj = {
           </div>
           {/* 2 nd Row */}
           {/* Image URL */}
-          <div className='flex gap-8 sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
-            <div className='w-1/2'>
+          <div className=' gap-8 sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
+            <div className=''>
               <div className="mb-2 block"> 
                 <Label htmlFor="imageURL" value=" Book Image URL" /> 
               </div>
               <TextInput id="imageURL" name="imageURL" type="text" placeholder="Enter the Book Image URL" required defaultValue={imageURL} />
             </div>
             {/* Category */}
-            <div className='w-1/2'>
+            <div className=''>
               <div className="mb-2 block"> 
                 <Label htmlFor="category" value=" Book Category" /> 
               </div>
