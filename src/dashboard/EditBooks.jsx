@@ -61,7 +61,7 @@ const updateBookObj = {
         </Link>
         <h2 className='mb-8 text-3xl font-bold'>Update the book data</h2>
 
-        <form className="flex lg:w-[1000px] flex-col flex-wrap gap-4 " onSubmit={handleUpdate}>
+        <form className="flex flex-col flex-wrap w-auto overflow-auto border border-collapse sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px] " onSubmit={handleUpdate}>
           {/* First Row */}
           {/* Book Name */}
           <div className='flex gap-8'>
@@ -72,7 +72,7 @@ const updateBookObj = {
             <TextInput id="bookTitle" name="bookTitle" type="text" placeholder="Enter the Book Name" required defaultValue={bookTitle} />
           </div>
           {/* Author Name */}
-          <div className='lg:w-1/2'>
+          <div className='w-1/2'>
             <div className="mb-2 block">
               <Label htmlFor="authorName" value="Author Name" />
             </div>
@@ -82,14 +82,14 @@ const updateBookObj = {
           {/* 2 nd Row */}
           {/* Image URL */}
           <div className='flex gap-8'>
-            <div className='lg:w-1/2'>
+            <div className='w-1/2'>
               <div className="mb-2 block"> 
                 <Label htmlFor="imageURL" value=" Book Image URL" /> 
               </div>
               <TextInput id="imageURL" name="imageURL" type="text" placeholder="Enter the Book Image URL" required defaultValue={imageURL} />
             </div>
             {/* Category */}
-            <div className='lg:w-1/2'>
+            <div className='w-1/2'>
               <div className="mb-2 block"> 
                 <Label htmlFor="category" value=" Book Category" /> 
               </div>
