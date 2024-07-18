@@ -60,8 +60,8 @@ const updateBookObj = {
           <span className="ml-2">Back</span>
         </Link>
         <h2 className='mb-8 text-3xl font-bold'>Update the book data</h2>
-        <div className='w-auto border sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
-        <form className="flex max-w-full w-auto  flex-wrap" onSubmit={handleUpdate}>
+        <form className=" max-w-full w-auto " onSubmit={handleUpdate}>
+        <div className='flex flex-col flex-wrap w-auto border sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
           {/* First Row */}
           {/* Book Name */}
           <div className='flex gap-8'>
@@ -126,8 +126,8 @@ const updateBookObj = {
             <TextInput id="bookPrice" name='bookPrice' type="num" placeholder="book price ..." required defaultValue={bookPrice}/>
           </div>
           <Button type='submit' className='mt-5'>Update Book</Button>
-        </form>
         </div>
+        </form>
         
     </div>
   )
