@@ -60,19 +60,19 @@ const updateBookObj = {
           <span className="ml-2">Back</span>
         </Link>
         <h2 className='mb-8 text-3xl font-bold'>Update the book data</h2>
-        <div className=' block w-full border sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
+        <div className=' w-full border sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
         <form className="flex max-w-full w-auto flex-col flex-wrap" onSubmit={handleUpdate}>
           {/* First Row */}
           {/* Book Name */}
           <div className='flex gap-8 w-auto border sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
-          <div className=' block'>
-            <div className="mb-2 block">
+          <div>
+            <div className="mb-2">
               <Label htmlFor="bookTitle" value="Book Title" />
             </div>
             <TextInput id="bookTitle" name="bookTitle" type="text" placeholder="Enter the Book Name" required defaultValue={bookTitle} />
           </div>
           {/* Author Name */}
-          <div className=' block'>
+          <div>
             <div className="mb-2 block">
               <Label htmlFor="authorName" value="Author Name" />
             </div>
@@ -82,15 +82,15 @@ const updateBookObj = {
           {/* 2 nd Row */}
           {/* Image URL */}
           <div className='flex gap-8 w-auto border sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
-            <div className=' block'>
-              <div className="mb-2 block"> 
+            <div>
+              <div className="mb-2"> 
                 <Label htmlFor="imageURL" value=" Book Image URL" /> 
               </div>
               <TextInput id="imageURL" name="imageURL" type="text" placeholder="Enter the Book Image URL" required defaultValue={imageURL} />
             </div>
             {/* Category */}
-            <div className=' block'>
-              <div className="mb-2 block"> 
+            <div>
+              <div className="mb-2 "> 
                 <Label htmlFor="category" value=" Book Category" /> 
               </div>
 
@@ -105,22 +105,22 @@ const updateBookObj = {
           </div>
           {/* Thrd Row */}
           {/* Book Description */}
-          <div className='w-auto block border sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
-            <div className="mb-2 block">
+          <div className='w-auto sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
+            <div className="mb-2 ">
               <Label htmlFor="bookDescription" value="Book Description" />
             </div>
             <Textarea id="bookDescription" name='bookDescription' placeholder="Write your Book Description..." required className='w-full' rows={6} defaultValue={bookDescription} />
           </div>
           {/* Book Pdf URL */}
-          <div className='w-auto block sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
-            <div className="mb-2 block">
+          <div className='w-auto sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
+            <div className="mb-2 ">
               <Label htmlFor="bookPDFURL" value="Book PDF URL" />
             </div>
             <TextInput id="bookPDFURL" name='bookPDFURL' type="text" placeholder="book pdf url" required defaultValue={bookPDFURL} />
           </div>
           {/* Book Price*/}
-          <div className='w-auto block sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
-            <div className="mb-2 block">
+          <div className='w-auto sm:max-w-[750px] md:max-w-[1004px] lg:max-w-[1260px]'>
+            <div className="mb-2 ">
               <Label htmlFor="bookPrice" value="Book Price" />
             </div>
             <TextInput id="bookPrice" name='bookPrice' type="num" placeholder="book price ..." required defaultValue={bookPrice}/>
