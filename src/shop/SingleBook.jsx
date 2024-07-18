@@ -13,7 +13,6 @@ const SingleBook = () => {
   const { _id, createrId, bookTitle, imageURL, category, bookDescription, authorName,bookPrice } = useLoaderData();
   const [books, setBooks] = useState([]);
   const user = useContext(AuthContext);
-  const [wishlistColor,setWishlistColor] = useState("text-gray-400");
   const [wishlistBooks, setWishlistBooks] = useState([]);
   const [cartBooks, setCartBooks] = useState([]);
   const book = { _id, createrId, bookTitle, imageURL, category, bookDescription, authorName,bookPrice };
@@ -42,11 +41,6 @@ const SingleBook = () => {
   const isBookInWishlist = book => {
     return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
   };
-  if(isBookInWishlist){
-    setWishlistColor("text-red-500");
-  }else{
-    setWishlistColor("text-gray-400");
-  }
   const isBookInCart = book => {
     return cartBooks.some(cartBook => cartBook._id === book._id);
   };
@@ -74,7 +68,6 @@ const SingleBook = () => {
 
   const addToWishlist = (event,book) => {
     event.preventDefault();
-    
     if (!book) {
         console.error("Book object is undefined");
         return;
@@ -146,7 +139,9 @@ const SingleBook = () => {
           <img src={imageURL} alt={bookTitle} className="rounded-lg shadow-lg object-cover w-full h-full" />
           <button
             onClick={event => addToWishlist(event,book)}
-            className={`absolute top-8 right-3 bg-white p-2 rounded-full ${wishlistColor} transition-none`}
+            className={`absolute top-8 right-3 bg-white p-2 rounded-full ${
+              isBookInWishlist(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
+            } transition-none`}
           >
             <FaHeart className=" mt-0 w-5 h-5" />
           </button>
