@@ -60,7 +60,7 @@ const updateBookObj = {
           <span className="ml-2">Back</span>
         </Link>
         <h2 className='mb-8 text-3xl font-bold'>Update the book data</h2>
-        <div className=' sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
+        <div className='w-full sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
         <form className=" inline-block" onSubmit={handleUpdate}>
           {/* First Row */}
           {/* Book Name */}
