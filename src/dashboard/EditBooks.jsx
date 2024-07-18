@@ -61,7 +61,7 @@ const updateBookObj = {
         </Link>
         <h2 className='mb-8 text-3xl font-bold'>Update the book data</h2>
         <div className='w-auto border sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
-        <form className="flex max-w-full w-auto flex-col flex-wrap" onSubmit={handleUpdate}>
+        <form className="flex max-w-full w-auto  flex-wrap" onSubmit={handleUpdate}>
           {/* First Row */}
           {/* Book Name */}
           <div className='flex gap-8'>
