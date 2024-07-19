@@ -61,7 +61,6 @@ const Shop = ({showSearchBox}) => {
         },
         body: JSON.stringify(book) // Stringify the book object before sending
       }).then(res => res.json()).then(data => {
-        //alert("Book Uploaded to wishlist Successfully!!!");
         setWishlistBooks([...wishlistBooks, book]); // Update wishlistBooks state
         refetch()
       })
@@ -72,7 +71,6 @@ const Shop = ({showSearchBox}) => {
       
     } else {
         // Remove book from wishlist
-        //console.log(bookId);
         fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/remove/${bookId}`, {
         method: "POST",
         headers: {
@@ -124,7 +122,6 @@ const Shop = ({showSearchBox}) => {
       
     } else {
         // Remove book from cart
-        //console.log(bookId);
        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/remove/${bookId}`, {
         method: "POST",
         headers: {
@@ -348,86 +345,3 @@ export default Shop;
 
 
 
-
-// import React, { useEffect, useState } from "react";
-// import { Card } from "flowbite-react";
-// import { Link } from "react-router-dom";
-
-// const Shop = () => {
-//   const [books, setBooks] = useState([]);
-
-//   useEffect(() => {
-//     fetch("http://localhost:5000/all-books")
-//       .then(res => res.json())
-//       .then(data => setBooks(data));
-//   }, []);
-
-//   return (
-//     <div className="mt-20 px-4 lg:px-24">
-//       <h2 className="text-5xl font-bold text-center">All Books are Here</h2>
-
-//       <div className="grid gap-4 w-[1100px] my-10 lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-3 grid-cols-1 p-0">
-//         {books.map(book => (
-//           <Card key={book._id} className="p-0 w-fit">
-//             <Link to={`/book/${book._id}`}>
-//               <img src={book.imageURL} alt="" className="w-full" />
-//               <h3 className=" font-bold tracking-tight text-gray-900 dark:text-white">
-//                 {book.bookTitle}
-//               </h3>
-//               <p className="font-medium text-gray-700 dark:text-gray-400">
-//                 {book.description}
-//               </p>
-//               <p className="font-normal text-gray-700 dark:text-gray-400">
-//                 ₹{book.bookPrice}
-//               </p>
-//               <button className="bg-blue-700 font-semibold text-white py-2 rounded w-full">
-//                 Buy Now
-//               </button>
-//             </Link>
-//           </Card>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Shop;
-
-
-
-
-// // import React, { useEffect, useState } from "react";
-// // import { Card } from "flowbite-react";
-
-// // const shop = () => {
-// //   const [books, setBooks] = useState([]);
-
-// //   useEffect( () => {
-// //     fetch("http://localhost:5000/all-books").then (res => res.json()).then(data => setBooks(data));
-// //   },[])
-// //   return (
-// //     <div className="mt-28 px-4 lg:px-24">
-// //       <h2 className="text-5xl font-bold text-center">All Books are Here</h2>
-
-// //       <div className="grid gap-8 my-12 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1">
-// //         {
-// //           books.map(book => <Card
-// //             >
-// //               <img src={book.imageURL} alt="" className='h-96'/>
-// //               <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-// //                 <p> {book.bookTitle}</p>
-// //               </h5>
-// //               <p className="font-normal text-gray-700 dark:text-gray-400">
-// //                 Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-// //               </p>
-// //               <button className='bg-blue-700 font-semibold text-white py-2 rounded'>Buy Now</button>
-// //             </Card>
-// //             )
-// //         }
-// //       </div>
-
-// //     </div>
-// //   )
-// // }
-
-// // export default Shop

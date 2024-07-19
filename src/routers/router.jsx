@@ -1,12 +1,9 @@
 import {
     createBrowserRouter,
-    // RouterProvider,
   } from "react-router-dom";
 import App from "../App";
 import Home from "../home/Home";
 import Shop from "../shop/Shop";
-//import About from "../components/About";
-//import Blog from "../components/Blog";
 import SingleBook from "../shop/SingleBook";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import Dashboard from "../dashboard/Dashboard";
@@ -20,7 +17,6 @@ import Logout from "../components/Logout";
 import BookCategories from "../components/BookCategories";
 import Wishlist from "../components/Wishlist";
 import Cart from "../components/Cart";
-//import UserProfile from "../components/UserProfile";
 import UploadedBooks from "../components/UploadedBooks";
 import SearchedBooks from "../components/SearchedBooks";
 import Orders from "../components/Orders";

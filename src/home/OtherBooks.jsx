@@ -18,27 +18,6 @@ const OtherBooks = () => {
   }
 
     useEffect( () =>  {
-        // if(user){
-        //     const fetchOtherBooks = async () =>  {
-        //         try{
-        //          const response= await fetch("https://book-store-api-theta.vercel.app/all-books", {
-        //              headers : {
-        //                  authorization: `Bearer ${token}`
-        //              }
-        //          });
-        //          if (!response.ok) {
-        //              throw new Error('Error fetching books by category');
-        //            }
-        //            const data = await response.json();
-        //            // Shuffle the fetched books and select the first 15
-        //            const shuffledBooks = shuffleArray(data).slice(0, 15);
-        //            setBooks(shuffledBooks);
-        //          } catch (error) {
-        //              console.error('Error:', error.message);
-        //            }
-        //     }
-        //     fetchOtherBooks();
-        // }else{
             const fetchOtherBooks = async () =>  {
                 try{
                     const response= await fetch("https://book-store-api-theta.vercel.app/all-books/get/other-books", {

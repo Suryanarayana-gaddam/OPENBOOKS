@@ -181,7 +181,7 @@ const Signup = () => {
                 "Content-type": "application/json",
             }
         }).then(res => {
-            if (res.status === 404 || res.status === 401) {
+            if (!res.status == 200) {
                 const userObj = {
                     username,
                     email,

@@ -31,13 +31,6 @@ const AuthProvider = ({children}) => {
       return signOut(auth);
     }
 
-    // update your profile 
-    // const updateUserProfile = (name , photoURL) => {
-    //   return updateProfile(auth.currentUser,{
-    //     displayName:name,
-    //     photoURL : photoURL
-    //   })
-    // }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth,currentUser => {

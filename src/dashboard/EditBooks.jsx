@@ -33,7 +33,6 @@ const updateBookObj = {
   bookTitle,authorName,imageURL,category,bookDescription,bookPDFURL,bookPrice
 }
 
-  //console.log(bookObj);
   //update book data
   fetch(`https://book-store-api-theta.vercel.app/book/update/${id}`,{
     method: "PATCH",
