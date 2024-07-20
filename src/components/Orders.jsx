@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthProvider';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import useUser from '../../hooks/useUser'
+import useFetch from '../../hooks/useFetch';
 
 
 const Orders = () => {
@@ -12,34 +13,18 @@ const Orders = () => {
   const token = localStorage.getItem('access-token');
   const [userData,refetch] = useUser();
 
+  const [url1,setUrl1] = useState("")
+  const {data : data1} = useFetch(url1);
+
   useEffect(() => {
     if(userData && userData._id){
       setUserId(userData._id)
-    
-      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/orders`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`
-        },
-      })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(error => {
-            console.error("Error fetching orders:", error);
-          });
-        }
-        return res.json();
-      })
-      .then(data => {
-          setOrders(data.reverse());
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-    }
-    refetch()
-  }, [user,userData,token]);
+    } 
+    setUrl1(`https://book-store-api-theta.vercel.app/user/${userId}/get/orders`);
+  }, [user,userData,userId]);
+  useEffect(() =>{
+    setOrders(data1.reverse());
+  },[data1])
 
   return (
     <div className="container mx-auto px-4 lg:px-24 mt-16">

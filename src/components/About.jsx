@@ -1,50 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import useBooks from '../../hooks/useBooks';
+import useFetch from '../../hooks/useFetch';
 
 const About = () => {
   const [bookCount, setBookCount] = useState(0);
   const [userCount, setUserCount] = useState(0);
   const [orderCount, setOrderCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const token = localStorage.getItem('access-token');
-  const [allBooks,refetch] = useBooks();
-  console.log(allBooks);
+
+  const [url1,setUrl1] = useState("")
+  const {data : data1} = useFetch(url1);
+  const [url2,setUrl2] = useState("")
+  const {data : data2} = useFetch(url2);
+  const [url3,setUrl3] = useState("")
+  const {data : data3} = useFetch(url3);
 
   useEffect(() => {
-    fetch("https://book-store-api-theta.vercel.app/all-books-count", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`
-      }
-    })
-      .then(res => res.json())
-      .then(data => setBookCount(data.booksCount))
-      .catch(error => console.error("Error fetching book count:", error));
+    setUrl1('http://localhost:5000/all-books');
+    setUrl2('http://localhost:5000/admin/all-users');
+    setUrl3('http://localhost:5000/get/all-orders');
+  }, []);
 
-    fetch("https://book-store-api-theta.vercel.app/admin/all-users-count", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`
+  useEffect(() => {
+      if (data1) {
+          setBookCount(data1.length);
       }
-    })
-      .then(res => res.json())
-      .then(data => setUserCount(data.usercount))
-      .catch(error => console.error("Error fetching user count:", error));
+  }, [data1]);
 
-    fetch("https://book-store-api-theta.vercel.app/get/all-orders-count", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`
+  useEffect(() => {
+      if (data2) {
+          setUserCount(data2.length);
       }
-    })
-      .then(res => res.json())
-      .then(data => setOrderCount(data.ordersCount))
-      .catch(error => console.error("Error fetching order count:", error))
-      .finally(() => setIsLoading(false));
-  }, [token]);
+  }, [data2]);
+
+  useEffect(() => {
+      if (data3) {
+          setOrderCount(data3.length);
+          setIsLoading(false); 
+      }
+  }, [data3]);
 
   return (
     <div className='pt-24 mx-5'>
@@ -63,7 +57,7 @@ const About = () => {
       ) : (
         
         <div className='flex justify-around mt-10 '>
-          <div className='inline-block bg-red'>Total Books: {allBooks.length}</div>
+          <div className='inline-block bg-red'>Total Books: {bookCount}</div>
           <div>Total Users: {userCount}</div>
           <div>Total Orders: {orderCount}</div>
         </div>
