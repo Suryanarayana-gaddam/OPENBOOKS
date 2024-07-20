@@ -1,6 +1,3 @@
-
-
-
 import { useState } from 'react';
 import BannerCard from '../home/BannerCard';
 import { Link } from 'react-router-dom';
