@@ -23,6 +23,7 @@ const Signup = () => {
     const [proceed,setProceed] = useState(false)
 
     const [showPassword, setShowPassword] = useState(false);
+    const token = localStorage.getItem("access-token");
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -144,6 +145,7 @@ const Signup = () => {
                         method: "POST",
                         headers: {
                             "Content-type": "application/json",
+                            "authorization" : `Bearer ${token}`
                         },
                         body: JSON.stringify(userObj)
                     }).then(res => res.json()).then(data => {
@@ -181,7 +183,7 @@ const Signup = () => {
                 "Content-type": "application/json",
             }
         }).then(res => {
-            if (!res.status == 200) {
+            if (res.status == 404) {
                 const userObj = {
                     username,
                     email,
