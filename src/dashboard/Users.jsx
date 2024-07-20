@@ -55,7 +55,7 @@ const Users = () => {
       .then(res => res.json())
       .then(data => {
         if (data.modifiedCount === 1) {
-          alert("User is now an admin!");
+          alert(`Deleted User : ${username}`);
         } else {
           alert("Failed to update user role.");
         }
@@ -200,7 +200,7 @@ const Users = () => {
                         : ( 
                           <div>
                               <button onClick={() => handleMakeAdmin(userInfo._id,userInfo.role)} className='bg-blue-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-green-600 ml-5 text-start'>Make Admin</button>
-                            <button onClick={() => handleDeleteUser(userInfo._id)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-100 hover:text-red-600 ml-5'>Delete</button>
+                            <button onClick={() => handleDeleteUser(userInfo._id,userInfo.username)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-100 hover:text-red-600 ml-5'>Delete</button>
                           </div>
                       ) 
                   }

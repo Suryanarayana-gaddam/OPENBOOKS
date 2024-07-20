@@ -66,7 +66,7 @@ const Signup = () => {
   }
     const handlePaste = (event) => {
         event.preventDefault();
-        window.alert("Paste is not allowed in Password!")
+        window.alert("Paste is not allowed in this field!")
     }
     
     const from = location.state?.from?.pathname || "/";
@@ -146,7 +146,7 @@ const Signup = () => {
                         method: "POST",
                         headers: {
                             "Content-type": "application/json",
-                            "authorization" : `Bearer ${token}`
+                            authorization : `Bearer ${token}`
                         },
                         body: JSON.stringify(userObj)
                     }).then(res => res.json()).then(data => {
@@ -245,7 +245,7 @@ const Signup = () => {
                                 
                             </div>
                             <div className="relative">
-                                <input onPaste={handlePaste} id="password" name="password" type={showPassword ? 'text' : 'password'} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="*Password" value={password}
+                                <input onPaste={handlePaste} id="password" name="password" type={showPassword ? 'text' : 'password'} defaultValue={null} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="*Password" value={password}
                                 onChange={handlePasswordChange} onFocus={handleFocus} onBlur={() => {setPwdInstruction("")
                                     setStrengthMessage('');}} required/>
                                 <button type="button" className='absolute right-3 top-2' onClick={togglePasswordVisibility}>
