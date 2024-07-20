@@ -24,6 +24,7 @@ const Signup = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const token = localStorage.getItem("access-token");
+    console.log("Access-token :",token)
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -181,6 +182,7 @@ const Signup = () => {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
+                "authorization" : `Bearer ${token}`
             }
         }).then(res => {
             if (res.status == 404) {
