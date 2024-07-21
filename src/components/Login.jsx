@@ -34,26 +34,39 @@ const Login = () => {
 </div>
   }
   const handleLogin = (event) => {
-      event.preventDefault();
-      setIsLoading(true);
-      const form = event.target;
-      const email = form.email.value;
-      const password = form.password.value;
-      login(email,password).then((userCredential) => {
-        // Signed in 
+    event.preventDefault();
+    setIsLoading(true);
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    login(email,password).then((userCredential) => {
         const user = userCredential.user;
-        console.log("user:",user)
-        navigate(from, { replace: true });
-
-        setIsLoading(false)
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setIsLoading(false)
-        setError(errorMessage);
-      });
+        fetch("https://book-store-api-theta.vercel.app/login", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({email,password})
+            }).then(res => res.json()).then(res => {
+            if(res.status == 404){
+                alert(res.status+" : User not found");
+            }else if(res.status == 401){
+                alert(res.status+" : Password is Incorrect");
+            }else{
+                alert("Welcome Back User...")
+                navigate("/",{replace:true})
+            }
+            }).catch(error =>{
+            console.error("Error in Login:",error)
+            })
+    setIsLoading(false)
+    })
+    .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setIsLoading(false)
+    setError(errorMessage);
+    });
      
   }
   const from = location.state?.from?.pathname || "/";
@@ -71,28 +84,33 @@ const handleRegister = () => {
         
         const token = localStorage.getItem('access-token');
         fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json",
-                authorization: `Bearer ${token}`
-            }
-        }).then(res => {
-            if (res.status === 404 || res.status == 401) {
-                fetch("https://book-store-api-theta.vercel.app/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json",
-                    },
-                    body: JSON.stringify(userObj)
-                }).then(res => res.json()).then(data => {
-                    alert("Signed up Successfully!");
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json",
+                }
+            }).then(res => {
+                if (res.status === 404) {
+                    fetch("https://book-store-api-theta.vercel.app/sign-up", {
+                        method: "POST",
+                        headers: {
+                            "Content-type": "application/json",
+                            authorization : `Bearer ${token}`
+                        },
+                        body: JSON.stringify(userObj)
+                    }).then(res => res.json()).then(response => {
+                        if(response.ok){
+                            alert("Signed up Successfully!");
+                            navigate(from, { replace: true });
+                        }
+                    }).catch(error =>{
+                        console.error("Error in Signup:",error);
+                    })
+                } else {
+                    setIsLoading(false);
+                    alert(`Welcome back , ${user.displayName} `);
                     navigate(from, { replace: true });
-                });
-            } else {
-                alert(`Welcome back , ${user.displayName} `);
-                navigate(from, { replace: true });
-            }
-        });
+                }
+            });
     }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;

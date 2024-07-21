@@ -218,7 +218,8 @@ const Signup = () => {
                 });
             } else {
                 setIsLoading(false)
-                alert("User already exists! please enter new mail!");
+                alert("User already exists! please login!");
+                navigate("/login")
             }
         });
     }

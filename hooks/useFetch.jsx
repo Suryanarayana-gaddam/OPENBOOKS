@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 const useFetch = (url) => {
-    const [data,setData] = useState([]);
+    const [data,setData] = useState(null);
     const token = localStorage.getItem("access-token");
 
     useEffect(() => {
