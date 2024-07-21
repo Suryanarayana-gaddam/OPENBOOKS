@@ -16,26 +16,26 @@ const About = () => {
   const {data : data3} = useFetch(url3);
 
   useEffect(() => {
-    setUrl1('https://book-store-api-theta.vercel.app/all-books');
-    setUrl2('https://book-store-api-theta.vercel.app/all-users');
-    setUrl3('https://book-store-api-theta.vercel.app/get/all-orders');
+    setUrl1('https://book-store-api-theta.vercel.app/all-books-count');
+    setUrl2('https://book-store-api-theta.vercel.app/all-users-count');
+    setUrl3('https://book-store-api-theta.vercel.app/get/all-orders-count');
   }, []);
 
   useEffect(() => {
       if (data1) {
-          setBookCount(data1 ? data1.length : 0);
+          setBookCount(data1[0] );
       }
   }, [data1]);
 
   useEffect(() => {
       if (data2) {
-          setUserCount(data2 ? data2.length : 0);
+          setUserCount(data2[0]);
       }
   }, [data2]);
 
   useEffect(() => {
       if (data3) {
-          setOrderCount(data3 ? data3.length : 0);
+          setOrderCount(data3 [0]);
           setIsLoading(false); 
       }
   }, [data3]);

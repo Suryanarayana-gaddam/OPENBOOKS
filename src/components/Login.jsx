@@ -4,6 +4,7 @@ import { Link , useLocation , useNavigate } from 'react-router-dom';
 import {AuthContext} from '../context/AuthProvider';
 import googleLogo from "../assets/google-logo.svg"
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
+import { setLogLevel } from 'firebase/app';
 
 const Login = () => {
   const [isLoading,setIsLoading] = useState(false)
@@ -39,8 +40,7 @@ const Login = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    login(email,password).then((userCredential) => {
-        const user = userCredential.user;
+    
         fetch("https://book-store-api-theta.vercel.app/login", {
             method: "POST",
             headers: {
@@ -53,20 +53,25 @@ const Login = () => {
             }else if(res.status == 401){
                 alert(res.status+" : Password is Incorrect");
             }else{
-                alert("Welcome Back User...")
-                navigate("/",{replace:true})
+                login(email,password).then((userCredential) => {
+                    const user = userCredential.user;
+                    setIsLoading(false)
+                    alert("Welcome Back User...")
+                    navigate("/",{replace:true})
+                }).catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setIsLoading(false)
+                setError(errorMessage);
+                setLogLevel(false)
+                });
             }
+            setIsLoading(false)
             }).catch(error =>{
             console.error("Error in Login:",error)
             })
-    setIsLoading(false)
-    })
-    .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    setIsLoading(false)
-    setError(errorMessage);
-    });
+    
+    
      
   }
   const from = location.state?.from?.pathname || "/";
