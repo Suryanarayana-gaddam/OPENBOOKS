@@ -22,11 +22,8 @@ const useFetchNumber = (url) => {
                 }
 
                 const count = await response.text(); // Assuming the response is a plain number
-                const resparsedCount = JSON.parse(response); // Parse the count to an integer
-                const parsedCount = JSON.parse(count); // Parse the count to an integer
-                console.log("resparsedCount :",resparsedCount.count)
+                const parsedCount = JSON.parse(response); // Parse the count to an integer
                 console.log("parsedCount :",parsedCount.count)
-                console.log("text parsedCount :",count)
                 setData(parsedCount);
             } catch (error) {
                 setError(error.message);
