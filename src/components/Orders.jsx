@@ -33,15 +33,16 @@ const Orders = () => {
       {!orders ? (
         <p className="text-gray-600">You have no orders</p>
       ) : (
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
           {orders && orders.map((order) => (
             <motion.div
               key={order._id}
               className="bg-white rounded-lg overflow-hidden shadow-md p-4 flex items-center justify-between"
               whileHover={{ scale: 1.05 }}
             >
+            <div className='md:flex w-fit'>
               <Link to={`/book/${order.bookId}`}>
-                <img src={order.imageURL} alt={order.bookTitle} className="h-40 w-24 object-cover mr-8 cursor-pointer" />
+                <img src={order.imageURL} alt={order.bookTitle} className="max-h-40 max-w-24 object-cover mr-5 cursor-pointer" />
               </Link>
               <div className="flex items-center">
                 <div>
@@ -66,6 +67,7 @@ const Orders = () => {
 
                 </div>
               </div>
+            </div>
             </motion.div>
           ))}
         </div>
