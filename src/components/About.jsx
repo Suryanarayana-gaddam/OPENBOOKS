@@ -34,7 +34,7 @@ const About = () => {
 
   useEffect(() => {
       if (data3) {
-          setOrderCount(data3.ordersCount);
+          setOrderCount(data3.count);
           setIsLoading(false); 
       }
   }, [data3]);
