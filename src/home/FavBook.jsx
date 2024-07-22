@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import FavBookImg from "../assets/favoritebook.jpg"
 import { Link } from 'react-router-dom'
+import useFetchNumber from '../../hooks/useFetchNumber';
 
 const FavBook = () => {
 
@@ -9,50 +10,40 @@ const FavBook = () => {
   const [orderCount, setOrderCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const token = localStorage.getItem('access-token');
+  const [url1,setUrl1] = useState("")
+  const {data : data1} = useFetchNumber(url1);
+  const [url2,setUrl2] = useState("")
+  const {data : data2} = useFetchNumber(url2);
+  const [url3,setUrl3] = useState("")
+  const {data : data3} = useFetchNumber(url3);
 
   useEffect(() => {
-     fetch("https://book-store-api-theta.vercel.app/all-books-count",{
-        method: "GET",
-        headers: {
-          "Content-Type" : "application/json",
-          authorization: `Bearer ${token}`
-        }}).then(res => res.json()).then(data => setBookCount(data.booksCount));
-      fetch("https://book-store-api-theta.vercel.app/admin/all-users-count",{
-        method: "GET",
-        headers: {
-          "Content-Type" : "application/json",
-          authorization: `Bearer ${token}`
-        }}).then(res => res.json()).then(data => setUserCount(data.usercount));
-      fetch(`https://book-store-api-theta.vercel.app/get/all-orders-count`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`
-        },
-      })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(error => {
-            console.error("Error fetching orders:", error);
-          });
-        }
-        return res.json();
-      })
-      .then(data => {
-          setOrderCount(data.ordersCount);
-
-      })
-      .catch(error => {
-        console.error("Error:", error); 
-      });
-
-      setIsLoading(false);
-    
+    setUrl1('https://book-store-api-theta.vercel.app/all-books-count');
+    setUrl2('https://book-store-api-theta.vercel.app/admin/all-users-count');
+    setUrl3('https://book-store-api-theta.vercel.app/get/all-orders-count');
   }, []);
 
+  useEffect(() => {
+      if (data1) {
+          setBookCount(data1.count);
+      }
+  }, [data1]);
+
+  useEffect(() => {
+      if (data2) {
+          setUserCount(data2.count);
+      }
+  }, [data2]);
+
+  useEffect(() => {
+      if (data3) {
+          setOrderCount(data3.count);
+          setIsLoading(false); 
+      }
+  }, [data3]);
+
   return (
-    <div className='px-4 lg:px-24 my-20 flex flex-col md:flex-row justify-between items-center gap-12'>
+    (!isLoading && <div className='px-4 lg:px-24 my-20 flex flex-col md:flex-row justify-between items-center gap-12'>
         <div className='md:w-1/2'>
             <img src={FavBookImg} alt="Favorite Book" className='rounded md:w-10/12'/>
         </div>
@@ -78,6 +69,7 @@ const FavBook = () => {
             <Link to="/shop" className='mt-12 block'><button className='bg-blue-700 text-white font-semibold px-5 py-2 rounded hover:bg-black transition-all duration-300'>Explore Our Collection</button></Link>
         </div>
     </div>
+    )
   )
 }
 
