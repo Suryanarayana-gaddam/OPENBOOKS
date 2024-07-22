@@ -16,13 +16,13 @@ const About = () => {
 
   useEffect(() => {
     setUrl1('https://book-store-api-theta.vercel.app/all-books-count');
-    setUrl2('https://book-store-api-theta.vercel.app/all-users-count');
+    setUrl2('https://book-store-api-theta.vercel.app/admin/all-users-count');
     setUrl3('https://book-store-api-theta.vercel.app/get/all-orders-count');
   }, []);
 
   useEffect(() => {
       if (data1) {
-          setBookCount(data1.count );
+          setBookCount(data1.count);
       }
   }, [data1]);
 
