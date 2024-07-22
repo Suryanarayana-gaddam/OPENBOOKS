@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 const useFetch = (url) => {
-    const [data,setData] = useState([]);
+    const [data,setData] = useState(null);
     const token = localStorage.getItem("access-token");
 
     useEffect(() => {
@@ -19,8 +19,7 @@ const useFetch = (url) => {
                 }
                 const resData = await response.json();
                 //console.log("Response:",resData)
-                const resDataArray = [resData]
-                setData([...data,resDataArray]);
+                setData(resData);
             }catch(error){
                 console.log("Error :",error)
             }

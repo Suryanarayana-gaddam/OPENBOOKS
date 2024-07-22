@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import useBooks from '../../hooks/useBooks';
-import useFetch from '../../hooks/useFetch';
+import { useState, useEffect } from 'react';
+import useFetchNumber from '../../hooks/useFetchNumber';
 
 const About = () => {
   const [bookCount, setBookCount] = useState(0);
@@ -9,11 +8,11 @@ const About = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [url1,setUrl1] = useState("")
-  const {data : data1} = useFetch(url1);
+  const {data : data1} = useFetchNumber(url1);
   const [url2,setUrl2] = useState("")
-  const {data : data2} = useFetch(url2);
+  const {data : data2} = useFetchNumber(url2);
   const [url3,setUrl3] = useState("")
-  const {data : data3} = useFetch(url3);
+  const {data : data3} = useFetchNumber(url3);
 
   useEffect(() => {
     setUrl1('https://book-store-api-theta.vercel.app/all-books-count');
@@ -23,19 +22,19 @@ const About = () => {
 
   useEffect(() => {
       if (data1) {
-          setBookCount(data1[0] );
+          setBookCount(data1.count );
       }
   }, [data1]);
 
   useEffect(() => {
       if (data2) {
-          setUserCount(data2[0]);
+          setUserCount(data2.count);
       }
   }, [data2]);
 
   useEffect(() => {
       if (data3) {
-          setOrderCount(data3 [0]);
+          setOrderCount(data3.ordersCount);
           setIsLoading(false); 
       }
   }, [data3]);

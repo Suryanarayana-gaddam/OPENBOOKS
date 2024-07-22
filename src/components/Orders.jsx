@@ -23,14 +23,14 @@ const Orders = () => {
     setUrl1(`https://book-store-api-theta.vercel.app/user/${userId}/get/orders`);
   }, [user,userData,userId]);
   useEffect(() =>{
-    setOrders(data1.reverse());
+    setOrders(data1 ? data1.reverse() : "");
   },[data1])
 
   return (
     <div className="container mx-auto px-4 lg:px-24 mt-16">
     <h1 className="text-3xl font-bold text-gray-800 mt-4 md:mt-0 text-center">My Orders</h1>
     <div>
-      {orders && orders.length === 0 ? (
+      {!orders ? (
         <p className="text-gray-600">You have no orders</p>
       ) : (
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
