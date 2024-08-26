@@ -22,7 +22,7 @@ const BookCategories = () => {
     try {
       const response = await fetch(`https://book-store-api-theta.vercel.app/all-books/bycategory/?category=${category}`, {
         headers : {
-            authorization: `Bearer ${token}`
+            "authorization": `Bearer ${token}`
         }
     });
       if (!response.ok) {

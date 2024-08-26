@@ -12,7 +12,7 @@ const BestSellerBooks = () => {
             fetch("https://book-store-api-theta.vercel.app/all-books/get/bestSellerBooks", {
                 headers : {
                     "Content-Type" : "application/json",
-                    authorization: `Bearer ${token}`
+                    "authorization": `Bearer ${token}`
                 }
             }).then(res => res.json()).then(data => setBooks(data))
     },[])

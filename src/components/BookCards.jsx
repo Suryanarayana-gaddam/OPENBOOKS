@@ -46,7 +46,7 @@ const BookCards = ({headLine,books, user}) => {
         method:"POST",
         headers:{
           "Content-type": "application/json",
-          authorization: `Bearer ${token}`,
+          "authorization": `Bearer ${token}`,
           
         },
         body: JSON.stringify(book) 
@@ -64,7 +64,7 @@ const BookCards = ({headLine,books, user}) => {
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          authorization: `Bearer ${token}`,
+          "authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({bookId: book._id}),
       })
@@ -92,7 +92,7 @@ const BookCards = ({headLine,books, user}) => {
         method:"POST",
         headers:{
           "Content-type": "application/json",
-          authorization: `Bearer ${token}`,
+          "authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(book)
       }).then(res => res.json()).then(data => {
@@ -109,7 +109,7 @@ const BookCards = ({headLine,books, user}) => {
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          authorization: `Bearer ${token}`,
+          "authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({bookId: book._id}),
       })

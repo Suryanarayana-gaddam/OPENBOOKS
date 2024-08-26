@@ -21,7 +21,7 @@ const ManageBooks = () => {
       method: "GET",
       headers: {
         "Content-Type" : "application/json",
-        authorization: `Bearer ${token}`
+        "authorization": `Bearer ${token}`
       }})
     .then(res => res.json())
     .then(data => setAllBooks(data));

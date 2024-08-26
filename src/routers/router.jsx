@@ -67,7 +67,7 @@ const router = createBrowserRouter([
             method: "GET",
             headers: {
               "Content-Type": "application/json", // Set content type header explicitly
-              authorization: `Bearer ${token}`,
+              "authorization": `Bearer ${token}`,
             },
           })
         },
@@ -106,7 +106,7 @@ const router = createBrowserRouter([
             method: "GET",
             headers: {
               "Content-Type": "application/json", // Set content type header explicitly
-              authorization: `Bearer ${token}`,
+              "authorization": `Bearer ${token}`,
             },
           })
         },
@@ -143,7 +143,7 @@ const router = createBrowserRouter([
             method: "GET",
             headers: {
               "Content-Type": "application/json", // Set content type header explicitly
-              authorization: `Bearer ${token}`,
+              "authorization": `Bearer ${token}`,
             },
           })
         }

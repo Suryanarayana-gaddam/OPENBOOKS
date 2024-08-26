@@ -24,7 +24,7 @@ const Signup = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const token = localStorage.getItem("access-token");
-    console.log("Access-token :",token)
+    //console.log("Access-token :",token)
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -146,7 +146,7 @@ const Signup = () => {
                         method: "POST",
                         headers: {
                             "Content-type": "application/json",
-                            authorization : `Bearer ${token}`
+                            "authorization" : `Bearer ${token}`
                         },
                         body: JSON.stringify(userObj)
                     }).then(res => res.json()).then(data => {
@@ -215,12 +215,17 @@ const Signup = () => {
                     setIsLoading(false)
                     alert("Signed up Successfully!");
                     navigate(from, { replace: true });
+                }).catch(err =>{
+                    console.log(err.error)
                 });
             } else {
                 setIsLoading(false)
                 alert("User already exists! please login!");
                 navigate("/login")
             }
+        }).catch(error => {
+            setIsLoading(false);
+            console.log("Error :",error,"err status:",error.status)
         });
     }
     
@@ -246,7 +251,7 @@ const Signup = () => {
                                 
                             </div>
                             <div className="relative">
-                                <input onPaste={handlePaste} id="password" name="password" type={showPassword ? 'text' : 'password'} defaultValue={null} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="*Password" value={password}
+                                <input onPaste={handlePaste} id="password" name="password" type={showPassword ? 'text' : 'password'} defaultValue={password || null} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="*Password" 
                                 onChange={handlePasswordChange} onFocus={handleFocus} onBlur={() => {setPwdInstruction("")
                                     setStrengthMessage('');}} required/>
                                 <button type="button" className='absolute right-3 top-2' onClick={togglePasswordVisibility}>

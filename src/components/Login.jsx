@@ -99,7 +99,7 @@ const handleRegister = () => {
                         method: "POST",
                         headers: {
                             "Content-type": "application/json",
-                            authorization : `Bearer ${token}`
+                            "authorization" : `Bearer ${token}`
                         },
                         body: JSON.stringify(userObj)
                     }).then(res => res.json()).then(response => {

@@ -18,19 +18,19 @@ const Dashboard = () => {
         method: "GET",
         headers: {
           "Content-Type" : "application/json",
-          authorization: `Bearer ${token}`
+          "authorization": `Bearer ${token}`
         }}).then(res => res.json()).then(data => setBookCount(data.length));
       fetch("https://book-store-api-theta.vercel.app/admin/all-users",{
         method: "GET",
         headers: {
           "Content-Type" : "application/json",
-          authorization: `Bearer ${token}`
+          "authorization": `Bearer ${token}`
         }}).then(res => res.json()).then(data => setUserCount(data.length));
       fetch(`https://book-store-api-theta.vercel.app/get/all-orders`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token}`
+          "authorization": `Bearer ${token}`
         },
       })
       .then(res => {

@@ -25,7 +25,7 @@ const UploadedBooks = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${token}`
+        "authorization": `Bearer ${token}`
       },
     })
     .then(res => {
@@ -56,7 +56,7 @@ const UploadedBooks = () => {
     fetch(`https://book-store-api-theta.vercel.app/book/delete/${id}`, {
         method: "DELETE",
         headers: {
-          authorization: `Bearer ${token}`,
+          "authorization": `Bearer ${token}`,
         },
     })
     .then(res => res.json())

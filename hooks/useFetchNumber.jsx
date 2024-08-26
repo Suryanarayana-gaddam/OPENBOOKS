@@ -13,7 +13,7 @@ const useFetchNumber = (url) => {
                     method: "GET",
                     headers: {
                         "Content-type": "application/json",
-                        "Authorization": `Bearer ${token}`
+                        "authorization": `Bearer ${token}`
                     },
                 });
 

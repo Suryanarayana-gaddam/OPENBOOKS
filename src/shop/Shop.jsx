@@ -24,7 +24,7 @@ const Shop = ({showSearchBox}) => {
   useEffect(() => {
     fetch("https://book-store-api-theta.vercel.app/all-books", {
       headers : {
-          authorization: `Bearer ${token}`
+          "authorization": `Bearer ${token}`
       }
   })
     .then((res) => res.json())
@@ -57,7 +57,7 @@ const Shop = ({showSearchBox}) => {
         method:"POST",
         headers:{
           "Content-type": "application/json",
-          authorization: `Bearer ${token}`
+          "authorization": `Bearer ${token}`
         },
         body: JSON.stringify(book) // Stringify the book object before sending
       }).then(res => res.json()).then(data => {
@@ -75,7 +75,7 @@ const Shop = ({showSearchBox}) => {
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          authorization: `Bearer ${token}`
+          "authorization": `Bearer ${token}`
         },
         body: JSON.stringify({bookId: book._id}),
       })
@@ -108,7 +108,7 @@ const Shop = ({showSearchBox}) => {
         method:"POST",
         headers:{
           "Content-type": "application/json",
-          authorization: `Bearer ${token}`
+          "authorization": `Bearer ${token}`
         },
         body: JSON.stringify(book) // Stringify the book object before sending
       }).then(res => res.json()).then(data => {
@@ -126,7 +126,7 @@ const Shop = ({showSearchBox}) => {
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          authorization: `Bearer ${token}`
+          "authorization": `Bearer ${token}`
         },
         body: JSON.stringify({bookId: book._id}),
       })
@@ -155,7 +155,7 @@ const Shop = ({showSearchBox}) => {
         method:"POST",
         headers:{
           "Content-type": "application/json",
-          authorization: `Bearer ${token}`
+          "authorization": `Bearer ${token}`
         },
         body: JSON.stringify(book) // Stringify the book object before sending
       }).then(res => res.json()).then(data => {

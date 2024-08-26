@@ -25,7 +25,7 @@ const Cart = () => {
         try {
           const response = await fetch("https://book-store-api-theta.vercel.app/all-books", {
             headers: {
-              authorization: `Bearer ${token}`
+              "authorization": `Bearer ${token}`
             }
           });
           if (!response.ok) {
@@ -54,7 +54,7 @@ const Cart = () => {
             method: "POST",
             headers: {
               "Content-type": "application/json",
-              authorization: `Bearer ${token}`,
+              "authorization": `Bearer ${token}`,
             },
             body: JSON.stringify({bookId: book._id}),
           })
@@ -111,7 +111,7 @@ const Cart = () => {
           method:"POST",
           headers:{
             "Content-type": "application/json",
-            authorization: `Bearer ${token}`
+            "authorization": `Bearer ${token}`
           },
           body: JSON.stringify(orderObj)
         }).then(res => res.json()).then(data => {
@@ -128,7 +128,7 @@ const Cart = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
+        "authorization": `Bearer ${token}`,
       },
     });
     if (!removeCartResponse.ok) {

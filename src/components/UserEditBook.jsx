@@ -44,7 +44,7 @@ const updateBookObj = {
     method: "PATCH",
     headers: {
       "Content-Type" : "application/json",
-      authorization: `Bearer ${token}`
+      "authorization": `Bearer ${token}`
     },
     body: JSON.stringify(updateBookObj)
   }).then(res => res.json()).then(data => {

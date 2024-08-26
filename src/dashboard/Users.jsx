@@ -19,7 +19,7 @@ const Users = () => {
         method: "GET",
         headers: {
           "Content-Type" : "application/json",
-          authorization: `Bearer ${token}`
+          "authorization": `Bearer ${token}`
         }})
       .then(res => res.json())
       .then(data => setAllUsers(data));
@@ -47,7 +47,7 @@ const Users = () => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${token}`
+            "authorization": `Bearer ${token}`
       
           },
         }
@@ -75,7 +75,7 @@ const Users = () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json", 
-          authorization: `Bearer ${token}`
+          "authorization": `Bearer ${token}`
         },
         body: JSON.stringify(updateUserObj)
       }).then(res => res.json()).then(data => {
@@ -97,7 +97,7 @@ const Users = () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token}`
+          "authorization": `Bearer ${token}`
     
         },
         body: JSON.stringify(updateUserObj)

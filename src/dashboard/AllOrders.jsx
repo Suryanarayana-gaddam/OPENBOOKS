@@ -17,7 +17,7 @@ const AllOrders = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${token}`
+            "authorization": `Bearer ${token}`
           },
         })
         .then(res => {
