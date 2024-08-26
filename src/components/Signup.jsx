@@ -216,7 +216,7 @@ const Signup = () => {
                     alert("Signed up Successfully!");
                     navigate(from, { replace: true });
                 }).catch(err =>{
-                    console.log(err.error)
+                    console.log("Error: ",err.error)
                 });
             } else {
                 setIsLoading(false)
