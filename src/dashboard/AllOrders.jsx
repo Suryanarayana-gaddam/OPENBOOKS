@@ -3,14 +3,22 @@ import { AuthContext } from '../context/AuthProvider';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { all } from 'axios';
+import Pagination from '../components/Pagination';
 const AllOrders = () => {
   const [allOrders, setAllOrders] = useState([]);
   const user = useContext(AuthContext);
   const token = localStorage.getItem('access-token');
-  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const ordersPerPage = 8;
 
+  const [indexOfFirstBook,setIndexOfFirstBook] = useState(null);
+  const [currentOrders,setCurrentOrders] = useState([]);
+
+  const setItemsDetails = (x) => {
+    setCurrentOrders(x);
+  }
+  const setIndexBook = (y) => {
+    setIndexOfFirstBook(y);
+  }
 
   useEffect(() => {
         fetch(`https://book-store-api-theta.vercel.app/get/all-orders`, {
@@ -37,7 +45,7 @@ const AllOrders = () => {
           console.error("Error:", error); 
           // Handle unexpected errors
         });
-  }, [user,currentPage]);
+  }, [user]);
 
   if(isLoading){
     return <div className="flex items-center justify-center h-screen">
@@ -49,67 +57,26 @@ const AllOrders = () => {
 </div>
   }
 
-  const indexOfLastOrder = currentPage * ordersPerPage;
-  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = allOrders.slice(indexOfFirstOrder, indexOfLastOrder);
-
-  // Calculate total number of pages
-  const totalPages = Math.ceil(allOrders.length / ordersPerPage);
-
-  // Generate array of page numbers to display
-  const getPageNumbers = () => {
-    let startPage = Math.max(1, currentPage - Math.floor(ordersPerPage / 2));
-    let endPage = Math.min(totalPages, startPage + ordersPerPage - 1);
-
-    // Adjust startPage when near the end of totalPages
-    if (endPage - startPage + 1 < ordersPerPage) {
-      startPage = Math.max(1, endPage - ordersPerPage + 1);
-    }
-
-    let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
-
-    const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
-    pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
-
-    if (!pageNumbers.includes(totalPages)) {
-      pageNumbers.push(totalPages);
-    }
-    if (!pageNumbers.includes(1)) {
-      pageNumbers.unshift(1);
-    }
-    return pageNumbers.sort((a, b) => a - b);
-  };
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const goToPreviousPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
-
-  const goToNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
 
   return (
-    <div className="container mx-auto px-4 lg:px-24 mt-16">
+    <div className="container mx-auto px-4 mt-16">
     <h1 className="text-3xl font-bold text-gray-800 mt-4 md:mt-0">All Orders</h1>
-    <div>
+    <div className=''>
       {currentOrders.length === 0 ? (
         <p className="text-gray-600">No orders</p>
       ) : (
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div className="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {currentOrders.map((order) => (
             <motion.div
               key={order._id}
-              className="bg-white rounded-lg overflow-hidden shadow-md p-4 flex items-center justify-between"
+              className="bg-white rounded-lg overflow-hidden shadow-md p-4 flex md:flex-col items-center justify-between sm:gap-2"
               whileHover={{ scale: 1.05 }}
             >
-              <Link to={`/book/${order.bookId}`}> {/* Wrap the image with Link component */}
-                <img src={order.imageURL} alt={order.bookTitle} className="sm:w-34 h-34 w-24 object-cover mr-4 cursor-pointer" />
+              <Link to={`/book/${order.bookId}`} > {/* Wrap the image with Link component */}
+              <div className=''>
+                <img src={order.imageURL} alt={order.bookTitle} className="sm:w-34 h-34 w-24 object-cover mr-4 cursor-pointer" /></div>
               </Link>
-              <div className="flex items-center">
+              <div className="flex items-center w-full md:p-3">
                 <div>
                   <p className="text-sm text-gray-600 font-bold">Order ID: {order._id}</p>
                   <p className="text-sm text-gray-600">Date: {new Date(order.date).toLocaleString('en-IN', {
@@ -138,40 +105,8 @@ const AllOrders = () => {
         </div>
       )}
     </div>
-     {/* Pagination buttons at the bottom */}
-     <div className={`flex justify-around mt-8 w-auto ${ allOrders.length>8 ? "block" : "hidden"}`}>
-        <div>
-          <button
-            onClick={goToPreviousPage}
-            disabled={currentPage === 1}
-            className="px-3 py-1 rounded-full bg-blue-500 text-white mr-2"
-          >
-            Previous
-          </button>
-        </div>
-        <div>
-          {getPageNumbers().map((number) => (
-            <button
-              key={number}
-              onClick={() => paginate(number)}
-              className={`px-3 py-1 rounded-full ${
-                currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200'
-              } mr-2`}
-            >
-              {number}
-            </button>
-          ))}
-        </div>
-        <div>
-          <button
-            onClick={goToNextPage}
-            disabled={currentPage === totalPages || totalPages === 0}
-            className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2"
-          >
-            Next
-          </button>
-        </div>
-      </div>
+    <Pagination setItemsDetails={setItemsDetails} setIndexBook={setIndexBook} itemsPerPage={12} maxPageNumbers={10} inputArrayItems={allOrders}/>
+
   </div>
   
   );

@@ -52,7 +52,6 @@ const BookCards = ({headLine,books, user}) => {
         body: JSON.stringify(book) 
       }).then(res => res.json()).then(data => {
         setWishlistBooks([...wishlistBooks, book]);
-        refetch()
       })
       .catch(error => {
         console.error("Error:", error);
@@ -72,7 +71,6 @@ const BookCards = ({headLine,books, user}) => {
         .then(data => {
           
           setWishlistBooks(wishlistBooks.filter(wishlistBook => wishlistBook._id !== book._id));
-          refetch()
         })
         .catch(error => {
           console.error("Error:", error);

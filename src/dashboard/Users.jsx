@@ -120,7 +120,7 @@ const Users = () => {
   const currentUsers = allUsers.slice(indexOfFirstBook, indexOfLastBook);
 
 
-  const totalPages = Math.ceil(currentUsers.length / booksPerPage);
+  const totalPages = Math.ceil(allUsers.length / booksPerPage);
 
   const getPageNumbers = () => {
     let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
@@ -163,57 +163,59 @@ const Users = () => {
       <h2 className='mb-8 text-3xl font-bold'>Manage Your Users</h2>
       <h2 className='mb-2'>Welcome Mr. &nbsp;<b>{username}</b> &nbsp;you can manage a users here !</h2>
 
-      <Table className='w-auto overflow-auto border border-collapse sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px] '>
-        <Table.Head>
-          <Table.HeadCell>No.</Table.HeadCell>
-          <Table.HeadCell>User Name</Table.HeadCell>
-          <Table.HeadCell>Email Address</Table.HeadCell>
-          <Table.HeadCell>Role</Table.HeadCell>
-          <Table.HeadCell>
-            <span className='ml-10'>Edit or Manage</span>
-          </Table.HeadCell>
-        </Table.Head>
-        {
-          allUsers.map( (userInfo,index) => <Table.Body className='divide-y sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]' key={userInfo._id}>
-              <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]">
-                <Table.Cell className=" font-medium text-gray-900 dark:text-white">
-                  {index + 1} 
-                </Table.Cell>
-                <Table.Cell className=" font-medium text-gray-900 dark:text-white">
-                  {userInfo.username}
-                </Table.Cell>
-                <Table.Cell ><span>{userInfo.email}</span></Table.Cell>
-                <Table.Cell>{userInfo.role}</Table.Cell>
-                <Table.Cell>
-                  
-                  {
-                      userInfo.role == "admin" ?
-                        (<div className='text-center'>
-                          {userInfo.email == "suryanarayanagaddam020@gmail.com" ? 
-                          <button className='bg-green-600 px-4 py-1 font-serif font-semibold text-white rounded hover:bg-blue-500 hover:text-white text-center'>Developer </button>
-                          : (
-                              <button onClick={() => handleRemoveAdmin(userInfo._id,userInfo.role,userInfo.username)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-600 hover:text-red ml-5 text-start'>Remove Admin</button>
-                            ) 
-                          }
-                        </div>
-                      )
-                        : ( 
-                          <div>
-                              <button onClick={() => handleMakeAdmin(userInfo._id,userInfo.role)} className='bg-blue-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-green-600 ml-5 text-start'>Make Admin</button>
-                            <button onClick={() => handleDeleteUser(userInfo._id,userInfo.username)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-100 hover:text-red-600 ml-5'>Delete</button>
+      <div className='overflow-auto'>
+        <Table className=' border border-collapse sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
+          <Table.Head>
+            <Table.HeadCell>No.</Table.HeadCell>
+            <Table.HeadCell>User Name</Table.HeadCell>
+            <Table.HeadCell>Email Address</Table.HeadCell>
+            <Table.HeadCell>Role</Table.HeadCell>
+            <Table.HeadCell>
+              <span className='ml-10'>Edit or Manage</span>
+            </Table.HeadCell>
+          </Table.Head>
+          {
+            currentUsers.map( (userInfo,index) => <Table.Body className='divide-y sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]' key={userInfo._id}>
+                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]">
+                  <Table.Cell className=" font-medium text-gray-900 dark:text-white">
+                    {indexOfFirstBook+index + 1} 
+                  </Table.Cell>
+                  <Table.Cell className=" font-medium text-gray-900 dark:text-white">
+                    {userInfo.username}
+                  </Table.Cell>
+                  <Table.Cell ><span>{userInfo.email}</span></Table.Cell>
+                  <Table.Cell>{userInfo.role}</Table.Cell>
+                  <Table.Cell>
+                    
+                    {
+                        userInfo.role == "admin" ?
+                          (<div className='text-center'>
+                            {userInfo.email == "suryanarayanagaddam020@gmail.com" ? 
+                            <button className='bg-green-600 px-4 py-1 font-serif font-semibold text-white rounded hover:bg-blue-500 hover:text-white text-center'>Developer </button>
+                            : (
+                                <button onClick={() => handleRemoveAdmin(userInfo._id,userInfo.role,userInfo.username)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-600 hover:text-red ml-5 text-start'>Remove Admin</button>
+                              ) 
+                            }
                           </div>
-                      ) 
-                  }
+                        )
+                          : ( 
+                            <div>
+                                <button onClick={() => handleMakeAdmin(userInfo._id,userInfo.role)} className='bg-blue-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-green-600 ml-5 text-start'>Make Admin</button>
+                              <button onClick={() => handleDeleteUser(userInfo._id,userInfo.username)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-100 hover:text-red-600 ml-5'>Delete</button>
+                            </div>
+                        ) 
+                    }
 
-                </Table.Cell>
-              </Table.Row>
-          </Table.Body>
-        )}
+                  </Table.Cell>
+                </Table.Row>
+            </Table.Body>
+          )}
 
 
-      </Table>
+        </Table>
+      </div>
 
-    <div className={`flex justify-around mt-8 w-auto ${ allUsers.length>10 ? "block" : "hidden"}`}>
+    <div className={`flex justify-around mt-8 w-auto ${ allUsers.length > 10 ? "block" : "hidden"}`}>
       <div>
         <button
           onClick={goToPreviousPage}

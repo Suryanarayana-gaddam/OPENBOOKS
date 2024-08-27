@@ -48,7 +48,7 @@ const BookCategories = () => {
             <input
               type="search" name='search-input'
               placeholder='Search a book'
-              className='py-2 px-2 rounded-s-sm outline-none lg:w-5/6 sm:w-4 text-center ml-10'
+              className='py-2 px-2 rounded-s-sm outline-none xl:w-full lg:w-5/6 md:w-4/6 w-3/6 text-center ml-10'
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
             />
@@ -60,7 +60,7 @@ const BookCategories = () => {
               </button>
             </Link>
           </div>
-      <h2 className='my-2 mt-5 bg-black text-center text-white text-2xl p-2 pb-2 h-12'>Categories</h2>
+      <h2 className='my-2 mt-5 bg-black text-center text-white text-2xl p-2 pb-2 h-12'>Available Categories</h2>
       <ul className='flex flex-wrap justify-center'>
         {bookCategories.map(category => (
           <li key={category} className={` border-dotted mx-4 my-2 px-4 py-2 rounded-full bg-gray-300 hover:bg-gray-500 hover:text-white transition-colors duration-300 ${selectedCategory === category ? ' text-white bg-lime-500' : 'text-black'}`}>
@@ -70,18 +70,18 @@ const BookCategories = () => {
           </li>
         ))}
       </ul>
-      <h2 className='my-2 mt-5 bg-black text-center text-white text-2xl p-2 h-12'>Books</h2>
+      <h2 className='my-2 mt-5 bg-black text-center text-white text-2xl p-2 h-12'>Books{selectedCategory && ` in ${selectedCategory}`}</h2>
       {!flag && (
         <div>
           <br />
-          <h4 className='text-center font-serif text-red-500'>Select one category to view the books inside it!</h4>
+          <h4 className='text-center font-serif text-red-500'>Select one category to view the available books !</h4>
         </div>
       )}
       <BookCards books={books} user={user.user} /> {/* Pass books state as prop */}
       {flag && (
         <div className="text-center font-bold text-gray-500">
           {books.length === 0 && "No Books Available in this category!"}
-          <Shop showSearchBox={false}/>
+          <Shop showSearchBox/>
         </div>
       )}
       {/* {books.length > 0 && <Shop />} Conditionally render Shop component when books are loaded */}

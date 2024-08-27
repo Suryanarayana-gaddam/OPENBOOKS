@@ -75,7 +75,6 @@ const Cart = () => {
         book._id === bookId ? { ...book, quantity: (book.quantity || 1) + 1 } : book
       )
     );
-    refetch();
   };
 
   const decreaseQuantity = (bookId) => {
@@ -84,7 +83,6 @@ const Cart = () => {
         book._id === bookId && (book.quantity || 1) > 1 ? { ...book, quantity: (book.quantity || 1) - 1 } : book
       )
     );
-    refetch();
   };
 
   const handleOrderSubmit = (event) => {
@@ -157,10 +155,10 @@ const Cart = () => {
                 className="bg-white rounded-lg overflow-hidden shadow-md mb-4"
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="lg:flex items-center justify-evenly lg:px-24 sm:px-52">
-                <div>
+                <div className="md:flex items-center justify-evenly lg:px-24 md:px-36 sm:px-52 p-2">
+                <div className='flex justify-center'>
                 <Link to={`/book/${book._id}`}> 
-                <img src={book.imageURL} alt={book.bookTitle} className=" w-32 object-cover cursor-pointer" />
+                <img src={book.imageURL} alt={book.bookTitle} className="md:w-36 lg:w-32 h-full w-32 object-cover cursor-pointer" />
               </Link>
                 </div>
                   <div className="flex-grow px-4 lg:ml-32">
@@ -186,7 +184,7 @@ const Cart = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex justify-center pt-1 items-center space-x-2">
                     <button
                       className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
                       onClick={() => handleRemoveFromCart(event, book)}

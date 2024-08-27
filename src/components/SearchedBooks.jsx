@@ -222,11 +222,11 @@ const SearchedBooks = () => {
   return (
       <div className="my-16 px-4 lg:px-24">
         <br /><br />
-        <div className=' flex'>
+        <div className=' flex '>
             <input
               type="search" name='search-input'
               placeholder='Search a book'
-              className='py-2 px-2 rounded-s-sm outline-none lg:w-5/6 sm:w-4 text-center ml-10'
+              className='py-2 px-2  rounded-s-sm outline-none xl:w-full lg:w-5/6 md:w-4/6 w-3/6 text-center ml-10'
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
             />
@@ -244,7 +244,7 @@ const SearchedBooks = () => {
         </h2>
         {currentBooks && currentBooks.length > 0 ? (
         <div className="mt-12">
-          <div className="grid gap-4 lg:w-[1100px] sm:w-[220px] my-10 lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-3 grid-cols-2 p-0">
+          <div className="grid gap-4 lg:max-w-[1100px] md:max-w-[760px] sm:max-w-[620px] my-10 lg:grid-cols-5 sm:grid-cols-3 md:grid-cols-4 grid-cols-2 p-0">
             {currentBooks && currentBooks.map((book) => (
               <Card key={book._id} className="p-0 ">
                 <Link to={`/book/${book._id}`}>

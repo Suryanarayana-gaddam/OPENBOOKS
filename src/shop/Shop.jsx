@@ -222,12 +222,12 @@ const goToNextPage = () => {
       <h2 className="text-3xl text-center text-bold text-black ">
         All Books Here
       </h2><br />
-      {showSearchBox && (
+      {!showSearchBox && (
         <div className='w-full text-center'>
         <input
           type="search" name="search-input"
           placeholder='Search a book'
-          className='py-2 px-2 rounded-s-sm outline-none lg:w-5/6 md:w-4/6 sm:w-4 text-center ml-10'
+          className='py-2 px-2 rounded-s-sm outline-none xl:w-full lg:w-5/6 md:w-4/6 w-3/6 text-center ml-10'
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
         />
@@ -243,7 +243,7 @@ const goToNextPage = () => {
 
       {/* Cards */}
       <div className="mt-12">
-        <div className="grid gap-4 lg:w-[1100px] sm:w-[220px] md:w-[800px] my-10 lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-4 grid-cols-2 p-0">
+        <div className="grid gap-4 lg:max-w-[1100px] sm:max-w-[630px] md:max-w-[800px] my-10 lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-4 grid-cols-2 p-0">
           { currentBooks && currentBooks.map((book) => (
             <Card key={book._id} className="p-0 m-0 ">
               <Link to={`/book/${book._id}`}>
