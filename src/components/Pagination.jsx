@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6';
 
 const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,maxPageNumbers}) => {
 
@@ -55,9 +56,9 @@ const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,
                 <button
                   onClick={goToPreviousPage}
                   disabled={currentPage === 1}
-                  className="px-3 py-1 rounded-full bg-blue-500 text-white mr-2"
+                  className="px-3 py-1 rounded-full bg-blue-500 text-white mr-2 flex"
                 >
-                  Previous
+                  <span className='relative top-[5px] right-1'><FaArrowLeftLong/></span>Previous
                 </button>
               </div>
               <div>
@@ -69,7 +70,11 @@ const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,
                       currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200'
                     } mr-2`}
                   >
-                    {number}
+                    {
+                    number === 1 ? (
+                       ("First Page 1")
+                    ) : (number === totalPages ? `Last Page ${totalPages}` : number)
+                    }
                   </button>
                 ))}
               </div>
@@ -77,9 +82,9 @@ const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,
                 <button
                   onClick={goToNextPage}
                   disabled={currentPage === totalPages || totalPages === 0}
-                  className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2"
+                  className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2 flex"
                 >
-                  Next
+                  Next<span className='relative top-[5px] left-1'><FaArrowRightLong/></span>
                 </button>
               </div>
             </div>

@@ -151,7 +151,7 @@ const UserProfile = () => {
             <h1 className='font-bold text-3xl'>Profile Details :</h1>
             <div className="text-center p-8 max-w-lg mx-auto shadow rounded-lg sm:pr-5">
                 <img
-                    className="h-36 w-36 rounded-full lg:ml-36 sm:ml-28 text-center"
+                    className="h-36 w-36 rounded-full ml-32 lg:ml-36 text-center"
                     src={ profilePic || user?.user?.photoURL}
                     alt={`Profile pic of ${username}`} 
                 />

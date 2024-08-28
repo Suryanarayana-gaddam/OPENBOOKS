@@ -105,7 +105,7 @@ return (
                     }
                 </ul>
  
-                    <p className='fixed bottom-0 right-0 mr-2 mb-1 '>{timeDate}</p>
+                <p className='fixed bottom-0 right-0 mr-2 mb-1 '>{timeDate}</p>
                 {/* btn for lg devices */}
                 <div className='space-x-5  hidden lg:flex sm:flex items-center mr-0'>
                     {/* Use the img tag to display the user's photo */}
@@ -159,10 +159,18 @@ return (
                     </button>
                 </div>
                 <div className='sm:hidden flex ' >
-                {/* <Link to="/userProfile" className='relative right-8'>
-                {user? (user.photoURL ? (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full' />) : <img src={profilePic} alt="Profile" className='p-0 h-8 w-8 border-none rounded-full' />
-) : <FaUser className='p-0 mt-1 mr-1 h-4 w-4 border-none rounded-full' />}
-                </Link> */}
+                    {
+                        user ? (
+                            <Link to={"/cart"}> 
+                       <label tabIndex={0} role='button' className="btn btn-ghost btn-circle relative top-4 right-4">
+                        <div className="indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        <span className="badge badge-sm indicator-item relative bottom-9 left-4">{userData.cart?.length}</span>
+                        </div>
+                        </label>
+                       </Link>
+                        ) : null
+                       }
                     <button onClick={toggleUserMenu} className="text-black focus:outline-none relative right-1">
                     {user? (user.photoURL ? (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full' />) : <img src={profilePic} alt="Profile" className='p-0 h-8 w-8 border-none rounded-full' />
 ) : <FaUser className='p-0 mt-1 mr-1 h-4 w-4 border-none rounded-full' />}
