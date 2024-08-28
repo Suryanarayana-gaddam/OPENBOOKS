@@ -6,6 +6,7 @@ import BookCards from '../components/BookCards';
 import { AuthContext } from '../context/AuthProvider';
 import { FaHeart } from 'react-icons/fa6';
 import useUser from '../../hooks/useUser';
+import { CRUDContext } from '../context/CRUDProvider';
 
 
 
@@ -18,7 +19,7 @@ const SingleBook = () => {
   const book = { _id, createrId, bookTitle, imageURL, category, bookDescription, authorName,bookPrice };
   const [userId,setUserId] = useState();
   const [userData,refetch] = useUser();
-
+  const {addToWishlist, removeFromWishlist, addToCart, removeFromCart} = useContext(CRUDContext);
   const token = localStorage.getItem('access-token');
   
   function shuffleArray(array) {
@@ -66,7 +67,7 @@ const SingleBook = () => {
     fetchBookByCategory()
   },[category,token])
 
-  const addToWishlist = (event,book) => {
+  const handleWishlist = (event,book) => {
     event.preventDefault();
     if (!book) {
         console.error("Book object is undefined");
@@ -74,61 +75,22 @@ const SingleBook = () => {
     }
     const bookId = book._id;
     if (!isBookInWishlist(book)) {
-      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/add`,{
-        method:"POST",
-        headers:{
-          "Content-type": "application/json",
-          "authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(book) 
-      }).then(res => res.json()).then(data => {
-        setWishlistBooks([...wishlistBooks, book]);
-        refetch()
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-      
+      addToWishlist(book);
+      refetch();
     } else {
-       fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/remove/${bookId}`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({bookId: book._id}),
-      })
-        .then(res => res.json())
-        .then(data => {
-          setWishlistBooks(wishlistBooks.filter(wishlistBook => wishlistBook._id !== book._id));
-          refetch()
-        })
-        .catch(error => {
-          console.error("Error:", error);
-        });
+       removeFromWishlist(bookId);
+       refetch();
     }
   };
-  const addToCart = (event,book) => {
+  const handleCart = (event,book) => {
     event.preventDefault();
     if (!book) {
         console.error("Book object is undefined");
         return;
     }
     if (!isBookInCart(book)) {
-      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/add`,{
-        method:"POST",
-        headers:{
-          "Content-type": "application/json",
-          "authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(book) 
-      }).then(res => res.json()).then(data => {
-        setCartBooks([...cartBooks, book]);
-        refetch()
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
+      addToCart(book);
+      refetch();
     }
   };
 
@@ -138,7 +100,7 @@ const SingleBook = () => {
         <div className="max-w-lg mx-auto relative ">
           <img src={imageURL} alt={bookTitle} className="rounded-lg shadow-lg object-cover w-full h-full" />
           <button
-            onClick={event => addToWishlist(event,book)}
+            onClick={event => handleWishlist(event,book)}
             className={`absolute top-8 right-3 bg-white p-2 rounded-full ${
               isBookInWishlist(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
             } transition-none`}
@@ -156,7 +118,7 @@ const SingleBook = () => {
         <div className="flex">
           {
             isBookInCart(book) ? '' : (
-              <button onClick={event => addToCart(event,book)} className="flex-1 bg-blue-500 text-white rounded-md px-4 py-2 mr-2">{
+              <button onClick={event => handleCart(event,book)} className="flex-1 bg-blue-500 text-white rounded-md px-4 py-2 mr-2">{
                 <Link to={"/cart"}>Buy Now</Link>
               }</button>
             )
@@ -168,7 +130,7 @@ const SingleBook = () => {
               </Link>
               </button>
             )
-           : <button onClick={event => addToCart(event,book)} className="flex-1 bg-green-500 text-white rounded-md px-4 py-2 ml-2">Add to Cart</button>
+           : <button onClick={event => handleCart(event,book)} className="flex-1 bg-green-500 text-white rounded-md px-4 py-2 ml-2">Add to Cart</button>
           }
         </div>
       </div>

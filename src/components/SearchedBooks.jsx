@@ -7,6 +7,8 @@ import { AuthContext } from '../context/AuthProvider';
 
 import { Card } from 'flowbite-react';
 import useUser from '../../hooks/useUser';
+import Pagination from './Pagination';
+import { CRUDContext } from '../context/CRUDProvider';
 
 const SearchedBooks = () => {
   const user = useContext(AuthContext);
@@ -17,18 +19,20 @@ const SearchedBooks = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [userId, setUserId] = useState(null);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const booksPerPage = 10;
-  const maxPageNumbers = 10; 
-
   const [searchedBooks, setSearchedBooks] = useState([]);
-    
+  const [indexOfFirstBook,setIndexOfFirstBook] = useState(null);
+  const [currentBooks,setCurrentBooks] = useState([]);    
   const [wishlistBooks, setWishlistBooks] = useState([]);
   const [cartBooks, setCartBooks] = useState([]);
-
+  const {addToWishlist, removeFromWishlist, addToCart, removeFromCart} = useContext(CRUDContext);
   const token = localStorage.getItem('access-token');
 
-
+  const setItemsDetails = (x) => {
+    setCurrentBooks(x);
+  }
+  const setIndexBook = (y) => {
+    setIndexOfFirstBook(y);
+  }  
 
   useEffect(() => {
 
@@ -55,7 +59,7 @@ const SearchedBooks = () => {
           console.error('Error fetching searched books:', error);
         });
     }
-  }, [query,user,userData,currentPage,token]);
+  }, [query,user,userData,token]);
 
   const isBookInWishlist = book => {
     return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
@@ -72,39 +76,11 @@ const SearchedBooks = () => {
     }
     const bookId = book._id;
     if (!isBookInWishlist(book)) {
-      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/add`,{
-        method:"POST",
-        headers:{
-          "Content-type": "application/json",
-          "authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(book) 
-      }).then(res => res.json()).then(data => {
-        setWishlistBooks([...wishlistBooks, book]);
-        refetch()
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-      
+      addToWishlist(book);
+      refetch();
     } else {
-        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/remove/${bookId}`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({bookId: book._id}),
-      })
-        .then(res => res.json())
-        .then(data => {
-          
-          setWishlistBooks(wishlistBooks.filter(wishlistBook => wishlistBook._id !== book._id));
-          refetch()
-        })
-        .catch(error => {
-          console.error("Error:", error);
-        });
+      removeFromWishlist(bookId);
+      refetch();
     }
   };
 
@@ -116,39 +92,11 @@ const SearchedBooks = () => {
     }
     const bookId = book._id;
     if (!isBookInCart(book)) {
-      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/add`,{
-        method:"POST",
-        headers:{
-          "Content-type": "application/json",
-          "authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(book) 
-      }).then(res => res.json()).then(data => {
-        setCartBooks([...cartBooks, book]);
-        refetch()
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        
-      });
-      
+      addToCart(book);
+      refetch();
     } else {
-      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/remove/${bookId}`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        "authorization": `Bearer ${token}`,
-      },
-      body: JSON.stringify({bookId: book._id}),
-      })
-      .then(res => res.json())
-      .then(data => {
-        setCartBooks(cartBooks.filter(cartBook => cartBook._id !== book._id));
-        refetch()
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
+      removeFromCart(bookId);
+      refetch();
     }
   };
 
@@ -159,66 +107,11 @@ const SearchedBooks = () => {
         return;
     }
     if (!isBookInCart(book)) {
-      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/add`,{
-        method:"POST",
-        headers:{
-          "Content-type": "application/json",
-          "authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(book)
-      }).then(res => res.json()).then(data => {
-        setCartBooks([...cartBooks, book]);
-        refetch()
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-
+      addToCart(book);
+      refetch();
     }
   };
 
-    const indexOfLastBook = currentPage * booksPerPage;
-    const indexOfFirstBook = indexOfLastBook - booksPerPage;
-    const currentBooks = searchedBooks.slice(indexOfFirstBook, indexOfLastBook);
-  
-  const totalPages = Math.ceil(searchedBooks.length / booksPerPage);
-
-  const getPageNumbers = () => {
-    let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
-    let endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
-
-    if (endPage - startPage + 1 < maxPageNumbers) {
-      startPage = Math.max(1, endPage - maxPageNumbers + 1);
-    }
-
-    let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
-
-    const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
-    pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
-
-    if (!pageNumbers.includes(totalPages)) {
-      pageNumbers.push(totalPages);
-    }
-
-    if (!pageNumbers.includes(1)) {
-      pageNumbers.unshift(1);
-    }
-
-    return pageNumbers.sort((a, b) => a - b);
-  };
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const goToPreviousPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
-
-  const goToNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-  
   return (
       <div className="my-16 px-4 lg:px-24">
         <br /><br />
@@ -242,7 +135,7 @@ const SearchedBooks = () => {
           <h2 className="text-3xl text-center text-bold text-black ">
           Searched Books
         </h2>
-        {currentBooks && currentBooks.length > 0 ? (
+        {searchedBooks && searchedBooks.length > 0 ? (
         <div className="mt-12">
           <div className="grid gap-4 lg:max-w-[1100px] md:max-w-[760px] sm:max-w-[620px] my-10 lg:grid-cols-5 sm:grid-cols-3 md:grid-cols-4 grid-cols-2 p-0">
             {currentBooks && currentBooks.map((book) => (
@@ -291,39 +184,7 @@ const SearchedBooks = () => {
               </Card>
             ))}
           </div>
-      <div className={`flex justify-around mt-8 w-auto ${ searchedBooks.length > 10 ? "block" : "hidden"}`}>
-        <div>
-          <button
-            onClick={goToPreviousPage}
-            disabled={currentPage === 1}
-            className="px-3 py-1 rounded-full bg-blue-500 text-white mr-2"
-          >
-            Previous
-          </button>
-        </div>
-        <div>
-          {getPageNumbers().map((number) => (
-            <button
-              key={number}
-              onClick={() => paginate(number)}
-              className={`px-3 py-1 rounded-full ${
-                currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200'
-              } mr-2`}
-            >
-              {number}
-            </button>
-          ))}
-        </div>
-        <div>
-          <button
-            onClick={goToNextPage}
-            disabled={currentPage === totalPages || totalPages === 0}
-            className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2"
-          >
-            Next
-          </button>
-        </div>
-      </div>
+          <Pagination setItemsDetails={setItemsDetails} setIndexBook={setIndexBook} itemsPerPage={10} maxPageNumbers={10} inputArrayItems={searchedBooks}/>
         </div>
         
         

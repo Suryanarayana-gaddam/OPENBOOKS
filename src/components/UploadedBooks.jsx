@@ -7,9 +7,6 @@ import Pagination from './Pagination';
 const UploadedBooks = () => {
   const [uploadedBooks,setUploadedBooks] = useState([]);
 
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const booksPerPage = 10;
-  // const maxPageNumbers = 10;
   const [userData,refetch] = useUser();
   const token = localStorage.getItem('access-token');
   const [createrId,setCreaterId] = useState(' ');
@@ -81,47 +78,6 @@ const UploadedBooks = () => {
     });
     }
   }
-
-  // const indexOfLastBook = currentPage * booksPerPage;
-  // const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  // const currentBooks =  uploadedBooks?.slice(indexOfFirstBook, indexOfLastBook)
-
-  // const totalPages = Math.ceil(uploadedBooks?.length / booksPerPage);
-
-  // const getPageNumbers = () => {
-  //   let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
-  //   let endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
-
-  //   // Adjust startPage when near the end of totalPages
-  //   if (endPage - startPage + 1 < maxPageNumbers) {
-  //     startPage = Math.max(1, endPage - maxPageNumbers + 1);
-  //   }
-
-  // let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
-
-  // const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
-  // pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
-
-  // if (!pageNumbers.includes(totalPages)) {
-  //   pageNumbers.push(totalPages);
-  // }
-  // if (!pageNumbers.includes(1)) {
-  //   pageNumbers.unshift(1);
-  // }
-  // return pageNumbers.sort((a, b) => a - b);
-  // };
-
-  // const paginate = (pageNumber) => {
-  // setCurrentPage(pageNumber);
-  // };
-
-  // const goToPreviousPage = () => {
-  // setCurrentPage((prevPage) => prevPage - 1);
-  // };
-
-  // const goToNextPage = () => {
-  // setCurrentPage((prevPage) => prevPage + 1);
-  // };
   
   return (
     <div className='p-5 my-24'>
@@ -169,40 +125,6 @@ const UploadedBooks = () => {
               </Table>
             </div>
             <Pagination setItemsDetails={setItemsDetails} setIndexBook={setIndexBook} itemsPerPage={10} maxPageNumbers={10} inputArrayItems={uploadedBooks}/>
-            {/* Pagination buttons at the bottom
-            <div className={`flex justify-around mt-8 w-auto ${ uploadedBooks.length>10 ? "block" : "hidden"}`}>
-              <div>
-                <button
-                  onClick={goToPreviousPage}
-                  disabled={currentPage === 1}
-                  className="px-3 py-1 rounded-full bg-blue-500 text-white mr-2"
-                >
-                  Previous
-                </button>
-              </div>
-              <div>
-                {getPageNumbers().map((number) => (
-                  <button
-                    key={number}
-                    onClick={() => paginate(number)}
-                    className={`px-3 py-1 rounded-full ${
-                      currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200'
-                    } mr-2`}
-                  >
-                    {number}
-                  </button>
-                ))}
-              </div>
-              <div>
-                <button
-                  onClick={goToNextPage}
-                  disabled={currentPage === totalPages || totalPages === 0}
-                  className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2"
-                >
-                  Next
-                </button>
-              </div>
-            </div> */}
           </div>
         ) : (
           <p className='text-center'>No Books Uploaded By You !</p> 

@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import  { useContext, useEffect, useState } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -8,6 +8,7 @@ import { Pagination } from 'swiper/modules';
 import {Link} from "react-router-dom";
 import {FaCartShopping, FaHeart} from 'react-icons/fa6';
 import useUser from '../../hooks/useUser'
+import { CRUDContext } from '../context/CRUDProvider';
 
 const BookCards = ({headLine,books, user}) => {
     
@@ -17,6 +18,9 @@ const BookCards = ({headLine,books, user}) => {
     const token = localStorage.getItem('access-token');
     const [userData,refetch] = useUser();
     const [userId,setUserId] = useState();
+
+    const {addToWishlist, removeFromWishlist, addToCart, removeFromCart} = useContext(CRUDContext);
+
   useEffect(() => {
     if (!user) return;
     if (userData && userData.wishlist) {
@@ -42,39 +46,11 @@ const BookCards = ({headLine,books, user}) => {
     }
     const bookId = book._id;
     if (!isBookInWishlist(book)) {
-      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/add`,{
-        method:"POST",
-        headers:{
-          "Content-type": "application/json",
-          "authorization": `Bearer ${token}`,
-          
-        },
-        body: JSON.stringify(book) 
-      }).then(res => res.json()).then(data => {
-        setWishlistBooks([...wishlistBooks, book]);
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-      
+      addToWishlist(book);
+      refetch();
     } else {
-        
-        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/wishlist/remove/${bookId}`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({bookId: book._id}),
-      })
-        .then(res => res.json())
-        .then(data => {
-          
-          setWishlistBooks(wishlistBooks.filter(wishlistBook => wishlistBook._id !== book._id));
-        })
-        .catch(error => {
-          console.error("Error:", error);
-        });
+      removeFromWishlist(bookId);
+      refetch();
     }
   };
 
@@ -86,40 +62,11 @@ const BookCards = ({headLine,books, user}) => {
     }
     const bookId = book._id;
     if (!isBookInCart(book)) {
-      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/add`,{
-        method:"POST",
-        headers:{
-          "Content-type": "application/json",
-          "authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(book)
-      }).then(res => res.json()).then(data => {
-        setCartBooks([...cartBooks, book]);
-        refetch()
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-      
+      addToCart(book);
+      refetch();
     } else {
-        
-        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/remove/${bookId}`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({bookId: book._id}),
-      })
-        .then(res => res.json())
-        .then(data => {
-          
-          setCartBooks(cartBooks.filter(cartBook => cartBook._id !== book._id));
-          refetch()
-        })
-        .catch(error => {
-          console.error("Error:", error);
-        });
+        removeFromCart(bookId);
+        refetch();
     }
   };
 
@@ -164,9 +111,6 @@ const BookCards = ({headLine,books, user}) => {
                                     <FaCartShopping className='w-5 h-5 '/>
                                 </button>
                                 <br />
-                                {/* <button onClick={(event) => handleWishlist(event, book)} className='absolute top-12 right-2 bg-blue-600 hover:bg-white p-2 rounded-full'>
-                                    <FaHeart className=' mt-0 w-5 h-5 text-white'/>
-                                </button> */}
                                 <button
                                 onClick={event => handleWishlist(event, book)}
                                 className={`absolute top-12 right-2 bg-white p-2 rounded-full ${

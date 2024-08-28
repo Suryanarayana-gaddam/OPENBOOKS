@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import useUser from '../../hooks/useUser';
 import BookCards from './BookCards';
+import { CRUDContext } from '../context/CRUDProvider';
 
 const Cart = () => {
   const [cartBooks, setCartBooks] = useState([]);
@@ -16,7 +17,7 @@ const Cart = () => {
   const [userData,refetch] = useUser();
   
   const user = useContext(AuthContext);
-
+  const {removeFromCart,clearCart} = useContext(CRUDContext);
   useEffect(() => {
       setUserId(userData._id);
       setUserName(userData.username);
@@ -50,23 +51,8 @@ const Cart = () => {
   const handleRemoveFromCart = (event,book) => {
     event.preventDefault();
     const bookId = book._id;
-        fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/remove/${bookId}`, {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json",
-              "authorization": `Bearer ${token}`,
-            },
-            body: JSON.stringify({bookId: book._id}),
-          })
-            .then(res => res.json())
-            .then(data => {
-              
-              setCartBooks(cartBooks.filter(cartBook => cartBook._id !== book._id));
-              refetch()
-            })
-            .catch(error => {
-              console.error("Error:", error);
-            });
+        removeFromCart(bookId);
+        refetch();
   }
 
   const increaseQuantity = (bookId) => {
@@ -122,13 +108,7 @@ const Cart = () => {
   };
   
   const emptyCart = async () => {
-    const removeCartResponse = await fetch(`https://book-store-api-theta.vercel.app/user/${userId}/cart/removeAll`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": `Bearer ${token}`,
-      },
-    });
+    const removeCartResponse = await clearCart()
     if (!removeCartResponse.ok) {
       throw new Error("Failed to empty cart");
     }

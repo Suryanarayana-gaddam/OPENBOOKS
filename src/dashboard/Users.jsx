@@ -2,17 +2,24 @@ import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthProvider';
 import { Table } from 'flowbite-react';
 import useUser from '../../hooks/useUser';
+import Pagination from '../components/Pagination';
 
 const Users = () => {
     const [allUsers,setAllUsers] = useState([]);
     const [username, setUsername] = useState('');
     const user = useContext(AuthContext);
     const [isLoading, setIsLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
-    const booksPerPage = 10;
-    const maxPageNumbers = 10;
+    const [indexOfFirstBook,setIndexOfFirstBook] = useState(null);
+    const [currentUsers,setCurrentUsers] = useState([]);
     const token = localStorage.getItem('access-token');
     const [userData,refetch] = useUser();
+
+    const setItemsDetails = (x) => {
+      setCurrentUsers(x);
+    }
+    const setIndexBook = (y) => {
+      setIndexOfFirstBook(y);
+    }  
   
     useEffect (() => {
       fetch("https://book-store-api-theta.vercel.app/admin/all-users",{
@@ -114,140 +121,71 @@ const Users = () => {
       });
     }
   }
-
-  const indexOfLastBook = currentPage * booksPerPage;
-  const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  const currentUsers = allUsers.slice(indexOfFirstBook, indexOfLastBook);
-
-
-  const totalPages = Math.ceil(allUsers.length / booksPerPage);
-
-  const getPageNumbers = () => {
-    let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
-    let endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
-
-    if (endPage - startPage + 1 < maxPageNumbers) {
-      startPage = Math.max(1, endPage - maxPageNumbers + 1);
-    }
-
-  let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
-
-
-  const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
-  pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
-
-  if (!pageNumbers.includes(totalPages)) {
-    pageNumbers.push(totalPages);
-  }
-  if (!pageNumbers.includes(1)) {
-    pageNumbers.unshift(1);
-  }
-
-  return pageNumbers.sort((a, b) => a - b);
-  };
-
-  const paginate = (pageNumber) => {
-  setCurrentPage(pageNumber);
-  };
-
-  const goToPreviousPage = () => {
-  setCurrentPage((prevPage) => prevPage - 1);
-  };
-
-  const goToNextPage = () => {
-  setCurrentPage((prevPage) => prevPage + 1);
-  };
   
   return (
     <div className='px-4 my-12 '>
       <h2 className='mb-8 text-3xl font-bold'>Manage Your Users</h2>
       <h2 className='mb-2'>Welcome Mr. &nbsp;<b>{username}</b> &nbsp;you can manage a users here !</h2>
 
-      <div className='overflow-auto'>
-        <Table className=' border border-collapse sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
-          <Table.Head>
-            <Table.HeadCell>No.</Table.HeadCell>
-            <Table.HeadCell>User Name</Table.HeadCell>
-            <Table.HeadCell>Email Address</Table.HeadCell>
-            <Table.HeadCell>Role</Table.HeadCell>
-            <Table.HeadCell>
-              <span className='ml-10'>Edit or Manage</span>
-            </Table.HeadCell>
-          </Table.Head>
-          {
-            currentUsers.map( (userInfo,index) => <Table.Body className='divide-y sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]' key={userInfo._id}>
-                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]">
-                  <Table.Cell className=" font-medium text-gray-900 dark:text-white">
-                    {indexOfFirstBook+index + 1} 
-                  </Table.Cell>
-                  <Table.Cell className=" font-medium text-gray-900 dark:text-white">
-                    {userInfo.username}
-                  </Table.Cell>
-                  <Table.Cell ><span>{userInfo.email}</span></Table.Cell>
-                  <Table.Cell>{userInfo.role}</Table.Cell>
-                  <Table.Cell>
-                    
-                    {
-                        userInfo.role == "admin" ?
-                          (<div className='text-center'>
-                            {userInfo.email == "suryanarayanagaddam020@gmail.com" ? 
-                            <button className='bg-green-600 px-4 py-1 font-serif font-semibold text-white rounded hover:bg-blue-500 hover:text-white text-center'>Developer </button>
-                            : (
-                                <button onClick={() => handleRemoveAdmin(userInfo._id,userInfo.role,userInfo.username)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-600 hover:text-red ml-5 text-start'>Remove Admin</button>
+      {
+        allUsers && Array.isArray(allUsers) && allUsers.length > 10 ?
+          (
+            <div className='overflow-auto'>
+              <Table className=' border border-collapse sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]'>
+                <Table.Head>
+                  <Table.HeadCell>No.</Table.HeadCell>
+                  <Table.HeadCell>User Name</Table.HeadCell>
+                  <Table.HeadCell>Email Address</Table.HeadCell>
+                  <Table.HeadCell>Role</Table.HeadCell>
+                  <Table.HeadCell>
+                    <span className='ml-10'>Edit or Manage</span>
+                  </Table.HeadCell>
+                </Table.Head>
+                {
+                  currentUsers.map( (userInfo,index) => <Table.Body className='divide-y sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]' key={userInfo._id}>
+                      <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px]">
+                        <Table.Cell className=" font-medium text-gray-900 dark:text-white">
+                          {indexOfFirstBook+index + 1} 
+                        </Table.Cell>
+                        <Table.Cell className=" font-medium text-gray-900 dark:text-white">
+                          {userInfo.username}
+                        </Table.Cell>
+                        <Table.Cell ><span>{userInfo.email}</span></Table.Cell>
+                        <Table.Cell>{userInfo.role}</Table.Cell>
+                        <Table.Cell>
+                          
+                          {
+                              userInfo.role == "admin" ?
+                                (<div className='text-center'>
+                                  {userInfo.email == "suryanarayanagaddam020@gmail.com" ? 
+                                  <button className='bg-green-600 px-4 py-1 font-serif font-semibold text-white rounded hover:bg-blue-500 hover:text-white text-center'>Developer </button>
+                                  : (
+                                      <button onClick={() => handleRemoveAdmin(userInfo._id,userInfo.role,userInfo.username)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-600 hover:text-red ml-5 text-start'>Remove Admin</button>
+                                    ) 
+                                  }
+                                </div>
+                              )
+                                : ( 
+                                  <div>
+                                      <button onClick={() => handleMakeAdmin(userInfo._id,userInfo.role)} className='bg-blue-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-green-600 ml-5 text-start'>Make Admin</button>
+                                    <button onClick={() => handleDeleteUser(userInfo._id,userInfo.username)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-100 hover:text-red-600 ml-5'>Delete</button>
+                                  </div>
                               ) 
-                            }
-                          </div>
-                        )
-                          : ( 
-                            <div>
-                                <button onClick={() => handleMakeAdmin(userInfo._id,userInfo.role)} className='bg-blue-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-green-600 ml-5 text-start'>Make Admin</button>
-                              <button onClick={() => handleDeleteUser(userInfo._id,userInfo.username)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-100 hover:text-red-600 ml-5'>Delete</button>
-                            </div>
-                        ) 
-                    }
+                          }
 
-                  </Table.Cell>
-                </Table.Row>
-            </Table.Body>
-          )}
+                        </Table.Cell>
+                      </Table.Row>
+                  </Table.Body>
+                )}
 
 
-        </Table>
-      </div>
-
-    <div className={`flex justify-around mt-8 w-auto ${ allUsers.length > 10 ? "block" : "hidden"}`}>
-      <div>
-        <button
-          onClick={goToPreviousPage}
-          disabled={currentPage === 1}
-          className="px-3 py-1 rounded-full bg-blue-500 text-white mr-2"
-        >
-          Previous
-        </button>
-      </div>
-      <div>
-        {getPageNumbers().map((number) => (
-          <button
-            key={number}
-            onClick={() => paginate(number)}
-            className={`px-3 py-1 rounded-full ${
-              currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200'
-            } mr-2`}
-          >
-            {number}
-          </button>
-        ))}
-      </div>
-      <div>
-        <button
-          onClick={goToNextPage}
-          disabled={currentPage === totalPages || totalPages === 0}
-          className="px-3 py-1 rounded-full bg-blue-500 text-white ml-2"
-        >
-          Next
-        </button>
-      </div>
-    </div>
+              </Table>
+              <Pagination setItemsDetails={setItemsDetails} setIndexBook={setIndexBook} itemsPerPage={10} maxPageNumbers={10} inputArrayItems={allUsers}/>
+            </div>
+          ) : (
+            <p className='text-center'> Currently No User Details Available </p>
+          )
+      }
 
     </div>
   )
