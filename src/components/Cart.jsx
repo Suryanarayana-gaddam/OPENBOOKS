@@ -100,18 +100,16 @@ const Cart = () => {
           body: JSON.stringify(orderObj)
         }).then(res => res.json()).then(data => {
           emptyCart();
+          refetch();
+        })
+        .catch(error => {
+          console.error("Error:", error);
         });
     })
-    .catch(error => {
-      console.error("Error:", error);
-    });
   };
   
-  const emptyCart = async () => {
-    const removeCartResponse = await clearCart()
-    if (!removeCartResponse.ok) {
-      throw new Error("Failed to empty cart");
-    }
+  const emptyCart = () => {
+    clearCart()
     setCartBooks([]);
     refetch() 
   };

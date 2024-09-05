@@ -7,10 +7,9 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import { setLogLevel } from 'firebase/app';
 
 const Login = () => {
-  const [isLoading,setIsLoading] = useState(false)
   const {login,loginWithGoogle} = useContext(AuthContext);
   const [error,setError] = useState("");
-  
+  const {SetLoading} = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
@@ -25,18 +24,9 @@ const Login = () => {
     setPassword(newPassword);
     };
 
-  if(isLoading){
-    return <div className="flex items-center justify-center h-screen">
-    <div className="relative">
-        <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
-        <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
-        </div>
-    </div>
-</div>
-  }
   const handleLogin = (event) => {
     event.preventDefault();
-    setIsLoading(true);
+    SetLoading(true);
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
@@ -55,21 +45,20 @@ const Login = () => {
             }else{
                 login(email,password).then((userCredential) => {
                     const user = userCredential.user;
-                    setIsLoading(false)
                     alert("Welcome Back User...")
                     navigate("/",{replace:true})
                 }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                setIsLoading(false)
                 setError(errorMessage);
                 setLogLevel(false)
                 });
             }
-            setIsLoading(false)
             }).catch(error =>{
             console.error("Error in Login:",error)
-            })
+            }).finally(
+                SetLoading(false)
+            )
     
     
      
@@ -85,7 +74,7 @@ const handleRegister = () => {
             password: "",
             googleSignIn: true 
         };
-        setIsLoading(true);
+        SetLoading(true);
         
         const token = localStorage.getItem('access-token');
         fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
@@ -111,7 +100,7 @@ const handleRegister = () => {
                         console.error("Error in Signup:",error);
                     })
                 } else {
-                    setIsLoading(false);
+                    SetLoading(false);
                     alert(`Welcome back , ${user.displayName} `);
                     navigate(from, { replace: true });
                 }

@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import useFetchNumber from '../../hooks/useFetchNumber';
+import { AuthContext } from '../context/AuthProvider';
 
 const About = () => {
   const [bookCount, setBookCount] = useState(0);
   const [userCount, setUserCount] = useState(0);
   const [orderCount, setOrderCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const {SetLoading} = useContext(AuthContext);
 
   const [url1,setUrl1] = useState("")
   const {data : data1} = useFetchNumber(url1);
@@ -15,9 +16,11 @@ const About = () => {
   const {data : data3} = useFetchNumber(url3);
 
   useEffect(() => {
+    SetLoading(true);
     setUrl1('https://book-store-api-theta.vercel.app/all-books-count');
     setUrl2('https://book-store-api-theta.vercel.app/admin/all-users-count');
     setUrl3('https://book-store-api-theta.vercel.app/get/all-orders-count');
+    SetLoading(false);
   }, []);
 
   useEffect(() => {
@@ -35,22 +38,12 @@ const About = () => {
   useEffect(() => {
       if (data3) {
           setOrderCount(data3.count);
-          setIsLoading(false); 
-      }
+          SetLoading(false);
+        }
   }, [data3]);
 
   return (
     <div className='pt-20 mx-5'>
-      
-      {isLoading ? (
-         <div className="flex items-center justify-center h-screen">
-        <div className="relative">
-            <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
-            <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
-            </div>
-        </div>
-    </div>
-      ) : (
         <div>
           <h1 className='sm:text-2xl md:text-3xl text-xl relative left-2 top-8 mb-4'>About OPENBOOKS Bookstore </h1><br />
           <p className='indent-4'>Welcome to OPENBOOKS Bookstore! We are passionate about providing a wide range of books to cater to every reader&apos;s taste and interest. Whether you&apos;re a fiction enthusiast, a history buff, or someone exploring self-help and personal development, we have something for you.</p>
@@ -62,7 +55,6 @@ const About = () => {
               <div>Total Orders: {orderCount}</div>
             </div>
         </div>
-      )}
     </div>
     
   );

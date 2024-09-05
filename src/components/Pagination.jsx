@@ -23,18 +23,18 @@ const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,
       startPage = Math.max(1, endPage - maxPageNumbers + 1);
     }
 
-  let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
+    let pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
 
-  const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
-  pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
+    const multiplesOf50 = Array.from({ length: Math.ceil(totalPages / 50)-1 }, (_, index) => (index + 1) * 50);
+    pageNumbers = [...pageNumbers.filter(num => !multiplesOf50.includes(num)), ...multiplesOf50];
 
-  if (!pageNumbers.includes(totalPages)) {
-    pageNumbers.push(totalPages);
-  }
-  if (!pageNumbers.includes(1)) {
-    pageNumbers.unshift(1);
-  }
-  return pageNumbers.sort((a, b) => a - b);
+    if (!pageNumbers.includes(totalPages)) {
+      pageNumbers.push(totalPages);
+    }
+    if (!pageNumbers.includes(1)) {
+      pageNumbers.unshift(1);
+    }
+    return pageNumbers.sort((a, b) => a - b);
   };
 
   const paginate = (pageNumber) => {
@@ -70,11 +70,7 @@ const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,
                       currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200'
                     } mr-2`}
                   >
-                    {
-                    number === 1 ? (
-                       ("First Page 1")
-                    ) : (number === totalPages ? `Last Page ${totalPages}` : number)
-                    }
+                    {number}
                   </button>
                 ))}
               </div>

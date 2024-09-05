@@ -7,10 +7,10 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
 const Signup = () => {
     const {createUser,loginWithGoogle} = useContext(AuthContext);
-    const [error,setError] = useState("error");
+    const [error,setError] = useState("");
 
     const [profilePic, setProfilePic] = useState(null);
-    const [isLoading,setIsLoading] = useState(false);
+    const {SetLoading} = useContext(AuthContext);
     const picaa = pica();
 
     const location = useLocation();
@@ -71,16 +71,6 @@ const Signup = () => {
     
     const from = location.state?.from?.pathname || "/";
 
-    if(isLoading){
-        return <div className="flex items-center justify-center h-screen">
-        <div className="relative">
-            <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
-            <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
-            </div>
-        </div>
-    </div>
-    }
-
     const handleProfilePicChange = async (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -134,7 +124,7 @@ const Signup = () => {
                 password: "",
                 googleSignIn: true 
             };
-            setIsLoading(true);
+            SetLoading(true);
             fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
                 method: "GET",
                 headers: {
@@ -154,16 +144,20 @@ const Signup = () => {
                         navigate(from, { replace: true });
                     });
                 } else {
-                    setIsLoading(false);
                     alert(`Welcome back , ${user.displayName} `);
                     navigate(from, { replace: true });
                 }
-            });
+            }).catch((error) => {
+                const errorMessage = error.message;
+                setError(errorMessage || error);
+            }).finally(
+                SetLoading(false)
+            )
         }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             setError(errorMessage);
-        });
+        })
     }
     
     
@@ -173,7 +167,7 @@ const Signup = () => {
             return window.alert("Please enter a valid password!");
         }
         const form = event.target;
-        setIsLoading(true)
+        SetLoading(true)
         const username = form.username.value; 
         const email = form.email.value;
         const password = form.password.value;
@@ -196,8 +190,7 @@ const Signup = () => {
 
                 createUser(email,password).then((userCredential) => {
                     const user = userCredential.user;
-                    alert("Signed up Successfully!");
-                    navigate("/");
+                    navigate("/login");
                   })
                   .catch((error) => {
                     const errorCode = error.code;
@@ -212,19 +205,20 @@ const Signup = () => {
                     },
                     body: JSON.stringify(userObj)
                 }).then(res => res.json()).then(data => {
-                    setIsLoading(false)
                     alert("Signed up Successfully!");
                     navigate(from, { replace: true });
                 }).catch(err =>{
                     console.log("Error: ",err.error)
-                });
+                }).finally(
+                    SetLoading(false)
+                )
             } else {
-                setIsLoading(false)
+                SetLoading(false)
                 alert("User already exists! please login!");
                 navigate("/login")
             }
         }).catch(error => {
-            setIsLoading(false);
+            SetLoading(false)
             console.log("Error :",error,"err status:",error.status)
         });
     }
@@ -266,6 +260,7 @@ const Signup = () => {
                                 <label htmlFor="profilePic" className="block">Profile Picture:</label>
                                 <input id="profilePic" name="profilePic" type="file" accept=".jpeg, .png, .jpg" onChange={handleProfilePicChange} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" />
                             </div>
+                            {error && <span className='text-red-500'>{error}</span>}
                             <p>If you have an account. Please <Link to="/login" className="text-blue-700 underline">Login</Link></p>
                             <div className="relative">
                                 <button className="bg-blue-500 text-white rounded-md px-6 py-2">Sign up</button>
