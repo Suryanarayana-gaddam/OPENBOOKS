@@ -1,22 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { HiSearch } from 'react-icons/hi';
+import { useContext, useEffect, useState } from 'react';
 import { FaCartShopping, FaHeart} from 'react-icons/fa6';
 import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
-
 
 import { Card } from 'flowbite-react';
 import useUser from '../../hooks/useUser';
 import Pagination from './Pagination';
 import { CRUDContext } from '../context/CRUDProvider';
+import Search from './Search';
+import Loading from './Loading';
 
 const SearchedBooks = () => {
-  const user = useContext(AuthContext);
+  const {user} = useContext(AuthContext);
+
   const [userData,refetch] = useUser();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('query');
-  const [searchQuery, setSearchQuery] = useState('');
   const [userId, setUserId] = useState(null);
 
   const [searchedBooks, setSearchedBooks] = useState([]);
@@ -26,7 +26,7 @@ const SearchedBooks = () => {
   const [cartBooks, setCartBooks] = useState([]);
   const {addToWishlist, removeFromWishlist, addToCart, removeFromCart} = useContext(CRUDContext);
   const token = localStorage.getItem('access-token');
-
+  const [loading, setLoading] = useState(true);
   const setItemsDetails = (x) => {
     setCurrentBooks(x);
   }
@@ -35,7 +35,6 @@ const SearchedBooks = () => {
   }  
 
   useEffect(() => {
-
     if (!user) return;
     if (userData && userData.wishlist && userData.cart) {
       setUserId(userData._id)
@@ -43,7 +42,7 @@ const SearchedBooks = () => {
       setWishlistBooks(userData.wishlist)
     }
     refetch()
-
+    
     if (query) {
       fetch(`https://book-store-api-theta.vercel.app/all-books/searchedbooks?query=${encodeURIComponent(query)}`, {
         headers : {
@@ -59,7 +58,14 @@ const SearchedBooks = () => {
           console.error('Error fetching searched books:', error);
         });
     }
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000);
   }, [query,user,userData,token]);
+
+  if(loading){
+    return <Loading/>
+  }
 
   const isBookInWishlist = book => {
     return wishlistBooks.some(wishlistBook => wishlistBook._id === book._id);
@@ -114,28 +120,13 @@ const SearchedBooks = () => {
 
   return (
       <div className="my-16 px-4 lg:px-24">
-        <br /><br />
-        <div className=' flex '>
-            <input
-              type="search" name='search-input'
-              placeholder='Search a book'
-              className='py-2 px-2  rounded-s-sm outline-none xl:w-full lg:w-5/6 md:w-4/6 w-3/6 text-center ml-10'
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-            />
-            <Link to={`/books/searchedbooks?query=${encodeURIComponent(searchQuery)}`}>
-              <button
-                className='bg-blue-700 px-3 py-3 text-white font-medium hover:bg-black transition-all ease-in duration-200'
-              >
-                <HiSearch style={{maxWidth:'100%'}}/>
-                </button>
-            </Link>            
-          </div>
+        <br />
+          <Search/>
           <br />
           <h2 className="text-3xl text-center text-bold text-black ">
-          Searched Books
+          Searched Results for &quot;{decodeURIComponent(location.search.slice((location.search.indexOf("=")+1)))}&quot;
         </h2>
-        {searchedBooks && searchedBooks.length > 0 ? (
+        {searchedBooks.length > 0 ? (
         <div className="mt-12">
           <div className="grid gap-4 lg:max-w-[1100px] md:max-w-[760px] sm:max-w-[620px] my-10 lg:grid-cols-5 sm:grid-cols-3 md:grid-cols-4 grid-cols-2 p-0">
             {currentBooks && currentBooks.map((book) => (

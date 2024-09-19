@@ -1,14 +1,10 @@
-//16-04-2024 18:58
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import { useState, useEffect, useContext, useMemo } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
-import BookList from '../components/BookList';
 import BookCards from '../components/BookCards';
 import { AuthContext } from '../context/AuthProvider';
 import { FaHeart } from 'react-icons/fa6';
 import useUser from '../../hooks/useUser';
 import { CRUDContext } from '../context/CRUDProvider';
-
-
 
 const SingleBook = () => {
   const { _id, createrId, bookTitle, imageURL, category, bookDescription, authorName,bookPrice } = useLoaderData();

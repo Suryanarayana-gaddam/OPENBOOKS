@@ -8,9 +8,10 @@ const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   useEffect(() => {
+      
       const currentItems =  inputArrayItems?.slice(indexOfFirstItem, indexOfLastItem)
       setItemsDetails(currentItems);
-        setIndexBook(indexOfFirstItem)
+      setIndexBook(indexOfFirstItem)
     },[currentPage])  
   const totalPages = Math.ceil(inputArrayItems && inputArrayItems?.length / itemsPerPage);
 

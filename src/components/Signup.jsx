@@ -4,13 +4,14 @@ import {AuthContext} from '../context/AuthProvider';
 import googleLogo from "../assets/google-logo.svg"
 import pica from "pica";
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
+import Loading from './Loading';
 
 const Signup = () => {
     const {createUser,loginWithGoogle} = useContext(AuthContext);
     const [error,setError] = useState("");
 
     const [profilePic, setProfilePic] = useState(null);
-    const {SetLoading} = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
     const picaa = pica();
 
     const location = useLocation();
@@ -24,8 +25,6 @@ const Signup = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const token = localStorage.getItem("access-token");
-    //console.log("Access-token :",token)
-
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -40,7 +39,6 @@ const Signup = () => {
     })
 
   const evaluatePasswordStrength = (newPassword) => {
-    // Define your password strength criteria here
     const minLength = 8;
     const hasUpperCase = /[A-Z]/.test(newPassword);
     const hasLowerCase = /[a-z]/.test(newPassword);
@@ -124,7 +122,7 @@ const Signup = () => {
                 password: "",
                 googleSignIn: true 
             };
-            SetLoading(true);
+            setLoading(true);
             fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
                 method: "GET",
                 headers: {
@@ -151,7 +149,7 @@ const Signup = () => {
                 const errorMessage = error.message;
                 setError(errorMessage || error);
             }).finally(
-                SetLoading(false)
+                setTimeout(() => setLoading(false),1000)
             )
         }).catch((error) => {
             const errorCode = error.code;
@@ -167,7 +165,7 @@ const Signup = () => {
             return window.alert("Please enter a valid password!");
         }
         const form = event.target;
-        SetLoading(true)
+        setLoading(true)
         const username = form.username.value; 
         const email = form.email.value;
         const password = form.password.value;
@@ -210,18 +208,22 @@ const Signup = () => {
                 }).catch(err =>{
                     console.log("Error: ",err.error)
                 }).finally(
-                    SetLoading(false)
+                    setTimeout(() => setLoading(false),1000)
                 )
             } else {
-                SetLoading(false)
+                setTimeout(() =>setLoading(false),1000)
                 alert("User already exists! please login!");
                 navigate("/login")
             }
         }).catch(error => {
-            SetLoading(false)
+            setTimeout(() =>setLoading(false),1000)
             console.log("Error :",error,"err status:",error.status)
         });
     }
+
+    if(loading){
+        return <Loading/>
+      }
     
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">

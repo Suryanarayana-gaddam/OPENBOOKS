@@ -1,28 +1,26 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { motion } from 'framer-motion'; 
 import { Link } from 'react-router-dom';
 import useUser from '../../hooks/useUser';
 import BookCards from './BookCards';
 import { CRUDContext } from '../context/CRUDProvider';
+import Loading from './Loading';
 
 const Cart = () => {
-  const [cartBooks, setCartBooks] = useState([]);
+  const [userData,refetch] = useUser();
   const [books,setBooks] = useState([]);
-  const [userId,setUserId] = useState(null);
-  const [userName,setUserName] = useState(null);
-  
+  const [cartBooks, setCartBooks] = useState(userData.cart);
+   
   const token = localStorage.getItem('access-token');
   const headLine = "My Cart";
-  const [userData,refetch] = useUser();
   
   const user = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+  const count = useRef(0)
   const {removeFromCart,clearCart} = useContext(CRUDContext);
   useEffect(() => {
-      setUserId(userData._id);
-      setUserName(userData.username);
-
-      const fetchBooks = async () => {
+    const fetchBooks = async () => {
         try {
           const response = await fetch("https://book-store-api-theta.vercel.app/all-books", {
             headers: {
@@ -39,14 +37,19 @@ const Cart = () => {
           console.error('Error:', error.message);
         }
       };
-    
       fetchBooks();
 
       if(userData && userData.cart){
       setCartBooks(userData.cart.reverse())
       }
-      
-  }, [user,userData,token]);
+      console.log("Rendered ",count.current,"Times!")
+      count.current += 1
+      setTimeout(() =>setLoading(false),1000);
+    }, [userData,token]);
+
+  if(loading){
+    return <Loading/>
+  }
 
   const handleRemoveFromCart = (event,book) => {
     event.preventDefault();
@@ -73,10 +76,11 @@ const Cart = () => {
 
   const handleOrderSubmit = (event) => {
     event.preventDefault();
+    setLoading(true)
     cartBooks.map(book => {
       const orderObj = {
-        userId:userId,
-        username:userName,
+        userId:userData._id,
+        username:userData.userName,
         bookId: book._id,
         quantity: book.quantity || 1,
         totalPrice: (book.quantity || 1) * book.bookPrice,
@@ -91,7 +95,7 @@ const Cart = () => {
         date : new Date()
       };
 
-      fetch(`https://book-store-api-theta.vercel.app/user/${userId}/add/orders`,{
+      fetch(`https://book-store-api-theta.vercel.app/user/${userData._id}/add/orders`,{
           method:"POST",
           headers:{
             "Content-type": "application/json",
@@ -104,7 +108,9 @@ const Cart = () => {
         })
         .catch(error => {
           console.error("Error:", error);
-        });
+        }).finally(
+          setTimeout(() =>setLoading(false),1000)
+        )
     })
   };
   
@@ -165,7 +171,7 @@ const Cart = () => {
                   <div className="flex justify-center pt-1 items-center space-x-2">
                     <button
                       className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-                      onClick={() => handleRemoveFromCart(event, book)}
+                      onClick={() => handleRemoveFromCart(event,book)}
                     >
                       Remove
                     </button>
@@ -174,7 +180,7 @@ const Cart = () => {
               </motion.div>
             ))}
             <div className="flex justify-around mt-4">
-              <p className="text-lg font-bold">Total Price: ₹{cartBooks.reduce((total, book) => total + (book.quantity || 1) * book.bookPrice, 0)}</p>
+              <p className="text-lg font-bold">Total Price: ₹{cartBooks && cartBooks.reduce((total, book) => total + (book.quantity || 1) * book.bookPrice, 0)}</p>
               <button onClick={(event) => handleOrderSubmit(event)} className=" py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 transition duration-300 px-2">
                 Proceed to Pay
               </button>

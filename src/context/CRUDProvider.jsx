@@ -6,7 +6,7 @@ export const CRUDContext = createContext();
 const CRUDProvider = ({ children }) => {
   const [userData,refetch] = useUser();
   const token = localStorage.getItem('access-token');
-  const [userId,setUserId] = useState();
+  const [userId,setUserId] = useState(userData._id);
 
   useEffect(() => {
     if (userData && userData.wishlist) {

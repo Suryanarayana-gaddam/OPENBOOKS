@@ -4,6 +4,7 @@ import { FaPen } from 'react-icons/fa';
 import pica from 'pica';
 import { useNavigate } from 'react-router-dom';
 import useUser from '../../hooks/useUser';
+import Loading from './Loading';
 
 const UserProfile = () => {
     const [username, setUsername] = useState(null);
@@ -11,7 +12,7 @@ const UserProfile = () => {
     const [userId, setUserId] = useState(null);
     const [newUsername, setNewUsername] = useState('');
     const [isNameChangeClicked, setIsNameChangeClicked] = useState(false);
-
+    const [loading, setLoading] = useState(true);
     const token = localStorage.getItem('access-token');
     const fileInputRef = useRef(null);
     const picaInstance = pica();
@@ -27,7 +28,14 @@ const UserProfile = () => {
             setProfilePic(userData.profilePic);
             setUserId(userData._id);
         }
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000);
     }, [userData]);
+
+    if(loading){
+        return <Loading/>
+    }
 
     const handleLogout = async () => {
         try {

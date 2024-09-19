@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthProvider';
 import { Table } from 'flowbite-react';
 import useUser from '../../hooks/useUser';
 import Pagination from '../components/Pagination';
+import { useNavigate } from 'react-router-dom';
 
 const Users = () => {
     const [allUsers,setAllUsers] = useState([]);
@@ -13,6 +14,7 @@ const Users = () => {
     const [currentUsers,setCurrentUsers] = useState([]);
     const token = localStorage.getItem('access-token');
     const [userData,refetch] = useUser();
+    const navigate = useNavigate()
 
     const setItemsDetails = (x) => {
       setCurrentUsers(x);
@@ -35,7 +37,7 @@ const Users = () => {
       if(userData && userData.username){
         setUsername(userData.username)
       }
-    }, [user,userData,token]);
+    }, [user,userData,token,currentUsers]);
 
     if(isLoading){
       return <div className="flex items-center justify-center h-screen">
@@ -47,7 +49,7 @@ const Users = () => {
   </div>
     }
   
-  const handleDeleteUser = (id) => {
+  const handleDeleteUser = (id,name) => {
     const isConfirmed = window.confirm("Are you sure you want to delete this user ?");
     if (isConfirmed) {
       fetch(`https://book-store-api-theta.vercel.app/user/delete/${id}`, {
@@ -55,16 +57,17 @@ const Users = () => {
           headers: {
             "Content-Type": "application/json",
             "authorization": `Bearer ${token}`
-      
           },
         }
       )
       .then(res => res.json())
       .then(data => {
-        if (data.modifiedCount === 1) {
-          alert(`Deleted User : ${username}`);
+        if (data.deletedCount === 1) {
+          alert(`Deleted '${name}'`);
+          refetch();
+          setAllUsers(allUsers.filter(prev => prev.username !== name));
         } else {
-          alert("Failed to update user role.");
+          alert(`Failed to delete the ${name}.`);
         }
       })
       .catch(error => {
@@ -74,7 +77,7 @@ const Users = () => {
   }
 
 
-  const handleMakeAdmin = (id,userrole) => {
+  const handleMakeAdmin = (id,userrole,userInfo) => {
     const updateUserObj = {role : userrole=='user' ? 'admin' : "user"};
     const isConfirmed = window.confirm("Are you sure , you want to make this user as admin ?");
     if (isConfirmed) {
@@ -86,8 +89,15 @@ const Users = () => {
         },
         body: JSON.stringify(updateUserObj)
       }).then(res => res.json()).then(data => {
-        alert(`This user is admin now !!!`);
-        window.location.href = '/admin/dashboard/all-users';
+        alert(`The ${userInfo.username}'s role has been updated to ${updateUserObj.role}!`);
+
+        setCurrentUsers(prev => {prev.map(item => {
+          if(item.id === id) {
+            return [...item,item.role === updateUserObj.role]
+          }
+          return item;
+        })})
+        refetch()
       })
       .catch(error => {
         console.error('Error updating book:', error);
@@ -96,7 +106,7 @@ const Users = () => {
     }
   }
 
-  const handleRemoveAdmin = (id,userrole,currentusername) => {
+  const handleRemoveAdmin = (id,userrole,currentusername,userInfo) => {
     const updateUserObj = {role : userrole=='admin' ? 'user' : "admin"};
     const isConfirmed = window.confirm("Are you sure , you want to remove this user as admin ?");
     if (isConfirmed) {
@@ -109,11 +119,17 @@ const Users = () => {
         },
         body: JSON.stringify(updateUserObj)
       }).then(res => res.json()).then(data => {
-        alert(`This person is user now !!!`);
+        alert(`${userInfo.username} is user now !!!`);
         if(username == currentusername){
-          window.location.href = '/';
+          navigate("/")
         }else{
-          window.location.href = '/admin/dashboard/all-users';
+          setCurrentUsers(prev => {prev.map(item => {
+            if(item.id === id) {
+              return [...item,item.role === updateUserObj.role]
+            }
+            return item;
+          })})
+          refetch()
         }
       })
       .catch(error => {
@@ -160,14 +176,14 @@ const Users = () => {
                                   {userInfo.email == "suryanarayanagaddam020@gmail.com" ? 
                                   <button className='bg-green-600 px-4 py-1 font-serif font-semibold text-white rounded hover:bg-blue-500 hover:text-white text-center'>Developer </button>
                                   : (
-                                      <button onClick={() => handleRemoveAdmin(userInfo._id,userInfo.role,userInfo.username)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-600 hover:text-red ml-5 text-start'>Remove Admin</button>
+                                      <button onClick={() => handleRemoveAdmin(userInfo._id,userInfo.role,userInfo.username,userInfo)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-600 hover:text-red ml-5 text-start'>Remove Admin</button>
                                     ) 
                                   }
                                 </div>
                               )
                                 : ( 
                                   <div>
-                                      <button onClick={() => handleMakeAdmin(userInfo._id,userInfo.role)} className='bg-blue-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-green-600 ml-5 text-start'>Make Admin</button>
+                                      <button onClick={() => handleMakeAdmin(userInfo._id,userInfo.role,userInfo)} className='bg-blue-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-green-600 ml-5 text-start'>Make Admin</button>
                                     <button onClick={() => handleDeleteUser(userInfo._id,userInfo.username)} className='bg-red-600 px-4 py-1 font-semibold text-white rounded-full hover:bg-gray-100 hover:text-red-600 ml-5'>Delete</button>
                                   </div>
                               ) 

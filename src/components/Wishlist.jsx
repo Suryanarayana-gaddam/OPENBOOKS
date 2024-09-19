@@ -9,7 +9,7 @@ const Wishlist = () => {
   const user = useContext(AuthContext);
   const headLine = "Wishlist";
   const [userData,refetch] = useUser();
-  
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
 
     if (userData && userData.wishlist) {

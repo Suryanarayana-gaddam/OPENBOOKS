@@ -3,6 +3,7 @@ import { Table } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import useUser from '../../hooks/useUser';
 import Pagination from './Pagination';
+import Loading from './Loading';
 
 const UploadedBooks = () => {
   const [uploadedBooks,setUploadedBooks] = useState([]);
@@ -12,39 +13,40 @@ const UploadedBooks = () => {
   const [createrId,setCreaterId] = useState(' ');
   const [indexOfFirstBook,setIndexOfFirstBook] = useState(null);
   const [currentBooks,setCurrentBooks] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if(userData && userData._id){
       setCreaterId(userData._id)
     }
-  }, [userData]);
+    const fetchData = () => {
+      fetch(`https://book-store-api-theta.vercel.app/user/${createrId}/get/books`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": `Bearer ${token}`
+        },
+      })
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(error => {
+            console.error("Error fetching uploaded books:", error);
+            // Handle the error
+          });
+        }
+        return res.json();
+      })
+      .then(data => setUploadedBooks(data))
+      .catch(error => {
+        console.error("Error:", error);
+        // Handle unexpected errors
+      });
+    }
+    fetchData()
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000);
 
-    useEffect(() => {
-      const fetchData = () => {
-        fetch(`https://book-store-api-theta.vercel.app/user/${createrId}/get/books`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "authorization": `Bearer ${token}`
-          },
-        })
-        .then(res => {
-          if (!res.ok) {
-            return res.json().then(error => {
-              console.error("Error fetching uploaded books:", error);
-              // Handle the error
-            });
-          }
-          return res.json();
-        })
-        .then(data => setUploadedBooks(data))
-        .catch(error => {
-          console.error("Error:", error);
-          // Handle unexpected errors
-        });
-      }
-      fetchData()
-    },[createrId])
+    },[createrId,userData,token])
 
   const setItemsDetails = (x) => {
     setCurrentBooks(x);
@@ -53,9 +55,10 @@ const UploadedBooks = () => {
     setIndexOfFirstBook(y);
   }
 
+  if(loading){
+    return <Loading/>
+  }
 
-
-  //delete a book 
   const handleDelete = (id) => {
     // Display confirmation dialog
     const isConfirmed = window.confirm("Are you sure you want to delete this book?");

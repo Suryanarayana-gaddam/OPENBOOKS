@@ -1,16 +1,14 @@
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Shop from '../shop/Shop';
 import BookCards from './BookCards';
 import { AuthContext } from '../context/AuthProvider';
+import Search from './Search';
 
 const BookCategories = () => {
 
   const user = useContext(AuthContext);
-
   const [books, setBooks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
   const [flag,setFlag] = useState(false);
   const bookCategories = [
     "Fiction", "Mystery", "Programming", "Science Fiction", "Fantasy", "Horror", "Bibliography", "Autobiography", "History", "Self-help", "Memoir", "Business", "Children Books", "Travel", "Religion", "Art And Design"
@@ -44,29 +42,14 @@ const BookCategories = () => {
   return (
     <div className='pt-12 mx-5'>
       
-      <div className='w-full mt-12'>
-            <input
-              type="search" name='search-input'
-              placeholder='Search a book'
-              className='py-2 px-2 rounded-s-sm outline-none xl:w-full lg:w-5/6 md:w-4/6 w-3/6 text-center ml-10'
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-            />
-            <Link to={`/books/searchedbooks?query=${encodeURIComponent(searchQuery)}`}>
-              <button
-                className='bg-blue-700 px-6 py-2 text-white font-medium hover:bg-black transition-all ease-in duration-200'
-              >
-                Search
-              </button>
-            </Link>
-          </div>
+      <Search/>
       <h2 className='my-2 mt-5 bg-black text-center text-white text-2xl p-2 pb-2 h-12'>Available Categories</h2>
       <ul className='flex flex-wrap justify-center'>
         {bookCategories.map(category => (
           <li key={category} className={` border-dotted mx-4 my-2 px-4 py-2 rounded-full bg-gray-300 hover:bg-gray-500 hover:text-white transition-colors duration-300 ${selectedCategory === category ? ' text-white bg-lime-500' : 'text-black'}`}>
-            <Link to="#" onClick={() => handleClick(category)}>
+            <button onClick={() => handleClick(category)}>
               {category}
-            </Link>
+            </button>
           </li>
         ))}
       </ul>
@@ -84,7 +67,6 @@ const BookCategories = () => {
           <Shop showSearchBox/>
         </div>
       )}
-      {/* {books.length > 0 && <Shop />} Conditionally render Shop component when books are loaded */}
     </div>
   );
 };

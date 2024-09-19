@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { useLoaderData , useParams } from 'react-router-dom';
 import { Button, Label, Select, TextInput, Textarea } from "flowbite-react";
 import useUser from '../../hooks/useUser';
+import Loading from './Loading';
 
 const UserEditBook = () => {
   const {id} = useParams();
   const {bookTitle,authorName,imageURL,category,bookDescription,bookPDFURL,bookPrice} = useLoaderData();
-  
+  const [loading, setLoading] = useState(true);
   const bookCategories = [
     "Fiction","Mistery","Programming","Science Fiction","Fantasy","Horror","Bibliogarphy","Autobiography","History","Self-help","Memoir","Business","Children Books","Travel","Religion","Art And Design"
   ]
@@ -19,8 +20,14 @@ const UserEditBook = () => {
     if(userData && userData.username){
       setUsername(userData.username)
     }
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000);
   },[userData]);
 
+  if(loading){
+    return <Loading/>
+  }
 
   const handleChangeSelectedValue = (event) => {
     setselectedBookCategory(event.target.value);

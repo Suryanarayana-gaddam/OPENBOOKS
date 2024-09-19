@@ -1,47 +1,35 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import useFetchNumber from '../../hooks/useFetchNumber';
-import { AuthContext } from '../context/AuthProvider';
+import Loading from './Loading';
 
 const About = () => {
+  const {data : data1} = useFetchNumber('https://book-store-api-theta.vercel.app/all-books-count' || "");
+  const {data : data2} = useFetchNumber('https://book-store-api-theta.vercel.app/admin/all-users-count' || "");
+  const {data : data3} = useFetchNumber('https://book-store-api-theta.vercel.app/get/all-orders-count' || "");
   const [bookCount, setBookCount] = useState(0);
   const [userCount, setUserCount] = useState(0);
   const [orderCount, setOrderCount] = useState(0);
-  const {SetLoading} = useContext(AuthContext);
-
-  const [url1,setUrl1] = useState("")
-  const {data : data1} = useFetchNumber(url1);
-  const [url2,setUrl2] = useState("")
-  const {data : data2} = useFetchNumber(url2);
-  const [url3,setUrl3] = useState("")
-  const {data : data3} = useFetchNumber(url3);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    SetLoading(true);
-    setUrl1('https://book-store-api-theta.vercel.app/all-books-count');
-    setUrl2('https://book-store-api-theta.vercel.app/admin/all-users-count');
-    setUrl3('https://book-store-api-theta.vercel.app/get/all-orders-count');
-    SetLoading(false);
-  }, []);
-
-  useEffect(() => {
-      if (data1) {
-          setBookCount(data1.count);
-      }
-  }, [data1]);
-
-  useEffect(() => {
-      if (data2) {
-          setUserCount(data2.count);
-      }
-  }, [data2]);
-
-  useEffect(() => {
-      if (data3) {
-          setOrderCount(data3.count);
-          SetLoading(false);
-        }
-  }, [data3]);
-
+    if (data1) {
+      setBookCount(data1.count);
+    }
+    
+    if (data2) {
+      setUserCount(data2.count);
+    }
+    
+    if (data3) {
+      setOrderCount(data3.count);
+    }
+    setTimeout(() =>setLoading(false),1000);
+  }, [data1,data2,data3]);
+  
+  if(loading){
+    return (
+      <Loading/>
+    )
+  }
   return (
     <div className='pt-20 mx-5'>
         <div>

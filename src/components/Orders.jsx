@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import useUser from '../../hooks/useUser'
 import useFetch from '../../hooks/useFetch';
+import Loading from './Loading';
 
 
 const Orders = () => {
@@ -12,20 +13,20 @@ const Orders = () => {
   const token = localStorage.getItem('access-token');
   const [userData,refetch] = useUser();
   const [userId, setUserId] = useState(userData._id);
-
-  const [url1,setUrl1] = useState(`https://book-store-api-theta.vercel.app/user/${userId}/get/orders`)
-  const {data : data1} = useFetch(url1);
+  const {data : data1} = useFetch(`https://book-store-api-theta.vercel.app/user/${userId}/get/orders` || " ");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if(userData && userData._id){
       setUserId(userData._id)
     } 
-    setUrl1(`https://book-store-api-theta.vercel.app/user/${userId}/get/orders`);
-  }, []);
-  
-  useEffect(() =>{
     setOrders(data1 ? data1.reverse() : "");
+    setTimeout(() => setLoading(false),2000)
   },[data1])
+
+  if(loading){
+    return <Loading/>
+  }
 
   return (
     <div className="container mx-auto px-4 mt-16">

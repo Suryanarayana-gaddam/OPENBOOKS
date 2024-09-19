@@ -2,19 +2,12 @@ import { Outlet } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar'
 import MyFooter from './components/MyFooter'
-import { useState } from 'react';
-
 
 function App() {
-  const [cartLength, setCartLength] = useState(0);
-
-  const updateCartLength = (newLength) => {
-    setCartLength(newLength);
-  };
 
   return (
     <>
-      <Navbar updateCartLength={updateCartLength} cartLength={cartLength}/>
+      <Navbar />
       <div className='min-h-screen'>
           <Outlet/>
       </div>
@@ -23,4 +16,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

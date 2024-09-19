@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { FaCartShopping, FaHeart } from "react-icons/fa6";
@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthProvider";
 import useUser from "../../hooks/useUser";
 import Pagination from "../components/Pagination";
 import { CRUDContext } from "../context/CRUDProvider";
+import Search from "../components/Search";
 
 const Shop = ({showSearchBox}) => {
   const [books, setBooks] = useState([]);
@@ -13,8 +14,6 @@ const Shop = ({showSearchBox}) => {
   const [currentBooks,setCurrentBooks] = useState([]); 
   const [userId,setUserId] = useState();
   const [userData,refetch] = useUser();
-
-  const [searchQuery, setSearchQuery] = useState('');
   const {addToWishlist, removeFromWishlist, addToCart, removeFromCart} = useContext(CRUDContext);
   const user = useContext(AuthContext);
     
@@ -99,24 +98,9 @@ const Shop = ({showSearchBox}) => {
     <div className="px-4 my-24 lg:px-24">
       <h2 className="text-3xl text-center text-bold text-black ">
         All Books Here
-      </h2><br />
+      </h2>
       {!showSearchBox && (
-        <div className='w-full text-center'>
-        <input
-          type="search" name="search-input"
-          placeholder='Search a book'
-          className='py-2 px-2 rounded-s-sm outline-none xl:w-full lg:w-5/6 md:w-4/6 w-3/6 text-center ml-10'
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-        />
-        <Link to={`/books/searchedbooks?query=${encodeURIComponent(searchQuery)}`}>
-          <button
-            className='bg-blue-700 px-6 py-2 text-white lg:w-24 md:w-24 sm:w-8 font-medium hover:bg-black transition-all ease-in duration-200'
-          >
-            Search
-          </button>
-        </Link>
-      </div>
+        <Search/>
       )}
 
       {/* Cards */}
