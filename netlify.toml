@@ -2,8 +2,14 @@
   publish = "dist" 
   command = "npm run build" 
 
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
   force = true
+
+[[redirects]]
+  from = "/assets/*"
+  to = "/assets/:splat"
+  status = 200
