@@ -28,11 +28,11 @@ const Wishlist = () => {
       return (
         <div className='my-16 px-4 lg:px-14'>
           <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
-          <BookCards books={wishlistBooks} user={user?.user}/>
+          <BookCards books={wishlistBooks} user={user?.user} isPagination={true} isNavigation={true}/>
         </div>
       )
     }
   
-}
+} 
 
 export default Wishlist

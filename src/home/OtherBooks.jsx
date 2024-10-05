@@ -42,7 +42,7 @@ const OtherBooks = () => {
     
   return (
         <div>
-            <BookCards books={books} headLine="More Books" user={user?.user}/>
+            <BookCards books={books} headLine="More Books" user={user?.user} isPagination={true} isNavigation={true}/>
         </div>
     )
 }

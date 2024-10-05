@@ -19,7 +19,7 @@ const BestSellerBooks = () => {
     
   return (
         <div>
-            <BookCards books={books} headLine="Best Seller Books" user={user.user}/>
+            <BookCards books={books} headLine="Best Seller Books" user={user.user} isPagination={true} isAutoPlay={true}/>
         </div>
     )
 }

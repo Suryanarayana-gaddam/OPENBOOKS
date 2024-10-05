@@ -8,7 +8,7 @@ import Pagination from "../components/Pagination";
 import { CRUDContext } from "../context/CRUDProvider";
 import Search from "../components/Search";
 
-const Shop = ({showSearchBox}) => {
+const Shop = ({showSearchBox=true}) => {
   const [books, setBooks] = useState([]);
   const [indexOfFirstBook,setIndexOfFirstBook] = useState(null);
   const [currentBooks,setCurrentBooks] = useState([]); 
@@ -95,19 +95,19 @@ const Shop = ({showSearchBox}) => {
   };
 
   return (
-    <div className="px-4 my-24 lg:px-24">
+    <div className={`px-4 lg:px-24 ${showSearchBox ? "mt-24 mb-10" : "relative bottom-12"}`}>
       <h2 className="text-3xl text-center text-bold text-black ">
         All Books Here
       </h2>
-      {!showSearchBox && (
+      {showSearchBox && (
         <Search/>
       )}
 
       {/* Cards */}
       {
         books && Array.isArray(books) && books.length > 0 ? (
-          <div className="mt-12">
-            <div className="grid gap-4 lg:max-w-[1100px] sm:max-w-[630px] md:max-w-[800px] my-10 lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-4 grid-cols-2 p-0">
+          <div className={`${!showSearchBox ? "mt-12" : ""}`}>
+            <div className="grid gap-4 lg:max-w-[1100px] sm:max-w-[630px] md:max-w-[800px] my-10 lg:grid-cols-6 sm:grid-cols-3 md:grid-cols-4 grid-cols-2 p-0">
               { currentBooks && currentBooks.map((book) => (
                 <Card key={book._id} className="p-0 m-0 ">
                   <Link to={`/book/${book._id}`}>
@@ -151,10 +151,10 @@ const Shop = ({showSearchBox}) => {
                 </Card>
               ))}
             </div>
-            <Pagination setItemsDetails={setItemsDetails} setIndexBook={setIndexBook} itemsPerPage={10} maxPageNumbers={10} inputArrayItems={books}/>
+            <Pagination setItemsDetails={setItemsDetails} setIndexBook={setIndexBook} itemsPerPage={24} maxPageNumbers={10} inputArrayItems={books}/>
           </div>
         ) : (
-          <p className='text-center '>Currently No Books Avialable !</p> 
+          <p className='text-center mt-20'>Currently No Books Avialable !</p> 
         )
       }
     </div>

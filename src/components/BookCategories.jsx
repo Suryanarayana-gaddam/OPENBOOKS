@@ -41,12 +41,12 @@ const BookCategories = () => {
 
   return (
     <div className='pt-12 mx-5'>
-      
+       
       <Search/>
-      <h2 className='my-2 mt-5 bg-black text-center text-white text-2xl p-2 pb-2 h-12'>Available Categories</h2>
+      <h2 className='my-2 mt-5 bg-black text-center  text-white text-2xl p-2 pb-2 h-12'>Available Categories</h2>
       <ul className='flex flex-wrap justify-center'>
         {bookCategories.map(category => (
-          <li key={category} className={` border-dotted mx-4 my-2 px-4 py-2 rounded-full bg-gray-300 hover:bg-gray-500 hover:text-white transition-colors duration-300 ${selectedCategory === category ? ' text-white bg-lime-500' : 'text-black'}`}>
+          <li key={category} className={` border-dotted mx-4 my-2 px-4 py-2 rounded-full hover:text-white hover:scale-110 transition-colors duration-300 ${selectedCategory === category ? ' text-white bg-blue-700 scale-110 hover:bg-lime-500 font-semibold' : 'text-black hover:bg-gray-500 bg-gray-300'}`}>
             <button onClick={() => handleClick(category)}>
               {category}
             </button>
@@ -60,11 +60,11 @@ const BookCategories = () => {
           <h4 className='text-center font-serif text-red-500'>Select one category to view the available books !</h4>
         </div>
       )}
-      <BookCards books={books} user={user.user} /> {/* Pass books state as prop */}
+      <BookCards books={books} user={user.user} isPagination={true} isAutoPlay={true} isDynamicPagination={true}/> {/* Pass books state as prop */}
       {flag && (
         <div className="text-center font-bold text-gray-500">
-          {books.length === 0 && "No Books Available in this category!"}
-          <Shop showSearchBox/>
+          <div className='relative bottom-20'>{books.length === 0 && "No Books Available in this category!"}</div>
+          <Shop showSearchBox={false}/>
         </div>
       )}
     </div>

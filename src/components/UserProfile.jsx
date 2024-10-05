@@ -157,7 +157,7 @@ const UserProfile = () => {
     return (
         <div className="lg:pt-24 pt-16 text-center">
             <h1 className='font-bold text-3xl'>Profile Details :</h1>
-            <div className="text-center p-8 max-w-lg mx-auto shadow rounded-lg sm:pr-5">
+            <div className="text-center p-8 max-w-lg mx-auto shadow rounded-lg sm:pr-5 hover:scale-110 duration-300">
                 <img
                     className="h-36 w-36 rounded-full ml-32 lg:ml-36 text-center"
                     src={ profilePic || user?.user?.photoURL}
@@ -213,7 +213,7 @@ const UserProfile = () => {
                     <b>E-Mail : </b>
                     {userData.email}
                 </p>
-                <button onClick={handleLogout} className="bg-red-700 px-8 py-2 text-white rounded mt-6">
+                <button onClick={handleLogout} className="bg-red-700 px-8 py-2 hover:scale-95 duration-75 text-white rounded mt-6">
                     Logout
                 </button>
             </div>

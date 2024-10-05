@@ -179,7 +179,7 @@ const Cart = () => {
                 </div>
               </motion.div>
             ))}
-            <div className="flex justify-around mt-4">
+            <div className="flex justify-around mt-8">
               <p className="text-lg font-bold">Total Price: ₹{cartBooks && cartBooks.reduce((total, book) => total + (book.quantity || 1) * book.bookPrice, 0)}</p>
               <button onClick={(event) => handleOrderSubmit(event)} className=" py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 transition duration-300 px-2">
                 Proceed to Pay

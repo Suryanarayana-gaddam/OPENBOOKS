@@ -132,7 +132,7 @@ const SingleBook = () => {
       </div>
       <div>
         <h2 className='my-2 mt-5 bg-black text-center text-white text-2xl p-2 h-12'>Similar Books</h2>
-        <BookCards books={books} category={category} user={user.user}/>
+        <BookCards books={books} category={category} user={user.user} isPagination={true}/>
       </div>
     </div>
   );

@@ -28,6 +28,7 @@ import About from "../components/About";
 import Contact from "../components/Contact";
 import Payment from "../components/Payment";
 import UserProfile from "../components/UserProfile";
+import Notfound from "../components/Notfound";
 
 const token = localStorage.getItem('access-token');
 
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       children: [
         {
           path:'/',
+          element:<Home/>
+        },
+        {
+          path:'/home',
           element:<Home/>
         },
         {
@@ -160,6 +165,10 @@ const router = createBrowserRouter([
     {
       path:"logout",
       element:<PrivateRoute><Logout/></PrivateRoute>
+    },
+    {
+      path:"*",
+      element:<Notfound/>
     },
 
   ]);

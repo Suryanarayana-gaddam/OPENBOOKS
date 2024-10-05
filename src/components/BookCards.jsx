@@ -3,14 +3,14 @@ import  { useContext, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
-
+import 'swiper/css/navigation';
+import { Navigation, Pagination, Mousewheel, Autoplay, Keyboard, EffectFade } from 'swiper/modules';
 import {Link} from "react-router-dom";
 import {FaCartShopping, FaHeart} from 'react-icons/fa6';
 import useUser from '../../hooks/useUser'
 import { CRUDContext } from '../context/CRUDProvider';
 
-const BookCards = ({headLine,books, user}) => {
+const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation, isDynamicPagination, isEffectFade}) => {
     
     const [wishlistBooks, setWishlistBooks] = useState([]);
     const [cartBooks, setCartBooks] = useState([]);
@@ -76,15 +76,13 @@ const BookCards = ({headLine,books, user}) => {
       
       <div className='mt-12 ' > 
             <Swiper
-                slidesPerView={1}
-                spaceBetween={10}
-                pagination={{
-                clickable: true,
-                }}
+                slidesPerView={2}
+                spaceBetween={20}
+                
                 breakpoints={{
                 640: {
-                    slidesPerView: 2,
-                    spaceBetween: 20,
+                    slidesPerView: 3,
+                    spaceBetween: 30,
                 },
                 768: {
                     slidesPerView: 4,
@@ -95,7 +93,34 @@ const BookCards = ({headLine,books, user}) => {
                     spaceBetween: 50,
                 },
                 }}
-                modules={[Pagination]}
+                cssMode={true}
+                navigation={isNavigation ? true : ""}
+                effect={isEffectFade ? "fade" : ""}
+                pagination={
+                  isPagination ? 
+                  (
+                    isDynamicPagination ? 
+                      {
+                        clickable : true,
+                        dynamicBullets : true
+                      }
+                    : 
+                    {
+                      clickable: true,
+                    }
+                  ) 
+                  : ""
+                }
+                autoplay={
+                  isAutoPlay ? {
+                    delay: 2000,
+                    disableOnInteraction: false,
+                  } : ""
+                }
+                mousewheel={true}
+                loop={true}
+                keyboard={true}
+                modules={[Navigation, Pagination, Keyboard, Autoplay, Mousewheel, EffectFade]}
                 className="mySwiper w-full h-full"
             >
                 
