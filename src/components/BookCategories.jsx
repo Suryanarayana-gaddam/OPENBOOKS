@@ -60,7 +60,7 @@ const BookCategories = () => {
           <h4 className='text-center font-serif text-red-500'>Select one category to view the available books !</h4>
         </div>
       )}
-      <BookCards books={books} user={user.user} isPagination={true} isAutoPlay={true} isDynamicPagination={true}/> {/* Pass books state as prop */}
+      <BookCards books={books} user={user.user} isAutoPlay={true} isDynamicPagination={true}/> {/* Pass books state as prop */}
       {flag && (
         <div className="text-center font-bold text-gray-500">
           <div className='relative bottom-20'>{books.length === 0 && "No Books Available in this category!"}</div>

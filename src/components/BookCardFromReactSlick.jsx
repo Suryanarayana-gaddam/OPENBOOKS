@@ -1,16 +1,73 @@
+import React from 'react'
 import  { useContext, useEffect, useState } from 'react';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import { Navigation, Pagination, Mousewheel, Autoplay, Keyboard, EffectFade } from 'swiper/modules';
 import {Link} from "react-router-dom";
 import {FaCartShopping, FaHeart} from 'react-icons/fa6';
 import useUser from '../../hooks/useUser'
 import { CRUDContext } from '../context/CRUDProvider';
 
-const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation, isDynamicPagination, isEffectFade, isNumberedPagination}) => {
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", background: "red" }}
+        onClick={onClick}
+      />
+    );
+  }
+  
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", background: "red" }}
+        onClick={onClick}
+      />
+    );
+  }
+
+  var settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 760,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      }
+    ]
+};
+
+const BookCardFromReactSlick = ({headLine,books, user}) => {
     
     const [wishlistBooks, setWishlistBooks] = useState([]);
     const [cartBooks, setCartBooks] = useState([]);
@@ -71,73 +128,12 @@ const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation
   };
 
   return (
-    <div className='my-16 px-4 lg:px-24 '>
-      <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
-      
-      <div className='mt-12 ' > 
-            <Swiper
-                slidesPerView={2}
-                spaceBetween={20}
-                
-                breakpoints={{
-                640: {
-                    slidesPerView: 3,
-                    spaceBetween: 30,
-                },
-                768: {
-                    slidesPerView: 4,
-                    spaceBetween: 40,
-                },
-                1024: {
-                    slidesPerView: 5,
-                    spaceBetween: 50,
-                },
-                }}
-                cssMode={true}
-                navigation={isNavigation ? true : ""}
-                effect={isEffectFade ? "fade" : ""}
-                pagination={
-                  isPagination ? 
-                  (
-                    {
-                      clickable : true
-                    }
-                  ) 
-                  : 
-                  (isDynamicPagination ? 
-                    {
-                      clickable : true,
-                      dynamicBullets : true
-                    }
-                    : 
-                    (isNumberedPagination ? 
-                      {
-                        clickable: true,
-                        renderBullet: function (index, className) {
-                          return '<span class="' + className + '">' + (index + 1) + '</span>';
-                        },
-                      }
-                      : ""
-                    )
-                  ) 
-                }
-                autoplay={
-                  isAutoPlay ? {
-                    delay: 2000,
-                    disableOnInteraction: false,
-                  } : ""
-                }
-                mousewheel={true}
-                loop={true}
-                keyboard={true}
-                modules={[Navigation, Pagination, Keyboard, Autoplay, Mousewheel, EffectFade]}
-                className="mySwiper w-full h-full"
-            >
-                
-                {
-                    books && books.map(book => <SwiperSlide key={book._id}>
+    <div className="slider-container p-20 w-full">
+        <Slider {...settings} >
+        {
+                    books && books.map(book => <div key={book._id}>
                        <Link to={`/book/${book._id}`}>
-                            <div className='relative'>
+                            <div className='relative p-2'>
                                 <img src={book.imageURL} alt="" className="object-cover w-full h-full"/>
                                 <button onClick={event => handleCart(event, book)} className={`transition-none duration-0 absolute top-2 right-2  bg-white p-2 rounded-full ${
                                   isBookInCart(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
@@ -165,14 +161,12 @@ const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation
                                 </div>
                             </div>  
                         </Link>
-                    </SwiperSlide>)
+                    </div>)
                 }
-            </Swiper>
-      </div>
+        </Slider>
     </div>
   );
 };
-
-export default BookCards
+export default BookCardFromReactSlick
 
 

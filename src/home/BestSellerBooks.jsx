@@ -19,9 +19,16 @@ const BestSellerBooks = () => {
     
   return (
         <div>
-            <BookCards books={books} headLine="Best Seller Books" user={user.user} isPagination={true} isAutoPlay={true}/>
+            <BookCards 
+                books={books} 
+                headLine="Best Seller Books" 
+                user={user.user} 
+                isPagination={true} 
+                isAutoPlay={true} 
+                isDynamicPagination={true} 
+                isNavigation={true}/>
         </div>
     )
 }
 
-export default BestSellerBooks
+export default BestSellerBooks;

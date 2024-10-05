@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import BookCards from '../components/BookCards';
 import { AuthContext } from '../context/AuthProvider';
+import BookCardFromReactSlick from '../components/BookCardFromReactSlick';
 const token = localStorage.getItem('access-token');
 
 const OtherBooks = () => {
@@ -42,7 +42,7 @@ const OtherBooks = () => {
     
   return (
         <div>
-            <BookCards books={books} headLine="More Books" user={user?.user} isPagination={true} isNavigation={true}/>
+            <BookCardFromReactSlick books={books} headLine="More Books" user={user?.user}/>
         </div>
     )
 }
