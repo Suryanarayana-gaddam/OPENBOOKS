@@ -29,6 +29,7 @@ import Contact from "../components/Contact";
 import Payment from "../components/Payment";
 import UserProfile from "../components/UserProfile";
 import Notfound from "../components/Notfound";
+import HOC from "../PrivateRoute/HOC";
 
 const token = localStorage.getItem('access-token');
 
@@ -78,7 +79,7 @@ const router = createBrowserRouter([
         },
         {
           path : "/wishlist",
-          element : <Wishlist/>
+          element : <Wishlist/>               
         },
         {
           path : "/cart",
@@ -156,15 +157,11 @@ const router = createBrowserRouter([
     },
     {
       path: "sign-up",
-      element:<Signup/>
+      element: <HOC component={Signup}/>
     },
     {
       path:"login",
-      element: <Login/>
-    },
-    {
-      path:"logout",
-      element:<PrivateRoute><Logout/></PrivateRoute>
+      element: <HOC component={Login}/>
     },
     {
       path:"*",

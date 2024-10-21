@@ -29,7 +29,7 @@ const BookData = ({ headLine }) => {
 
   return (
     <div>
-      <div className='my-16 px-4 lg:px-24'>
+      <div className='my-16 px-4 lg:px-10'>
         <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
 
         {/* cards */}

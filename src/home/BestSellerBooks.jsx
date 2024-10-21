@@ -15,18 +15,19 @@ const BestSellerBooks = () => {
                     "authorization": `Bearer ${token}`
                 }
             }).then(res => res.json()).then(data => setBooks(data))
-    },[])
+    },[token])
     
   return (
         <div>
+            <h1 className='text-center mt-5 text-3xl md:text-4xl lg:text-5xl'>Best Seller Books</h1>
             <BookCards 
                 books={books} 
-                headLine="Best Seller Books" 
                 user={user.user} 
                 isPagination={true} 
                 isAutoPlay={true} 
                 isDynamicPagination={true} 
-                isNavigation={true}/>
+                isNavigation={true}
+            />
         </div>
     )
 }

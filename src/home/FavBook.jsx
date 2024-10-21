@@ -43,7 +43,7 @@ const FavBook = () => {
   }, [data3]);
 
   return (
-    (!isLoading && <div className='px-4 lg:px-24 my-20 flex flex-col md:flex-row justify-between items-center gap-12'>
+    (!isLoading && <div className='px-4 mt-5 lg:px-10 flex flex-col md:flex-row justify-between items-center gap-12'>
         <div className='md:w-1/2'>
             <img src={FavBookImg} alt="Favorite Book" className='rounded md:w-10/12'/>
         </div>

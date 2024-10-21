@@ -13,7 +13,7 @@ function SampleNextArrow(props) {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", background: "red" }}
+        style={{ ...style, display: "block", background: "blue", borderRadius:'10px' }}
         onClick={onClick}
       />
     );
@@ -24,7 +24,7 @@ function SampleNextArrow(props) {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", background: "red" }}
+        style={{ ...style, display: "block", background: "blue", borderRadius:"10px" }}
         onClick={onClick}
       />
     );
@@ -34,7 +34,7 @@ function SampleNextArrow(props) {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 6,
     slidesToScroll: 1,
     initialSlide: 0,
     nextArrow: <SampleNextArrow />,
@@ -54,16 +54,20 @@ function SampleNextArrow(props) {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
-          initialSlide: 2
+          initialSlide: 2,
+          infinite: true,
+          dots: true
         }
       },
       {
         breakpoint: 640,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 1
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
         }
-      }
+      },
     ]
 };
 
@@ -128,14 +132,14 @@ const BookCardFromReactSlick = ({headLine,books, user}) => {
   };
 
   return (
-    <div className="slider-container p-20 w-full">
+    <div className="slider-container p-10 w-full">
         <Slider {...settings} >
         {
                     books && books.map(book => <div key={book._id}>
                        <Link to={`/book/${book._id}`}>
                             <div className='relative p-2'>
                                 <img src={book.imageURL} alt="" className="object-cover w-full h-full"/>
-                                <button onClick={event => handleCart(event, book)} className={`transition-none duration-0 absolute top-2 right-2  bg-white p-2 rounded-full ${
+                                <button onClick={event => handleCart(event, book)} className={`transition-none duration-0 absolute top-3 right-4 bg-white p-2 rounded-full ${
                                   isBookInCart(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
                                 } transition-none`}
                                 >
@@ -144,7 +148,7 @@ const BookCardFromReactSlick = ({headLine,books, user}) => {
                                 <br />
                                 <button
                                 onClick={event => handleWishlist(event, book)}
-                                className={`absolute top-12 right-2 bg-white p-2 rounded-full ${
+                                className={`absolute top-14 right-4 bg-white p-2 rounded-full ${
                                   isBookInWishlist(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
                                 } transition-none `}
                               >

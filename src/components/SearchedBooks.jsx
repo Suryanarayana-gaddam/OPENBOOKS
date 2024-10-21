@@ -130,48 +130,48 @@ const SearchedBooks = () => {
         <div className="mt-12">
           <div className="grid gap-4 lg:max-w-[1100px] md:max-w-[760px] sm:max-w-[620px] my-10 lg:grid-cols-5 sm:grid-cols-3 md:grid-cols-4 grid-cols-2 p-0">
             {currentBooks && currentBooks.map((book) => (
-              <Card key={book._id} className="p-0 ">
+              <Card key={book._id} className="">
                 <Link to={`/book/${book._id}`}>
                   
-                  <div className='relative'>
-                                  <img src={book.imageURL} alt="" className="w-full h-full object-cover"/>
-                                  <button onClick={event => handleCart(event, book)} className={`absolute top-2 right-2  bg-white p-2 rounded-full ${
-                                    isBookInCart(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
-                                  }`}
-                                  >
-                                      <FaCartShopping className='w-5 h-5 '/>
-                                  </button>
-                                  <br />
-                                  
-                                  <button
-                                  onClick={event => handleWishlist(event, book)}
-                                  className={`absolute top-12 right-2 bg-white hover:bg-white p-2 rounded-full ${
-                                    isBookInWishlist(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
-                                  }`}
-                                >
-                                  <FaHeart className=" mt-0 w-5 h-5" />
-                                </button>
-                              </div>
-                  <h3 className=" font-bold w-[140px] h-[15px] text-sm tracking-tight text-gray-900 dark:text-white">
-                    {book.bookTitle}
-                  </h3><br />
-                  <p className="font-medium text-gray-700 dark:text-gray-400">
-                    {book.description}
-                  </p>
-                  <p className="font-normal text-gray-700 dark:text-gray-400">
-                    ₹{book.bookPrice}
-                  </p>
+                  <div className='relative p-0 h-[200px] mb-1'>
+                      <img src={book.imageURL} alt="" className="object-cover h-full w-full"/>
+                      <button onClick={event => handleCart(event, book)} className={`absolute top-2 right-2  bg-white p-2 rounded-full ${
+                        isBookInCart(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
+                      }`}
+                      >
+                          <FaCartShopping className='w-5 h-5 '/>
+                      </button>
+                      <br />
+                      
+                      <button
+                      onClick={event => handleWishlist(event, book)}
+                      className={`absolute top-12 right-2 bg-white hover:bg-white p-2 rounded-full ${
+                        isBookInWishlist(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
+                      }`}
+                    >
+                      <FaHeart className=" mt-0 w-5 h-5" />
+                    </button>
+                  </div>
+                  <div className=''>
+                    <h3 className=" font-bold w-[140px] h-auto text-sm tracking-tight text-gray-900 dark:text-white">
+                      {book.bookTitle}
+                    </h3><br />
+                    
+                    <p className="font-normal text-gray-700 dark:text-gray-400">
+                      ₹{book.bookPrice}
+                    </p>
                   
+                    {isBookInCart(book) ? (
+                      <button className=" text-blue-700 font-semibold bg-white py-2 rounded w-full border-red-400">
+                      <Link to={'/cart'}>Go Cart</Link>
+                    </button>
+                    ) : (
+                      <button onClick={event => handleBuyCart(event, book)} className=" bg-blue-700 font-semibold text-white py-2 rounded w-full">
+                      <Link to={'/cart'}>Buy Now</Link>
+                    </button>
+                    )}
+                  </div>
                 </Link>
-                {isBookInCart(book) ? (
-                  <button className=" text-blue-700 font-semibold bg-white py-2 rounded w-full border-red-400">
-                  <Link to={'/cart'}>Go Cart</Link>
-                </button>
-                ) : (
-                  <button onClick={event => handleBuyCart(event, book)} className=" bg-blue-700 font-semibold text-white py-2 rounded w-full">
-                  <Link to={'/cart'}>Buy Now</Link>
-                </button>
-                )}
               </Card>
             ))}
           </div>

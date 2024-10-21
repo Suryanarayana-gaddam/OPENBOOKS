@@ -63,7 +63,7 @@ const BookCategories = () => {
       <BookCards books={books} user={user.user} isAutoPlay={true} isDynamicPagination={true}/> {/* Pass books state as prop */}
       {flag && (
         <div className="text-center font-bold text-gray-500">
-          <div className='relative bottom-20'>{books.length === 0 && "No Books Available in this category!"}</div>
+          <div className='relative bottom-16'>{books.length === 0 && "No Books Available in this category!"}</div>
           <Shop showSearchBox={false}/>
         </div>
       )}

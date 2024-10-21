@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { Navigation, Pagination, Mousewheel, Autoplay, Keyboard, EffectFade } from 'swiper/modules';
+import { Navigation, Pagination, Mousewheel, Autoplay, Keyboard, EffectFade, Zoom } from 'swiper/modules';
 import {Link} from "react-router-dom";
 import {FaCartShopping, FaHeart} from 'react-icons/fa6';
 import useUser from '../../hooks/useUser'
@@ -71,13 +71,19 @@ const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation
   };
 
   return (
-    <div className='my-16 px-4 lg:px-24 '>
+    <div className=' px-4 lg:px-10 '>
       <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
       
       <div className='mt-12 ' > 
             <Swiper
                 slidesPerView={2}
                 spaceBetween={20}
+                style={{
+                  '--swiper-navigation-color': '#5af55a',
+                  '--swiper-pagination-color': '#5af55a',
+                  '--swiper-navigation-sides-offset': '0px',
+                  'padding': '0px 45px 15px',
+                }}
                 
                 breakpoints={{
                 640: {
@@ -123,50 +129,55 @@ const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation
                 }
                 autoplay={
                   isAutoPlay ? {
-                    delay: 2000,
+                    delay: 3000,
                     disableOnInteraction: false,
                   } : ""
                 }
                 mousewheel={true}
                 loop={true}
                 keyboard={true}
-                modules={[Navigation, Pagination, Keyboard, Autoplay, Mousewheel, EffectFade]}
-                className="mySwiper w-full h-full"
+                zoom={true}
+                modules={[Navigation, Pagination, Keyboard, Autoplay, Mousewheel, EffectFade, Zoom]}
+                className="mySwiper w-full h-full px-10"
             >
                 
+                <div className='border-2 border-red-500'>
                 {
-                    books && books.map(book => <SwiperSlide key={book._id}>
+                    books && books.map(book => <SwiperSlide key={book._id} className=''>
                        <Link to={`/book/${book._id}`}>
+                          <div className="swiper-zoom-container">
                             <div className='relative'>
                                 <img src={book.imageURL} alt="" className="object-cover w-full h-full"/>
                                 <button onClick={event => handleCart(event, book)} className={`transition-none duration-0 absolute top-2 right-2  bg-white p-2 rounded-full ${
                                   isBookInCart(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
-                                } transition-none`}
-                                >
-                                    <FaCartShopping className='w-5 h-5 '/>
-                                </button>
-                                <br />
-                                <button
-                                onClick={event => handleWishlist(event, book)}
-                                className={`absolute top-12 right-2 bg-white p-2 rounded-full ${
-                                  isBookInWishlist(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
-                                } transition-none `}
+                                  } transition-none`}
+                                  >
+                                  <FaCartShopping className='w-5 h-5 '/>
+                                  </button>
+                                  <br />
+                                  <button
+                                  onClick={event => handleWishlist(event, book)}
+                                  className={`absolute top-12 right-2 bg-white p-2 rounded-full ${
+                                    isBookInWishlist(book) ? "text-red-500 bg-white" : "text-gray-400 border-collapse"
+                                    } transition-none `}
                               >
-                                <FaHeart className=" mt-0 w-5 h-5" />
+                              <FaHeart className=" mt-0 w-5 h-5" />
                               </button>
-                            </div>
-                            <div>
+                              </div>
+                              <div>
                                 <div>
-                                    <h3>{book.bookTitle}</h3>
-                                    <p>{book.authorName}</p>
+                                <h3>{book.bookTitle}</h3>
+                                <p>{book.authorName}</p>
                                 </div>
                                 <div>
-                                    <p>₹{book.bookPrice}</p>
+                                <p>₹{book.bookPrice}</p>
                                 </div>
-                            </div>  
+                                </div>  
+                          </div>
                         </Link>
                     </SwiperSlide>)
                 }
+                </div>
             </Swiper>
       </div>
     </div>

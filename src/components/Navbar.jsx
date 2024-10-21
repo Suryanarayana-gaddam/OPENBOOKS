@@ -6,6 +6,7 @@ import Logout from './Logout';
 import useUser from '../../hooks/useUser';
 import "./nav.css"
 import image from "../assets/Open Books.jpg"
+import Search from './Search';
 const Navbar = () => {
     const [activeItem, setActiveItem] = useState('');
     const [isMenuOpen,setIsMenuOpen] = useState(false);
@@ -36,13 +37,14 @@ const Navbar = () => {
         setIsMenuOpen(false);
     }
 
-    setInterval(timefun,1000)
+    setInterval(timefun,1000);
     function timefun(){
         let d = new Date();
         setTimeDate(
         d.getHours() + ":" +
         d.getMinutes() + ":" +
-        d.getSeconds() )   }
+        d.getSeconds() )   
+    }
 
     useEffect(() => {
         if (!user) return 
@@ -93,19 +95,80 @@ const Navbar = () => {
 
 return (
     <header className='w-full bg-transparent fixed top-0 left-0 right-0 transition-all ease-in duration-2000'>
-        <nav className={`py-2 lg:px-14 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
-            <div className='flex justify-between items-center text-base gap-8'>
-                {/* logo */} 
-                <Link to="/" ><img src={image} alt='logo' width={100} height={100} className={`${isSticky ? "w-14 h-14" : "lg:w-20 relative top-0 w-16 h-16 lg:h-20"} ml-4 rounded-full `}/></Link>
+        <nav className={`py-2 lg:px-10 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""}`}>
+            <div className='flex justify-between items-center text-base'>
+                <div className='flex'>
+                    {/* logo */} 
+                    <div>
+                    <Link to="/" ><img src={image} alt='logo' width={100} height={100} className={`${isSticky ? "w-14 h-14" : "lg:w-20 relative top-0 w-16 h-16 lg:h-20"} ml-4 duration-700 rounded-full `}/></Link>
+                    </div>
 
-                {/*nav items for large device */}
-                <ul className='md:flex space-x-12 hidden' onClick={CloseMenu}>
-                    {
-                        navItems.map(({link,path}) => <Link key={path} to={path}  className={`block text-base text-black uppercase cursor-pointer hover:text-blue-700 ${activeItem === link ? 'font-bold text-md text-blue-700' : 'text-black'}` } onClick={() => setActiveItem(link)}> {link}</Link>)
-                    }
-                </ul>
- 
+                    {/* search for small devices */}
+                    <div className='absolute top-[-38px] left-[110px]'>
+                        <Search 
+                            inputStyles={"md:hidden relative top-3 rounded-s-md w-36 h-8 outline-none px-1"} 
+                            searchStyles={"md:hidden bg-blue-700 px-4 py-[10px] relative top-[11px] w-[32px] h-[32px] hover:scale-100  text-white font-medium rounded-e-md hover:bg-black transition ease-in duration-200"}
+                            searchIconStyles={"relative right-[9px] bottom-[2px] text-xl"}
+                            styles={"text-xl"}
+                        />
+                    </div>
+
+                    {/*nav items for large device */}
+                    <ul className={`md:flex relative ${isSticky ? "top-[17px]" : "top-[21px]"} md:left-5 duration-700 lg:left-10 md:space-x-5 lg:space-x-12 hidden`} 
+                    onClick={CloseMenu}
+                    >
+                        {
+                            navItems.map(({link,path}) => 
+                                <Link 
+                                    key={path} 
+                                    to={path}  
+                                    className={`block text-black uppercase cursor-pointer hover:text-blue-700 ${activeItem === link ? 'font-semibold relative bottom-[3px] text-lg text-blue-700' : 'text-black'}` } 
+                                    onClick={() => {
+                                        setActiveItem(link);
+                                        if(link === "Admin" && !isAdmin){
+                                            window.alert("You are not admin!")
+                                        }
+                                    }}
+                                > 
+                                    {link}
+                                </Link>
+                            )
+                        }
+                    </ul>
+
+                    {/* MENU BAR FOR THE MOBILE DEVICES */}
+                    {/* nav for sm devises */}
+                    <div className={`space-y-4 md:hidden px-4 mt-16 py-9 bg-blue-700 text-white ${ isMenuOpen ? "block fixed top-[-64px] right-0 left-0 h-screen w-56" : "hidden"}`}
+                    >
+                        <FaXmark className=' text-3xl text-black cursor-pointer absolute top-3 right-4 hover:scale-125'
+                         onClick={CloseMenu}/>
+                        {
+                            navItems.map(({link,path}) => 
+                                <Link key={path} to={path} className="block text-base text-[#4f30ec] font-semibold uppercase cursor-pointer text-center hover:bg-[#A2C8FB] rounded-md bg-[#aae6e8] hover:font-bold hover:text-black hover:scale-105 duration-500 py-1" 
+                                onClick={() => {
+                                    CloseMenu()
+                                    if(link === "Admin" && !isAdmin){
+                                        window.alert("You are not admin!")
+                                    }
+                                }} 
+                                > 
+                                    {link}
+                                </Link>
+                            )
+                        }
+                    </div>
+
+                    {/* Toggle button for Nav Items */}
+                    <div className='md:hidden absolute top-[28px] left-2 w-full mr-0 pr-0'>
+                        <button onClick={toggleMenu} className="text-black focus:outline-none">
+                            {isMenuOpen ? "" : <FaBarsStaggered className='h-5 w-5 text-black text-3xl' />}
+                        </button>
+                    </div>
+                </div>
+
+                {/* Time And Date at the bottom */}
                 <p className='fixed bottom-0 right-0 mr-2 mb-1 '>{timeDate}</p>
+
                 {/* btn for lg devices */}
                 <div className='space-x-5  hidden lg:flex sm:flex items-center mr-0'>
                     {/* Use the img tag to display the user's photo */}
@@ -138,7 +201,7 @@ return (
                         ) : null
                        }
                                        
-                    
+                    {/* User menu Items */}
                     <div className="relative">
                         <button onClick={toggleUserMenu} className="text-black focus:outline-none">
                             <FaBarsStaggered className="h-5 w-5 text-black mt-3" />
@@ -153,11 +216,7 @@ return (
                     </div>
                 </div>
 
-                <div className='md:hidden absolute top-6 left-2 w-full mr-0 pr-0'>
-                    <button onClick={toggleMenu} className="text-black focus:outline-none">
-                        {isMenuOpen ? <FaXmark className='h-5 w-5 text-black' /> : <FaBarsStaggered className='h-5 w-5 text-black text-3xl' />}
-                    </button>
-                </div>
+                
                 <div className='sm:hidden flex ' >
                     {
                         user ? (
@@ -172,25 +231,29 @@ return (
                         ) : null
                        }
                     <button onClick={toggleUserMenu} className="text-black focus:outline-none relative right-1">
-                    {user? (user.photoURL ? (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full' />) : <img src={profilePic} alt="Profile" className='p-0 h-8 w-8 border-none rounded-full' />
-) : <FaUser className='p-0 mt-1 mr-1 h-4 w-4 border-none rounded-full' />}
+                        {
+                            isUserMenuOpen ? 
+                            <FaXmark className='text-3xl '/>
+                            :
+                            (user? 
+                                (user.photoURL ? 
+                                    (<img src={user?.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full' />) : 
+                                    <img src={profilePic} alt="Profile" className='p-0 h-8 w-8 border-none rounded-full' />
+                                ) : 
+                                <FaUser className='p-0 mt-1 mr-1 h-4 w-4 border-none rounded-full' />
+                            )
+                        }
                     </button>
-                    <div className={`absolute top-12 lg:top-10  right-1 z-10 mt-2 py-2 bg-white rounded-lg shadow-md text-left ${isUserMenuOpen ? "block" : "hidden"}`}>
+                    <div className={`absolute top-12 lg:top-10 right-1 z-10 mt-2 py-2 px-2 bg-white rounded-lg shadow-md text-left ${isUserMenuOpen ? "block" : "hidden"}`}>
                             {userMenuItems.map(({ link, path }) => (
-                                <Link key={path} to={path} onClick={CloseUserMenu} className=" block p-0 px-4 py-2 text-base text-black  bg-white hover:bg-gray-200 text-center">
+                                <Link key={path} to={path} onClick={CloseUserMenu} className=" block p-0 px-4 py-2 text-base text-black hover:text-black shadow-xl bg-[#e1bb3d] font-bold duration-700 my-1 rounded hover:bg-[#de3838] cursor-pointer text-center">
                                     {link}
                                 </Link>
                             ))}
                         </div>
                 </div>
             </div> 
-                {/* MENU BAR FOR THE MOBILE DEVICES */}
-            {/* nav for sm devises */}
-            <div className={`space-y-4 px-4 mt-16 py-7 bg-blue-700 text-white ${ isMenuOpen ? "block fixed top-0 right-0 left-0" : "hidden"}`}>
-                {
-                    navItems.map(({link,path}) => <Link key={path} to={path} onClick={CloseMenu} className="block text-base text-white uppercase cursor-pointer "> {link}</Link>)
-                }
-            </div>
+                
         </nav>
     </header>  
 ) 

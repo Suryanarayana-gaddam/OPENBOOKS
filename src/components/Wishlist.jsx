@@ -19,14 +19,14 @@ const Wishlist = () => {
 
     if(wishlistBooks && wishlistBooks.length === 0){
       return (
-        <div className='my-16 px-4 lg:px-24'>
+        <div className='my-16 px-4 lg:px-10'>
           <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
-          <h1 className='px-4 lg:px-24 text-2xl text-center'> Your Wishlist is Empty !</h1>
+          <h1 className='px-4 lg:px-10 text-2xl text-center'> Your Wishlist is Empty !</h1>
         </div>
       )
     }else{
       return (
-        <div className='my-16 px-4 lg:px-14'>
+        <div className='my-16 px-4 lg:px-10'>
           <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
           <BookCards books={wishlistBooks} user={user?.user} isPagination={true} isNavigation={true}/>
         </div>

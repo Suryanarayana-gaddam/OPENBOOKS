@@ -6,6 +6,7 @@ import { AuthContext } from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
 import { IoArrowBack } from 'react-icons/io5';
 import useUser from '../../hooks/useUser';
+import Logout from '../components/Logout';
 
 const SideBar = () => {
   const {user} = useContext(AuthContext);
@@ -56,7 +57,7 @@ const SideBar = () => {
             <Link to={"/admin/Dashboard/all-orders"}>Orders</Link>
           </Sidebar.Item>
           <Sidebar.Item icon={HiTable}>
-            <Link to={"/logout"}>Log Out</Link>
+            <Logout nocolor={true}/>
           </Sidebar.Item>
         </Sidebar.ItemGroup>
         <Sidebar.ItemGroup>

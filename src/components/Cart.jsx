@@ -80,7 +80,7 @@ const Cart = () => {
     cartBooks.map(book => {
       const orderObj = {
         userId:userData._id,
-        username:userData.userName,
+        username:userData.username,
         bookId: book._id,
         quantity: book.quantity || 1,
         totalPrice: (book.quantity || 1) * book.bookPrice,
@@ -125,8 +125,8 @@ const Cart = () => {
           <h2 className='text-3xl text-center text-bold text-black my-5'>{headLine}</h2>
       <div>
         {cartBooks && cartBooks.length === 0 ? (
-          <div className='lg:px-14 text-center'>
-          <p className='px-4 lg:px-24 text-1xl text-center my-3'>Your Cart was Empty!</p>
+          <div className='lg:px-10 text-center'>
+          <p className='px-4 lg:px-10 text-1xl text-center my-3'>Your Cart was Empty!</p>
           <Link to="/orders" className='text-center'><button className='text-white bg-blue-500 border-solid mt-5 p-3'>Go To Orders</button></Link>
           <h1 className='text-center text-3xl relative top-8'>Suggested Books </h1>
           <BookCards books={books} user={user.user} className=''/>
@@ -139,7 +139,7 @@ const Cart = () => {
                 className="bg-white rounded-lg overflow-hidden shadow-md mb-4"
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="md:flex items-center justify-evenly lg:px-24 md:px-36 sm:px-52 p-2">
+                <div className="md:flex items-center justify-evenly lg:px-10 md:px-36 sm:px-52 p-2">
                 <div className='flex justify-center'>
                 <Link to={`/book/${book._id}`}> 
                 <img src={book.imageURL} alt={book.bookTitle} className="md:w-36 lg:w-32 h-full w-32 object-cover cursor-pointer" />

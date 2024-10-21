@@ -5,6 +5,7 @@ import googleLogo from "../assets/google-logo.svg"
 import pica from "pica";
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import Loading from './Loading';
+import image from "../assets/Open Books.jpg"
 
 const Signup = () => {
     const {createUser,loginWithGoogle} = useContext(AuthContext);
@@ -233,6 +234,7 @@ const Signup = () => {
             </div>
             <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
                 <div className="max-w-md mx-auto">
+                <Link to="/" ><img src={image} alt='logo' className={`sm:w-28 sm:h-28 md:w-[120px] md:h-[120px] absolute top-2 right-4 w-[90px] h-[90px] ml-4 rounded-full `}/></Link>
                     <div>
                         <h1 className="text-2xl font-semibold">Sign Up Form</h1>
                     </div>

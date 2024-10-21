@@ -6,8 +6,8 @@ import Search from './Search';
 const Banner = () => {  
 
   return (
-    <div className='px-4 lg:px-24 bg-teal-100 flex items-center'>
-        <div className='flex w-full flex-col md:flex-row justify-around items-center gap-12 pt-40 pb-20'>
+    <div className='px-4 lg:px-10 bg-teal-100 flex items-center'>
+        <div className='flex w-full flex-col md:flex-row justify-around items-center gap-12 pt-40 pb-10'>
             {/* left side */}
             <div className='md:w-7/12 space-y-8 h-f'>
               <h2 className='text-5xl font-bold leading-snug text-black'>Buy And Sell Your Books <span className='text-blue-700 '>for the best prices</span></h2>
@@ -16,7 +16,7 @@ const Banner = () => {
               </p>
               <div>
             
-            <span className='relative right-10'><Search/></span>
+            <span className=' hidden md:flex relative right-10 bottom-10'><Search/></span>
           </div>
             </div>
 
