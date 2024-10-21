@@ -26,9 +26,9 @@ const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,
   useEffect(() => {
       // Update maxPNums based on the current width
       if (width > 1024) {
-          maxPNums.current = 12;
+          maxPNums.current = 15;
       } else if (width > 768) {
-          maxPNums.current = 10;
+          maxPNums.current = 11;
       } else if (width > 640) {
           maxPNums.current = 8;
       } else {
@@ -84,14 +84,14 @@ const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,
   return (
     <div>
       {/* Pagination buttons at the bottom */}
-      <div className={`flex justify-around mt-8 w-auto ${ inputArrayItems.length > itemsPerPage ? "block" : "hidden"}`}>
+      <div className={`flex justify-between mt-8 px-0 ${ inputArrayItems.length > itemsPerPage ? "block" : "hidden"}`}>
               <div className='grid'>
                 <button
                   onClick={goToPreviousPage}
                   disabled={currentPage === 1}
-                  className={`px-3 py-2 rounded-full bg-blue-500 text-white text-lg flex disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-gray-500`}
+                  className={`px-3 py-2 rounded-full bg-blue-500 text-white text-sm flex disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-gray-500`}
                 >
-                  <span><FaArrowLeftLong className='text-lg relative top-[2px] '/></span>
+                  <span><FaArrowLeftLong className='text-sm relative top-[2px] '/></span>
                 </button>
               </div>
               <div className='relative top-[0px] '>
@@ -99,8 +99,8 @@ const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,
                   <button
                     key={number}
                     onClick={() => paginate(number)}
-                    className={`px-3 py-1 text-lg rounded-full ${
-                      currentPage === number ? 'bg-blue-500 text-white text-xl' : 'bg-gray-200'
+                    className={`px-[6px] py-1 sm:px-3 sm:py-1 text-sm rounded-full ${
+                      currentPage === number ? 'bg-blue-500 text-white text-md' : 'bg-gray-200'
                     } mr-1`}
                   >
                     {number}
@@ -111,9 +111,9 @@ const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,
                 <button
                   onClick={goToNextPage}
                   disabled={currentPage === totalPages || totalPages === 0}
-                  className={`px-3 py-1 rounded-full bg-blue-500 text-white text-lg flex disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-gray-500`}
+                  className={`px-3 py-1 rounded-full bg-blue-500 text-white text-sm flex disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-gray-500`}
                 >
-                  <span><FaArrowRightLong className='text-lg relative top-[6px] '/></span>
+                  <span><FaArrowRightLong className='text-sm relative top-[6px] '/></span>
                 </button>
               </div>
             </div>

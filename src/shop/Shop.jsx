@@ -5,8 +5,8 @@ import Loading from "../components/Loading";
 
 const Shop = ({showSearchBox=true}) => {
   const [books, setBooks] = useState([]);
-  const token = localStorage.getItem('access-token');
   const [loading,setLoading] = useState(false)
+  const token = localStorage.getItem('access-token');
   useEffect(() => {
     setLoading(true)
     fetch("https://book-store-api-theta.vercel.app/all-books", {
@@ -29,7 +29,7 @@ const Shop = ({showSearchBox=true}) => {
   }
 
   return (
-    <div className={`px-4 lg:px-24 ${showSearchBox ? "mt-24 mb-10" : "relative bottom-12"}`}>
+    <div className={`px-2 lg:px-24 ${showSearchBox ? "mt-24 mb-10" : "relative bottom-12"}`}>
       <h2 className="text-3xl text-center text-bold text-black ">
         All Books Here
       </h2>

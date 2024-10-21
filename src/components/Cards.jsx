@@ -88,10 +88,10 @@ const Cards = ({booksTodisplay}) => {
       };
 
   return (
-    <div>
-        <div className="grid gap-4 lg:max-w-[1100px] sm:max-w-[630px] md:max-w-[800px] my-10 lg:grid-cols-5 sm:grid-cols-3 md:grid-cols-4 grid-cols-2 p-0">
+    <div className='lg:px-14 px-2 sm:px-4'>
+        <div className="grid gap-4 lg:max-w-[1100px] sm:max-w-[630px] md:max-w-[800px] w-full my-10 lg:grid-cols-5 sm:grid-cols-3 md:grid-cols-4 grid-cols-2 p-0">
             { currentBooks && currentBooks.map((book) => (
-                <Card key={book._id} className="">
+                <Card key={book._id} className="hover:scale-105 duration-700">
                     <Link to={`/book/${book._id}`}>
                         <div className='relative p-0 h-[200px] mb-1'>
                             <img src={book.imageURL} alt="" className="object-cover w-full h-full"/>
@@ -120,13 +120,13 @@ const Cards = ({booksTodisplay}) => {
                             ₹{book.bookPrice}
                             </p>
                             {isBookInCart(book) ? (
-                                <button className=" text-blue-700 font-semibold bg-white py-2 rounded w-full border-red-400">
-                            <Link to={'/cart'}>Go Cart</Link>
-                            </button>
+                                <button className=" text-blue-700 font-semibold shadow-xl bg-white py-2 rounded w-full border-gray-100 border-2 duration-500">
+                                  <Link to={'/cart'}>Go Cart</Link>
+                                </button>
                             ) : (
-                                <button onClick={event => handleBuyCart(event, book)} className=" bg-blue-700 font-semibold text-white py-2 rounded w-full">
-                            <Link to={'/cart'}>Buy Now</Link>
-                            </button>
+                                <button onClick={event => handleBuyCart(event, book)} className=" bg-blue-700 hover:bg-green-500 hover:text-black duration-500 font-semibold text-white shadow-xl py-2 rounded w-full">
+                                  <Link to={'/cart'}>Buy Now</Link>
+                                </button>
                             )}
                         </div>
                     </Link>

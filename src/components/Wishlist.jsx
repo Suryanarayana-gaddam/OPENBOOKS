@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthProvider';
 import useUser from '../../hooks/useUser'
 import BookCards from './BookCards.jsx'
+import Cards from './Cards.jsx';
 
 const Wishlist = () => {
 
@@ -28,7 +29,8 @@ const Wishlist = () => {
       return (
         <div className='my-16 px-4 lg:px-10'>
           <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
-          <BookCards books={wishlistBooks} user={user?.user} isPagination={true} isNavigation={true}/>
+          {/* <BookCards books={wishlistBooks} isDynamicPagination={true} user={user?.user} isAutoPlay={true} isNavigation={true}/> */}
+          <Cards booksTodisplay={wishlistBooks}/>
         </div>
       )
     }

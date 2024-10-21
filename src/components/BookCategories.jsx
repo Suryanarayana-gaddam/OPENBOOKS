@@ -1,8 +1,10 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Shop from '../shop/Shop';
 import BookCards from './BookCards';
 import { AuthContext } from '../context/AuthProvider';
 import Search from './Search';
+import Cards from './Cards';
+import axios from 'axios';
 
 const BookCategories = () => {
 
@@ -14,7 +16,20 @@ const BookCategories = () => {
     "Fiction", "Mystery", "Programming", "Science Fiction", "Fantasy", "Horror", "Bibliography", "Autobiography", "History", "Self-help", "Memoir", "Business", "Children Books", "Travel", "Religion", "Art And Design"
   ];
 
+  const [allBooks,setAllBooks] = useState([]);
   const token = localStorage.getItem('access-token');
+  useEffect(() => {
+    axios.get("https://book-store-api-theta.vercel.app/all-books", {
+      headers : {
+          "authorization": `Bearer ${token}`
+      }
+    })
+      .then((response) => setAllBooks(response.data))
+      .catch((err) =>{
+        throw new err;
+      })
+      console.log(allBooks)
+  }, [token]);
 
   const fetchBooksByCategory = async (category) => {
     try {
@@ -40,8 +55,7 @@ const BookCategories = () => {
   };
 
   return (
-    <div className='pt-12 mx-5'>
-       
+    <div className='pt-16 pb-10 mx-5'>
       <Search/>
       <h2 className='my-2 mt-5 bg-black text-center  text-white text-2xl p-2 pb-2 h-12'>Available Categories</h2>
       <ul className='flex flex-wrap justify-center'>
@@ -60,13 +74,21 @@ const BookCategories = () => {
           <h4 className='text-center font-serif text-red-500'>Select one category to view the available books !</h4>
         </div>
       )}
-      <BookCards books={books} user={user.user} isAutoPlay={true} isDynamicPagination={true}/> {/* Pass books state as prop */}
-      {flag && (
-        <div className="text-center font-bold text-gray-500">
-          <div className='relative bottom-16'>{books.length === 0 && "No Books Available in this category!"}</div>
-          <Shop showSearchBox={false}/>
-        </div>
-      )}
+      {/* <BookCards books={books} user={user.user} isAutoPlay={true} isDynamicPagination={true}/> Pass books state as prop */}
+      <Cards booksTodisplay={books}/>
+      {/* <Shop showSearchBox={false}/> */}
+      {flag && 
+          <div className='relative left-16 bottom-16'>{books.length === 0 && "No Books Available in this category!"}</div>
+      }
+      { flag &&
+        <h2 className="text-3xl relative top-10 text-center text-bold text-black ">
+          All Books Here
+        </h2>
+      }
+      { flag &&
+        <BookCards books={allBooks} user={user.user} isStyles={`lg:px-10 relative top-10 px-0 py-0`} isPadforNav="0px 45px 0px" isAutoPlay={true} isDynamicPagination={true}/>
+      }
+      
     </div>
   );
 };

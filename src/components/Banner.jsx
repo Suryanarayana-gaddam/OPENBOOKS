@@ -16,7 +16,7 @@ const Banner = () => {
               </p>
               <div>
             
-            <span className=' hidden md:flex relative right-10 bottom-10'><Search/></span>
+            <span className=' hidden md:flex relative right-10 bottom-10'><Search inputStyles='ml-10 md:w-[70%] lg:w-[80%]'/></span>
           </div>
             </div>
 

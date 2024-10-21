@@ -155,7 +155,7 @@ const UserProfile = () => {
     }
 
     return (
-        <div className="lg:pt-24 pt-16 text-center">
+        <div className="lg:pt-24 pt-[178px] text-center">
             <h1 className='font-bold text-3xl'>Profile Details :</h1>
             <div className="text-center p-8 max-w-lg mx-auto shadow rounded-lg sm:pr-5 hover:scale-110 duration-300">
                 <img

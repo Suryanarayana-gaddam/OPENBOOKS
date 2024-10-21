@@ -15,7 +15,7 @@ const Search = ({inputStyles, searchStyles, searchIconStyles, styles}) => {
               type="search" name='search-input'
               autoComplete='off'
               placeholder='Search a book'
-              className={`${ !inputStyles ? "py-2 px-2 rounded-s-lg outline-none xl:w-10/12 lg:w-5/6 md:w-4/6 w-4/6 text-center ml-10" : inputStyles}`}
+              className={`${ !inputStyles ? "py-2 px-2 rounded-s-lg outline-none xl:w-[88%] lg:w-[87%] md:w-[85%] w-4/6 text-center md:ml-6 lg:ml-10" : inputStyles}`}
               value={searchQuery} required
               onChange={e => setSearchQuery(e.target.value)}
             />

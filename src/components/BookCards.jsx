@@ -10,7 +10,7 @@ import {FaCartShopping, FaHeart} from 'react-icons/fa6';
 import useUser from '../../hooks/useUser'
 import { CRUDContext } from '../context/CRUDProvider';
 
-const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation, isDynamicPagination, isEffectFade, isNumberedPagination}) => {
+const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation, isDynamicPagination, isEffectFade, isNumberedPagination, isStyles, isPadforNav}) => {
     
     const [wishlistBooks, setWishlistBooks] = useState([]);
     const [cartBooks, setCartBooks] = useState([]);
@@ -71,7 +71,7 @@ const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation
   };
 
   return (
-    <div className=' px-4 lg:px-10 '>
+    <div className={` ${isStyles ? isStyles : "px-4 lg:px-14"}`}>
       <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
       
       <div className='mt-12 ' > 
@@ -81,8 +81,8 @@ const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation
                 style={{
                   '--swiper-navigation-color': '#5af55a',
                   '--swiper-pagination-color': '#5af55a',
-                  '--swiper-navigation-sides-offset': '0px',
-                  'padding': '0px 45px 15px',
+                  '--swiper-navigation-sides-offset': '-3px',
+                  padding: `${ isPadforNav ? isPadforNav : "0px 45px 15px"}`,
                 }}
                 
                 breakpoints={{
@@ -129,7 +129,7 @@ const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation
                 }
                 autoplay={
                   isAutoPlay ? {
-                    delay: 3000,
+                    delay: 2000,
                     disableOnInteraction: false,
                   } : ""
                 }
@@ -141,7 +141,7 @@ const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation
                 className="mySwiper w-full h-full px-10"
             >
                 
-                <div className='border-2 border-red-500'>
+                <div className=''>
                 {
                     books && books.map(book => <SwiperSlide key={book._id} className=''>
                        <Link to={`/book/${book._id}`}>

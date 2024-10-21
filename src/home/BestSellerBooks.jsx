@@ -23,7 +23,6 @@ const BestSellerBooks = () => {
             <BookCards 
                 books={books} 
                 user={user.user} 
-                isPagination={true} 
                 isAutoPlay={true} 
                 isDynamicPagination={true} 
                 isNavigation={true}

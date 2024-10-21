@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBarsStaggered, FaBookAtlas, FaUser, FaXmark} from "react-icons/fa6"
+import { FaBarsStaggered, FaBookAtlas, FaHeart, FaUser, FaX, FaXmark} from "react-icons/fa6"
 import { AuthContext } from '../context/AuthProvider';
 import Logout from './Logout';
 import useUser from '../../hooks/useUser';
@@ -104,10 +104,10 @@ return (
                     </div>
 
                     {/* search for small devices */}
-                    <div className='absolute top-[-38px] left-[110px]'>
+                    <div className={`absolute top-[-38px] duration-500 ${isSticky ? "left-[97px]" : " left-[105px]"}`}>
                         <Search 
-                            inputStyles={"md:hidden relative top-3 rounded-s-md w-36 h-8 outline-none px-1"} 
-                            searchStyles={"md:hidden bg-blue-700 px-4 py-[10px] relative top-[11px] w-[32px] h-[32px] hover:scale-100  text-white font-medium rounded-e-md hover:bg-black transition ease-in duration-200"}
+                            inputStyles={"md:hidden relative top-3 rounded-s-md w-40 h-[34px] outline-none px-1"} 
+                            searchStyles={"md:hidden bg-blue-700 px-4 py-[10px] relative top-[12px] w-[32px] h-[33px] hover:scale-100  text-white font-medium rounded-e-md hover:bg-black transition ease-in duration-200"}
                             searchIconStyles={"relative right-[9px] bottom-[2px] text-xl"}
                             styles={"text-xl"}
                         />
@@ -126,7 +126,7 @@ return (
                                     onClick={() => {
                                         setActiveItem(link);
                                         if(link === "Admin" && !isAdmin){
-                                            window.alert("You are not admin!")
+                                            window.alert("You are not an Admin!")
                                         }
                                     }}
                                 > 
@@ -188,27 +188,38 @@ return (
                                 <FaUser className='p-0 mt-1 h-4 w-4 border-none rounded-full' />
                             )}
                     </span>
-                       {
+                    
+                    {
+                        user && <div className='relative top-[2px]'>
+                            <Link to= '/wishlist'><FaHeart className='text-red-500 text-2xl hover:scale-105'/></Link>
+                        </div>
+                    }
+    
+                    {
                         user ? (
                             <Link to={"/cart"}> 
-                       <label tabIndex={0} role='button' className="btn btn-ghost btn-circle relative top-4">
-                        <div className="indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                        <span className="badge badge-sm indicator-item relative bottom-9 left-4">{userData.cart?.length}</span>
-                        </div>
-                        </label>
-                       </Link>
+                                <label tabIndex={0} role='button' className="btn btn-ghost btn-circle relative top-4">
+                                    <div className="indicator">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                    <span className="badge badge-sm indicator-item relative bottom-9 left-4">{userData.cart?.length}</span>
+                                    </div>
+                                </label>
+                            </Link>
                         ) : null
-                       }
-                                       
+                    }
+                                   
                     {/* User menu Items */}
                     <div className="relative">
                         <button onClick={toggleUserMenu} className="text-black focus:outline-none">
-                            <FaBarsStaggered className="h-5 w-5 text-black mt-3" />
+                            { isUserMenuOpen ?
+                                <FaX className="h-5 w-5 text-black mt-3" />
+                                :
+                                <FaBarsStaggered className="h-5 w-5 text-black mt-3" />
+                            }
                         </button>
-                        <div className={`absolute top-full right-0  z-10 mt-2 py-2 bg-white rounded-lg shadow-md text-left ${isUserMenuOpen ? "block" : "hidden"}`}>
+                        <div className={`absolute top-full right-[-5px]  z-10 mt-2 px-2 py-2 bg-gray-200 rounded-lg shadow-md text-left ${isUserMenuOpen ? "block" : "hidden"}`}>
                             {userMenuItems.map(({ link, path }) => (
-                                <Link key={path} to={path} onClick={CloseUserMenu} className="block items-center w-28 p-0 py-1 text-center text-inherit text-black  bg-white hover:bg-gray-200 " >
+                                <Link key={path} to={path} onClick={CloseUserMenu} className="block font-semibold hover:text-white items-center w-36  p-0 py-1 text-center text-inherit text-black my-1 rounded-md bg-[#99c0f8] hover:bg-[#3379dc] duration-700 " >
                                     {link}
                                 </Link>
                             ))}
@@ -244,13 +255,13 @@ return (
                             )
                         }
                     </button>
-                    <div className={`absolute top-12 lg:top-10 right-1 z-10 mt-2 py-2 px-2 bg-white rounded-lg shadow-md text-left ${isUserMenuOpen ? "block" : "hidden"}`}>
+                    <div className={`absolute top-12 lg:top-10 right-1 z-10 mt-2 py-2 px-2 bg-gray-200 rounded-lg shadow-md text-left ${isUserMenuOpen ? "block" : "hidden"}`}>
                             {userMenuItems.map(({ link, path }) => (
-                                <Link key={path} to={path} onClick={CloseUserMenu} className=" block p-0 px-4 py-2 text-base text-black hover:text-black shadow-xl bg-[#e1bb3d] font-bold duration-700 my-1 rounded hover:bg-[#de3838] cursor-pointer text-center">
+                                <Link key={path} to={path} onClick={CloseUserMenu} className=" block p-0 px-4 py-2 text-base text-black hover:text-white shadow-xl bg-[#9ac1f8] font-bold duration-700 my-1 rounded hover:bg-[#3372d9] cursor-pointer text-center">
                                     {link}
                                 </Link>
                             ))}
-                        </div>
+                    </div>
                 </div>
             </div> 
                 
