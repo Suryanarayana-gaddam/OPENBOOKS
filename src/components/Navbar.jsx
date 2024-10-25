@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBarsStaggered, FaBookAtlas, FaHeart, FaUser, FaX, FaXmark} from "react-icons/fa6"
 import { AuthContext } from '../context/AuthProvider';
@@ -7,6 +7,7 @@ import useUser from '../../hooks/useUser';
 import "./nav.css"
 import image from "../assets/Open Books.jpg"
 import Search from './Search';
+import { FaSearch } from 'react-icons/fa';
 const Navbar = () => {
     const [activeItem, setActiveItem] = useState('');
     const [isMenuOpen,setIsMenuOpen] = useState(false);
@@ -19,7 +20,7 @@ const Navbar = () => {
     const [userData,refetch] = useUser();
     const [timeDate,setTimeDate] = useState(null);
     //const TimeAndDate = new Date().toISOString();
-    
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const token = localStorage.getItem('access-token');
 
     const toggleMenu = () => {
@@ -67,8 +68,14 @@ const Navbar = () => {
         }
         window.addEventListener("scroll",handleScroll);
 
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+        window.addEventListener('resize', handleResize);
+
         return() => {
             window.addEventListener("scroll",handleScroll);
+            window.removeEventListener('resize', handleResize);
         }
     },[user,userData,token])
 
@@ -114,7 +121,7 @@ return (
                     </div>
 
                     {/*nav items for large device */}
-                    <ul className={`md:flex relative ${isSticky ? "top-[17px]" : "top-[21px]"} md:left-5 duration-700 lg:left-10 md:space-x-5 lg:space-x-12 hidden`} 
+                    <ul className={` relative md:flex ${isSticky ? "top-[17px]" : "top-[21px] lg:top-[27px]"} md:left-5 duration-700 lg:left-10 md:space-x-5 lg:space-x-12 hidden`} 
                     onClick={CloseMenu}
                     >
                         {
@@ -170,10 +177,27 @@ return (
                 <p className='fixed bottom-0 right-0 mr-2 mb-1 '>{timeDate}</p>
 
                 {/* btn for lg devices */}
-                <div className='space-x-5  hidden lg:flex sm:flex items-center mr-0'>
+                <div className='space-x-5  hidden sm:flex items-center mr-0'>
+                    {/* search from md devices */}
+                {/* {
+                    isSearchOpen ? 
+                    <div className={`absolute w-full hidden md:flex duration-500 ${isSticky ? "top-[-36px] md:left-[85px]  xl:left-[197px]" : "top-[-26px] lg:top-[-17px] md:left-[80px] lg:left-[120px] xl:left-[205px]"}`}>
+                        <Search 
+                            inputStyles={"py-1 px-1 rounded-s-lg outline-none xl:w-[40%] lg:w-[36%] md:w-[25%] w-4/6 text-center md:ml-6 lg:ml-10"}
+                            searchStyles={"bg-blue-700 px-4 py-[15px] relative top-[-4px] w-[36px] h-[36px] hover:scale-100  text-white font-medium rounded-e-md hover:bg-black transition ease-in duration-200"}
+                            searchIconStyles={"relative right-[13px] bottom-[10px] text-2xl"}
+                            CancelBtnStyles={"bg-blue-700 px-4 py-[15px] relative top-[-4px] right-[6px] border-l-2 border-black w-[34px] h-[36px] hover:scale-100  text-white font-medium rounded-e-md hover:bg-black transition ease-in duration-200"}
+                            XiconStyles={"relative right-[9px] bottom-[9px] text-xl"}
+                            setSearchOpen={setSearchOpen}
+                            searchOpen={isSearchOpen}
+                        />
+                    </div>
+                    : */}
+                    <Link to='/books/searchedbooks'><FaSearch title='Search a Book here...' className=' cursor-pointer hidden md:block p-[3px] w-8 h-6 rounded-full relative top-[1px] right-4 md:right-[-30px] lg:right-[-24px] border border-black'/></Link>
+                
                     {/* Use the img tag to display the user's photo */}
-                    {user?.displayName || user ? username : "" || user?.email}
-                    <span>
+                    <span className='text-wrap hidden md:flex relative md:left-6 lg:left-4'>{user?.displayName || user ? username : "" || user?.email}</span>
+                    <span title={windowWidth > 640 ? "View the Profile" : "Toggle the User Menu"}>
                             {user ? (
                                 user.photoURL ? (
                                         <Link to="/userProfile">
@@ -190,7 +214,7 @@ return (
                     </span>
                     
                     {
-                        user && <div className='relative top-[2px]'>
+                        user && <div title='Wishlist' className='relative top-[2px]'>
                             <Link to= '/wishlist'><FaHeart className='text-red-500 text-2xl hover:scale-105'/></Link>
                         </div>
                     }
@@ -198,7 +222,7 @@ return (
                     {
                         user ? (
                             <Link to={"/cart"}> 
-                                <label tabIndex={0} role='button' className="btn btn-ghost btn-circle relative top-4">
+                                <label title='Cart' tabIndex={0} role='button' className="btn btn-ghost btn-circle relative top-4">
                                     <div className="indicator">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                                     <span className="badge badge-sm indicator-item relative bottom-9 left-4">{userData.cart?.length}</span>
@@ -210,7 +234,7 @@ return (
                                    
                     {/* User menu Items */}
                     <div className="relative">
-                        <button onClick={toggleUserMenu} className="text-black focus:outline-none">
+                        <button title='Toggle User Menu' onClick={toggleUserMenu} className="text-black focus:outline-none">
                             { isUserMenuOpen ?
                                 <FaX className="h-5 w-5 text-black mt-3" />
                                 :

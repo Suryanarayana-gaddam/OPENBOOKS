@@ -42,7 +42,7 @@ const OtherBooks = () => {
     
   return (
         <div className='m-0 md:px-10'>
-            <h1 className='text-center mt-5 text-3xl md:text-4xl lg:text-5xl'>More Books</h1>
+            <h1 className='text-center font-semibold mt-5 text-3xl md:text-4xl lg:text-5xl'>More Books</h1>
             <BookCardFromReactSlick books={books} headLine="More Books" user={user?.user}/>
         </div>
     )

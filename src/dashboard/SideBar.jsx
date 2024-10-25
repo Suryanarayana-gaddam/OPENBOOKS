@@ -4,11 +4,11 @@ import { HiCash, HiChartPie, HiInbox, HiOutlineCloudUpload, HiTable, HiUser } fr
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
-import { IoArrowBack } from 'react-icons/io5';
 import useUser from '../../hooks/useUser';
 import Logout from '../components/Logout';
+import { FaX } from 'react-icons/fa6';
 
-const SideBar = () => {
+const SideBar = ({toggleSidebar}) => {
   const {user} = useContext(AuthContext);
   const [profilePic,setProfilePic] = useState(null);
   const [userName, setUserName] = useState('');
@@ -22,14 +22,9 @@ const SideBar = () => {
   }, [userData]);
 
   return (
-    <Sidebar aria-label="Sidebar with content separator example">
-      <div className="flex items-center pb-2">
-        <Link to="/" className="flex items-center">
-        <IoArrowBack />
-          <span className="ml-2" >Back</span>
-        </Link>
-      </div>
-      <div className="flex items-center pb-3">
+    <Sidebar className='bg-[#a2c9ff]' style={{backgroundColor:'#d5f5f6'}} aria-label="Sidebar with content separator example">
+      
+      <div className="flex items-center pb-3 p-1 bg-[#a2c9ff] hover:bg-red-300 ">
       <Link to="/userProfile">
         {user && user.photoURL !== null && user.photoURL !== undefined ? (
           <img src={user.photoURL} alt="User" className="w-8 h-8 rounded-full mr-2" />
@@ -39,30 +34,40 @@ const SideBar = () => {
         </Link>
         <span>{user ? user.displayName || userName : "Guest"}</span>
       </div>
-      <Sidebar.Items>
-        <Sidebar.ItemGroup>
-          <Sidebar.Item  icon={HiChartPie}>
-            <Link to={"/admin/Dashboard"}>DashBoard</Link>
-          </Sidebar.Item>
-          <Sidebar.Item  icon={HiOutlineCloudUpload}>
-            <Link to={"/admin/Dashboard/upload"}>Upload Book</Link>
-          </Sidebar.Item>
-          <Sidebar.Item  icon={HiInbox}>
-            <Link to={"/admin/Dashboard/manage"}>Mangage Books</Link>
-          </Sidebar.Item>
-          <Sidebar.Item icon={HiUser}>
-          <Link to={"/admin/Dashboard/all-users"}>Mangage Users</Link>
-          </Sidebar.Item>
-          <Sidebar.Item  icon={HiCash}>
-            <Link to={"/admin/Dashboard/all-orders"}>Orders</Link>
-          </Sidebar.Item>
-          <Sidebar.Item icon={HiTable}>
+      <Sidebar.Items className='m-1'>
+        <Sidebar.ItemGroup className=''>
+          <Link to={"/admin/Dashboard"} onClick={toggleSidebar}>
+            <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiChartPie}>
+              DashBoard
+            </Sidebar.Item>
+          </Link>
+          <Link to={"/admin/Dashboard/upload"} onClick={toggleSidebar}>
+            <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiOutlineCloudUpload}>
+              Upload Book
+            </Sidebar.Item>
+          </Link>
+          <Link to={"/admin/Dashboard/manage"} onClick={toggleSidebar}>
+            <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiInbox}>
+              Mangage Books
+            </Sidebar.Item>
+          </Link>
+          <Link to={"/admin/Dashboard/all-users"} onClick={toggleSidebar}>
+            <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiUser}>
+              Mangage Users
+            </Sidebar.Item>
+          </Link>
+          <Link to={"/admin/Dashboard/all-orders"} onClick={toggleSidebar}>
+            <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiCash}>
+              Orders
+            </Sidebar.Item>
+          </Link>
+          <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiTable}>
             <Logout nocolor={true}/>
           </Sidebar.Item>
         </Sidebar.ItemGroup>
         <Sidebar.ItemGroup>
           
-          <Sidebar.Item href="#" icon={BiBuoy}>
+          <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' href="#" icon={BiBuoy} onClick={toggleSidebar}>
             Help
           </Sidebar.Item>
         </Sidebar.ItemGroup>

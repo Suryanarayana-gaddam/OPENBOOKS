@@ -19,7 +19,7 @@ const BestSellerBooks = () => {
     
   return (
         <div>
-            <h1 className='text-center mt-5 text-3xl md:text-4xl lg:text-5xl'>Best Seller Books</h1>
+            <h1 className='text-center font-semibold mt-5 text-3xl md:text-4xl lg:text-5xl'>Best Seller Books</h1>
             <BookCards 
                 books={books} 
                 user={user.user} 

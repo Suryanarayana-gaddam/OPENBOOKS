@@ -64,7 +64,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h2 className="dashboard-heading">Welcome Admin!</h2>
+      <h2 className="dashboard-heading mt-8">Welcome Admin!</h2>
         <div className="dashboard-content">
           <div className="dashboard-card">
             <h3>Book Details</h3>

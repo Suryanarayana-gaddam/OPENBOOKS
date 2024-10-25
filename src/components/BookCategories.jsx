@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import Shop from '../shop/Shop';
 import BookCards from './BookCards';
 import { AuthContext } from '../context/AuthProvider';
-import Search from './Search';
 import Cards from './Cards';
 import axios from 'axios';
 
@@ -55,8 +54,7 @@ const BookCategories = () => {
   };
 
   return (
-    <div className='pt-16 pb-10 mx-5'>
-      <Search/>
+    <div className='pt-[70px] pb-10 mx-5'>
       <h2 className='my-2 mt-5 bg-black text-center  text-white text-2xl p-2 pb-2 h-12'>Available Categories</h2>
       <ul className='flex flex-wrap justify-center'>
         {bookCategories.map(category => (
@@ -81,7 +79,7 @@ const BookCategories = () => {
           <div className='relative left-16 bottom-16'>{books.length === 0 && "No Books Available in this category!"}</div>
       }
       { flag &&
-        <h2 className="text-3xl relative top-10 text-center text-bold text-black ">
+        <h2 className="text-3xl relative bg-red-300 p-1 rounded top-10 text-center text-bold text-black ">
           All Books Here
         </h2>
       }

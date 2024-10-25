@@ -10,7 +10,7 @@ const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,
   useEffect(() => {
       const currentItems =  inputArrayItems?.slice(indexOfFirstItem, indexOfLastItem)
       setItemsDetails(currentItems);
-    },[currentPage,setItemsDetails])  
+    },[currentPage,indexOfFirstItem,indexOfLastItem,inputArrayItems])  
 
     useEffect(() =>{
       setIndexBook(indexOfFirstItem)
@@ -103,7 +103,7 @@ const Pagination =  ({inputArrayItems,setItemsDetails,setIndexBook,itemsPerPage,
                       currentPage === number ? 'bg-blue-500 text-white text-md' : 'bg-gray-200'
                     } mr-1`}
                   >
-                    {number}
+                    <a href="#">{number}</a>
                   </button>
                 ))}
               </div>

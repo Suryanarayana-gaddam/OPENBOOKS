@@ -58,7 +58,7 @@ const UploadBook = () => {
 
   return (
     <div className='px-2 my-12'>
-        <h2 className='mb-8 text-3xl font-bold'>Upload Book</h2>
+        <h2 className='mb-8 text-3xl text-center bg-red-300 font-bold py-1'>Upload Book</h2>
 
         <form className="flex lg:w-[980px] flex-col flex-wrap gap-4 " onSubmit={handleBookSubmit}>
 

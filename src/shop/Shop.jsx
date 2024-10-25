@@ -29,13 +29,11 @@ const Shop = ({showSearchBox=true}) => {
   }
 
   return (
-    <div className={`px-2 lg:px-24 ${showSearchBox ? "mt-24 mb-10" : "relative bottom-12"}`}>
-      <h2 className="text-3xl text-center text-bold text-black ">
+    <div className={`px-2 lg:px-14 ${showSearchBox ? "mt-24 mb-10" : "relative bottom-12"}`}>
+      <h2 className="text-3xl text-center text-bold bg-red-300 p-1 rounded text-black ">
         All Books Here
       </h2>
-      {showSearchBox && (
-        <Search/>
-      )}
+      
       {/* Cards */}
       {
         books && Array.isArray(books) && books.length > 0 ? (

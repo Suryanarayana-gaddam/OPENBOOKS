@@ -8,7 +8,6 @@ const Wishlist = () => {
 
   const [wishlistBooks, setWishlistBooks] = useState([]);
   const user = useContext(AuthContext);
-  const headLine = "Wishlist";
   const [userData,refetch] = useUser();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -18,22 +17,17 @@ const Wishlist = () => {
     }
   }, [userData]);
 
-    if(wishlistBooks && wishlistBooks.length === 0){
-      return (
-        <div className='my-16 px-4 lg:px-10'>
-          <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
-          <h1 className='px-4 lg:px-10 text-2xl text-center'> Your Wishlist is Empty !</h1>
-        </div>
-      )
-    }else{
-      return (
-        <div className='my-16 px-4 lg:px-10'>
-          <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
-          {/* <BookCards books={wishlistBooks} isDynamicPagination={true} user={user?.user} isAutoPlay={true} isNavigation={true}/> */}
-          <Cards booksTodisplay={wishlistBooks}/>
-        </div>
-      )
-    }
+  return (
+    <div className='my-[90px] px-4 lg:px-10'>
+      <h2 className='text-3xl text-center bg-red-300 p-1 rounded text-bold text-black my-5'>Wishlist</h2>
+      {(wishlistBooks && wishlistBooks.length === 0)  ? 
+        <h1 className='px-4 lg:px-10 text-2xl text-center'> Your Wishlist is Empty !</h1>
+        :
+        <Cards booksTodisplay={wishlistBooks}/>
+      }
+      {/* <BookCards books={wishlistBooks} isDynamicPagination={true} user={user?.user} isAutoPlay={true} isNavigation={true}/> */}
+    </div>
+  )
   
 } 
 

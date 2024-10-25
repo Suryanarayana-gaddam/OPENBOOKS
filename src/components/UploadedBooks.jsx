@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom';
 import useUser from '../../hooks/useUser';
 import Pagination from './Pagination';
 import Loading from './Loading';
+import Search from './Search';
 
 const UploadedBooks = () => {
   const [uploadedBooks,setUploadedBooks] = useState([]);
+  const [filteredBooks,setFilteredBooks] = useState([]);
+  const [searchKey,setSearchKey] = useState('');
 
   const [userData,refetch] = useUser();
   const token = localStorage.getItem('access-token');
@@ -14,6 +17,7 @@ const UploadedBooks = () => {
   const [indexOfFirstBook,setIndexOfFirstBook] = useState(null);
   const [currentBooks,setCurrentBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if(userData && userData._id){
       setCreaterId(userData._id)
@@ -47,6 +51,13 @@ const UploadedBooks = () => {
     }, 2000);
 
     },[createrId,userData,token])
+
+  const setBooksFun = (x) => {
+    setFilteredBooks(x);
+  }
+  const setSearchKeyFun = (x) => {
+    setSearchKey(x);
+  }
 
   const setItemsDetails = (x) => {
     setCurrentBooks(x);
@@ -83,8 +94,11 @@ const UploadedBooks = () => {
   }
   
   return (
-    <div className='p-5 my-24'>
-      <h2 className='mb-8 text-3xl font-bold text-center'>Manage Your Books</h2>
+    <div className='p-5 mt-24 mb-2'>
+      <h2 className='text-3xl font-bold text-center'>Manage Your Books</h2>
+      <div className='mb-4'>
+        <Search books={uploadedBooks} setSearchKeyFun={setSearchKeyFun} setBooksFun={setBooksFun} />
+      </div>
       {
         uploadedBooks && Array.isArray(uploadedBooks) && uploadedBooks.length > 0 ? (
           <div>
@@ -102,7 +116,8 @@ const UploadedBooks = () => {
                   </Table.HeadCell>
                 </Table.Head>
                 {
-                  currentBooks && Array.isArray(currentBooks) && currentBooks.map( (book,index) => <Table.Body className='divide-y w-full' key={book._id}>
+                  currentBooks && currentBooks.length > 0 && Array.isArray(currentBooks) && currentBooks.map( (book,index) => 
+                    <Table.Body className='divide-y w-full' key={book._id}>
                       <Table.Row className="bg-white w-full border border-gray-100 dark:border-gray-700 dark:bg-gray-800 ">
                         <Table.Cell className=" font-medium text-gray-900 dark:text-white">
                           {indexOfFirstBook + index + 1} 
@@ -123,11 +138,13 @@ const UploadedBooks = () => {
 
                         </Table.Cell>
                       </Table.Row>
-                  </Table.Body>
-                )}
+                    </Table.Body>
+                  ) 
+                }
               </Table>
             </div>
-            <Pagination setItemsDetails={setItemsDetails} setIndexBook={setIndexBook} itemsPerPage={10} maxPageNumbers={10} inputArrayItems={uploadedBooks}/>
+                {currentBooks.length < 1 && <p className='text-center text-red-400'>&apos;&apos;&nbsp;No Books matched the Search !!!&nbsp;&apos;&apos;</p>}
+            <Pagination setItemsDetails={setItemsDetails} setIndexBook={setIndexBook} itemsPerPage={10} maxPageNumbers={10} inputArrayItems={searchKey ? filteredBooks : uploadedBooks}/>
           </div>
         ) : (
           <p className='text-center'>No Books Uploaded By You !</p> 

@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { all } from 'axios';
 import Pagination from '../components/Pagination';
+import Loading from '../components/Loading';
 const AllOrders = () => {
   const [allOrders, setAllOrders] = useState([]);
   const user = useContext(AuthContext);
@@ -48,36 +47,31 @@ const AllOrders = () => {
   }, [user]);
 
   if(isLoading){
-    return <div className="flex items-center justify-center h-screen">
-    <div className="relative">
-        <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
-        <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
-        </div>
-    </div>
-</div>
+    return <Loading/>
   }
 
 
   return (
-    <div className="container mx-auto px-4 mt-16">
-    <h1 className="text-3xl font-bold text-gray-800 mt-4 md:mt-0">All Orders</h1>
+    <div className="container mx-auto px-4 mt-12 mb-5">
+    <h1 className="text-3xl font-bold text-gray-800 mt-4 text-center py-1 mb-2 bg-red-300 md:mt-0">All Orders</h1>
     <div className=''>
       {currentOrders.length === 0 ? (
         <p className="text-gray-600">No orders</p>
       ) : (
-        <div className="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-6 ">
-          {currentOrders.map((order) => (
-            <motion.div
+        <div className="mt-6 grid md:grid-cols-2 lg:grid-cols-2 gap-6 ">
+          {currentOrders.map((order,index) => (
+            <div
               key={order._id}
-              className="bg-white rounded-lg overflow-hidden shadow-md p-4 flex md:flex-col items-center justify-between sm:gap-2"
-              whileHover={{ scale: 1.05 }}
+              className="bg-white rounded-lg overflow-hidden shadow-md p-4 md:flex md:flex-col items-center justify-between sm:gap-2 hover:scale-110"
             >
               <Link to={`/book/${order.bookId}`} > {/* Wrap the image with Link component */}
-              <div className=''>
-                <img src={order.imageURL} alt={order.bookTitle} className="sm:w-34 h-34 w-24 object-cover mr-4 cursor-pointer" /></div>
+              <div className='flex justify-center w-full'>
+                <img src={order.imageURL} alt={order.bookTitle} className="sm:w-34 h-34 w-24 object-cover mr-4 cursor-pointer" />
+              </div>
               </Link>
               <div className="flex items-center w-full md:p-3">
                 <div>
+                  <p className='border border-black rounded-full w-fit px-1'>{index+1+indexOfFirstBook}</p>
                   <p className="text-sm text-gray-600 font-bold">Order ID: {order._id}</p>
                   <p className="text-sm text-gray-600">Date: {new Date(order.date).toLocaleString('en-IN', {
                       timeZone: 'Asia/Kolkata',
@@ -96,11 +90,11 @@ const AllOrders = () => {
                   <p className="text-sm text-gray-600">Price: ₹{order.bookPrice}</p>
                   <p className="text-sm text-gray-600">Quantity: {order.quantity}</p>
                   <p className="text-sm text-gray-600">Total Price: ₹{order.totalPrice}</p>
-                  <p className="text-sm text-gray-600">Book URL: <a href={order.bookPDFURL} >{order.bookPDFURL}</a></p>
+                  <p className="text-sm text-gray-600">Book URL: <Link href={order.bookPDFURL} ><span className='text-blue-500 cursor-pointer'>{order.bookPDFURL}</span></Link></p>
 
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       )}

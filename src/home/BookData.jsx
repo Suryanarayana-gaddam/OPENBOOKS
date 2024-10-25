@@ -29,8 +29,8 @@ const BookData = ({ headLine }) => {
 
   return (
     <div>
-      <div className='my-16 px-4 lg:px-10'>
-        <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
+      <div className='my-[90px] px-4 lg:px-10'>
+        <h2 className='text-3xl md:text-4xl lg:text-5xl text-center bg-red-300 p-1 text-bold text-black my-5'>{headLine}</h2>
 
         {/* cards */}
         <div className='mt-12'>

@@ -93,10 +93,7 @@ const router = createBrowserRouter([
           path: "/uploaded-books",
           element : <UploadedBooks/>
         },
-        {
-          path: "/books/searchedbooks",
-          element : <PrivateRoute><SearchedBooks/></PrivateRoute>
-        },
+        
         {
           path: "/orders",
           element : <Orders/>
@@ -154,6 +151,10 @@ const router = createBrowserRouter([
           })
         }
       ]
+    },
+    {
+      path: "/books/searchedbooks",
+      element : <PrivateRoute><SearchedBooks/></PrivateRoute>
     },
     {
       path: "sign-up",

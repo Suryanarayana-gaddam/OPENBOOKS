@@ -8,6 +8,7 @@ import Pagination from '../components/Pagination';
 
 const ManageBooks = () => {
   const [allBooks,setAllBooks] = useState([]);
+  const [filteredBooks,setFilteredBooks] = useState([]);
   const [username, setUsername] = useState('');
 
   const [isLoading, setIsLoading] = useState(true);
@@ -57,6 +58,7 @@ const ManageBooks = () => {
       )
       .then(res => res.json())
       .then(data => {
+        console.log(data)
         alert("Book is deleted successfully!");
       })
       .catch(error => {
@@ -67,11 +69,12 @@ const ManageBooks = () => {
 
   return (
     <div className='px-4 my-12'>
-      <h2 className='mb-8 text-3xl font-bold text-center'>Manage All Books</h2>
+      <h2 className='mb-8 text-3xl font-bold bg-red-300 py-1 text-center'>Manage All Books</h2>
       <h2 className='mb-2'>Welcome <b>{username}</b> you can manage a book here !</h2>
+      
       {
         allBooks && Array.isArray(allBooks) && allBooks.length > 0 ? (
-          <div>
+          <div >
             <div className='overflow-auto w-full'>
               <Table className=' border border-collapse sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px] xl:max-w-[1300px] '>
                 <Table.Head>
@@ -85,7 +88,7 @@ const ManageBooks = () => {
                   </Table.HeadCell>
                 </Table.Head>
                 {
-                  currentBooks.map( (book,index) => <Table.Body className='divide-y sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px] w-auto' key={book._id}>
+                  currentBooks.map( (book,index) => <Table.Body  style={{zIndex:1}} className='divide-y sm:max-w-[760px] md:max-w-[1014px] lg:max-w-[1270px] w-auto' key={book._id}>
                       <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 w-auto">
                         <Table.Cell className=" w-auto font-medium text-gray-900 dark:text-white">
                           {indexOfFirstBook + index + 1} 

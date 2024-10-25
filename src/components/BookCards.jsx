@@ -72,7 +72,7 @@ const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation
 
   return (
     <div className={` ${isStyles ? isStyles : "px-4 lg:px-14"}`}>
-      <h2 className='text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
+      <h2 className='text-3xl md:text-4xl lg:text-5xl text-center text-bold text-black my-5'>{headLine}</h2>
       
       <div className='mt-12 ' > 
             <Swiper

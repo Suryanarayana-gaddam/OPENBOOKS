@@ -9,6 +9,7 @@ import Pagination from './Pagination';
 import { CRUDContext } from '../context/CRUDProvider';
 import Search from './Search';
 import Loading from './Loading';
+import { BiArrowBack } from 'react-icons/bi';
 
 const SearchedBooks = () => {
   const {user} = useContext(AuthContext);
@@ -118,12 +119,25 @@ const SearchedBooks = () => {
     }
   };
 
+  const handleGoBack = () => {
+    window.history.back();
+  };
+
   return (
-      <div className="my-16 px-4 lg:px-24">
+      <div className=" relative bottom-[76px] px-4 lg:px-14">
         <br />
-          <Search/>
+          <div className='ml-5 md:ml-10  flex'>
+            <button onClick={handleGoBack}><BiArrowBack className='text-black border border-black rounded-full p-1 w-7 h-7 relative top-[37px] right-4 text-2xl'/></button>
+            <Search 
+              autofocus={true}
+              inputStyles={" relative top-3 rounded-s-md h-[34px] outline-none px-1 xl:w-[88%] lg:w-[87%] md:w-[85%] sm:w-11/12 w-5/6 text-center md:ml-6 lg:ml-10"} 
+              searchStyles={" bg-blue-700 px-4 py-[10px] relative top-[12px] w-[32px] h-[35px] hover:scale-100  text-white font-medium rounded-e-md hover:bg-black transition ease-in duration-200"}
+              searchIconStyles={"relative right-[9px] bottom-[2px] text-xl"}
+              styles={"text-xl"}
+            />
+          </div>
           <br />
-          <h2 className="text-3xl text-center text-bold text-black ">
+          <h2 className="text-2xl text-center text-bold text-black ">
           Searched Results for &quot;{decodeURIComponent(location.search.slice((location.search.indexOf("=")+1)))}&quot;
         </h2>
         {searchedBooks.length > 0 ? (

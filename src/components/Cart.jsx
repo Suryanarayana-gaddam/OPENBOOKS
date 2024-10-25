@@ -13,7 +13,6 @@ const Cart = () => {
   const [cartBooks, setCartBooks] = useState(userData.cart);
    
   const token = localStorage.getItem('access-token');
-  const headLine = "My Cart";
   
   const user = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
@@ -32,7 +31,7 @@ const Cart = () => {
           }
           const data = await response.json();
           const shuffledBooks = data.sort(() => 0.5 - Math.random());
-          setBooks(shuffledBooks.slice(0, 10));
+          setBooks(shuffledBooks.slice(10, 30));
         } catch (error) {
           console.error('Error:', error.message);
         }
@@ -121,16 +120,16 @@ const Cart = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 mt-16">
-          <h2 className='text-3xl text-center text-bold text-black my-5'>{headLine}</h2>
+    <div className="container mx-auto px-4 mt-[90px]">
+          <h2 className='text-3xl text-center text-bold bg-red-300 p-1 text-black my-5'>My Cart</h2>
       <div>
         {cartBooks && cartBooks.length === 0 ? (
-          <div className='lg:px-10 text-center'>
-          <p className='px-4 lg:px-10 text-1xl text-center my-3'>Your Cart was Empty!</p>
-          <Link to="/orders" className='text-center'><button className='text-white bg-blue-500 border-solid mt-5 p-3'>Go To Orders</button></Link>
-          <h1 className='text-center text-3xl relative top-8'>Suggested Books </h1>
-          <BookCards books={books} user={user.user} className=''/>
-        </div> 
+          <div className=' text-center'>
+            <p className='px-4 lg:px-10 text-1xl text-center my-3'>Your Cart was Empty!</p>
+            <Link to="/orders" className='text-center'><button className='text-white bg-blue-500 border-solid mt-5 p-3'>Go To Orders</button></Link>
+            <h1 className='text-center text-3xl relative top-8'>Suggested Books </h1>
+            <BookCards books={books} isAutoPlay={true} isNavigation={true} isNumberedPagination={true} user={user.user} className=''/>
+          </div> 
         ) : (
           <div className='p-10 mb-5'>
             {cartBooks && cartBooks.map(book => (
