@@ -54,8 +54,8 @@ const Orders = () => {
     <div className="container mx-auto px-4 mt-16 mb-5">
     <h1 className="text-3xl font-bold text-gray-800 mt-4 md:mt-0 text-center">My Orders</h1>
     <div className='mb-4'>
-        <Search books={orders} setSearchKeyFun={setSearchKeyFun} setBooksFun={setBooksFun} />
-      </div>
+      <Search books={orders} setSearchKeyFun={setSearchKeyFun} setBooksFun={setBooksFun} />
+    </div>
     <div className='transition-all duration-1000'>
       { orders && Array.isArray(orders) && orders.length > 0 ? (
         <div className="">
