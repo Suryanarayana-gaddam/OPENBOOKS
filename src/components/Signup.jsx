@@ -1,34 +1,40 @@
-import React, { useContext, useState } from 'react'
-import { Link , useLocation , useNavigate } from 'react-router-dom';
-import {AuthContext} from '../context/AuthProvider';
+import { useState } from 'react'
+import { Link } from 'react-router-dom';
 import googleLogo from "../assets/google-logo.svg"
 import pica from "pica";
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import Loading from './Loading';
 import image from "../assets/Open Books.jpg"
+import UseLoginWithGoogle from '../../hooks/UseLoginWithGoogle';
+import useSignUp from '../../hooks/useSignUp';
 
 const Signup = () => {
-    const {createUser,loginWithGoogle} = useContext(AuthContext);
     const [error,setError] = useState("");
-
     const [profilePic, setProfilePic] = useState(null);
     const [loading, setLoading] = useState(false);
     const picaa = pica();
-
-    const location = useLocation();
-    const navigate = useNavigate();
-
+    
     const [password, setPassword] = useState('');
     const [strengthMessage, setStrengthMessage] = useState('');
     const [messageColor, setMessageColor] = useState('');
     const [pwdInstruction,setPwdInstruction] = useState(null)
     const [proceed,setProceed] = useState(false)
-
     const [showPassword, setShowPassword] = useState(false);
-    const token = localStorage.getItem("access-token");
+
+    const settingError = (errVal) => {
+        setError(err => ({...err,message: errVal}));
+    } 
+    const settingLoading = (bool) => {
+        setLoading(bool);
+    } 
+
+    const handleRegister = UseLoginWithGoogle({setError: settingError});
+    const handleSignup = useSignUp({proceed,setError: settingError,setLoading: settingLoading,profilePic});
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+
 
     const handlePasswordChange = (event) => {
         const newPassword = event.target.value;
@@ -67,8 +73,6 @@ const Signup = () => {
         event.preventDefault();
         window.alert("Paste is not allowed in this field!")
     }
-    
-    const from = location.state?.from?.pathname || "/";
 
     const handleProfilePicChange = async (e) => {
         const file = e.target.files[0];
@@ -111,116 +115,6 @@ const Signup = () => {
             reader.readAsDataURL(file);
         });
     }; 
-
-    const handleRegister = () => {
-        
-        loginWithGoogle().then((result) => {
-            const user = result.user;
-            const userObj = {
-                username: user.displayName,
-                email: user.email,               
-                profilePic: user.photoURL,
-                password: "",
-                googleSignIn: true 
-            };
-            setLoading(true);
-            fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
-                method: "GET",
-                headers: {
-                    "Content-type": "application/json",
-                }
-            }).then(res => {
-                if (res.status === 404) {
-                    fetch("https://book-store-api-theta.vercel.app/sign-up", {
-                        method: "POST",
-                        headers: {
-                            "Content-type": "application/json",
-                            "authorization" : `Bearer ${token}`
-                        },
-                        body: JSON.stringify(userObj)
-                    }).then(res => res.json()).then(data => {
-                        alert("Signed up Successfully!");
-                        navigate(from, { replace: true });
-                    });
-                } else {
-                    alert(`Welcome back , ${user.displayName} `);
-                    navigate(from, { replace: true });
-                }
-            }).catch((error) => {
-                const errorMessage = error.message;
-                setError(errorMessage || error);
-            }).finally(
-                setTimeout(() => setLoading(false),1000)
-            )
-        }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            setError(errorMessage);
-        })
-    }
-    
-    
-    const handleSignup = (event) => {
-        event.preventDefault();
-        if( !proceed ){
-            return window.alert("Please enter a valid password!");
-        }
-        const form = event.target;
-        setLoading(true)
-        const username = form.username.value; 
-        const email = form.email.value;
-        const password = form.password.value;
-      
-        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${email}`, {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json",
-                "authorization" : `Bearer ${token}`
-            }
-        }).then(res => {
-            if (res.status == 404) {
-                const userObj = {
-                    username,
-                    email,
-                    password,
-                    profilePic,
-                    googleSignIn: false
-                };
-
-                createUser(email,password).then((userCredential) => {
-                    const user = userCredential.user;
-                    navigate("/login");
-                  })
-                  .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    setError(errorMessage);
-                  });
-                
-                fetch("https://book-store-api-theta.vercel.app/sign-up", {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json",
-                    },
-                    body: JSON.stringify(userObj)
-                }).then(res => res.json()).then(data => {
-                    alert("Signed up Successfully!");
-                    navigate(from, { replace: true });
-                }).catch(err =>{
-                    console.log("Error: ",err.error)
-                }).finally(
-                    setTimeout(() => setLoading(false),1000)
-                )
-            } else {
-                setTimeout(() =>setLoading(false),1000)
-                alert("User already exists! please login!");
-                navigate("/login")
-            }
-        }).catch(error => {
-            setTimeout(() =>setLoading(false),1000)
-            console.log("Error :",error,"err status:",error.status)
-        });
-    }
 
     if(loading){
         return <Loading/>

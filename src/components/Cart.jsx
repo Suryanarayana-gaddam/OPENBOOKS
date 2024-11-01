@@ -39,6 +39,7 @@ const Cart = () => {
       fetchBooks();
 
       if(userData && userData.cart){
+        console.log(user)
       setCartBooks(userData.cart.reverse())
       }
       console.log("Rendered ",count.current,"Times!")

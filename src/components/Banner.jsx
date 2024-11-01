@@ -1,8 +1,4 @@
-import { useState } from 'react';
 import BannerCard from '../home/BannerCard';
-import { Link } from 'react-router-dom';
-import { BiSearch } from 'react-icons/bi';
-import Search from './Search';
 const Banner = () => {  
 
   return (

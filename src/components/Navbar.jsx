@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBarsStaggered, FaBookAtlas, FaHeart, FaUser, FaX, FaXmark} from "react-icons/fa6"
+import { VscHeart } from "react-icons/vsc"
 import { AuthContext } from '../context/AuthProvider';
 import Logout from './Logout';
 import useUser from '../../hooks/useUser';
@@ -201,7 +202,7 @@ return (
                             {user ? (
                                 user.photoURL ? (
                                         <Link to="/userProfile">
-                                            <img src={user.photoURL} alt="" className='p-0 h-8 w-8 border-none rounded-full mr-0' />
+                                            <img src={user.photoURL} alt="Profile pic" className='p-0 h-8 w-8 border-none rounded-full mr-0' />
                                         </Link>
                                     ) : (
                                         <Link to="/userProfile">
@@ -215,7 +216,7 @@ return (
                     
                     {
                         user && <div title='Wishlist' className='relative top-[2px]'>
-                            <Link to= '/wishlist'><FaHeart className='text-red-500 text-2xl hover:scale-105'/></Link>
+                            <Link to= '/wishlist'><VscHeart className=' text-2xl hover:scale-105'/></Link>
                         </div>
                     }
     

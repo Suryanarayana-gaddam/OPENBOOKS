@@ -53,12 +53,13 @@ const Orders = () => {
   return (
     <div className="container mx-auto px-4 mt-16 mb-5">
     <h1 className="text-3xl font-bold text-gray-800 mt-4 md:mt-0 text-center">My Orders</h1>
-    <div className='mb-4'>
-      <Search books={orders} setSearchKeyFun={setSearchKeyFun} setBooksFun={setBooksFun} />
-    </div>
+    
     <div className='transition-all duration-1000'>
       { orders && Array.isArray(orders) && orders.length > 0 ? (
         <div className="">
+          <div className='mb-4'>
+      <Search books={orders} setSearchKeyFun={setSearchKeyFun} setBooksFun={setBooksFun} />
+    </div>
         <div className='mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4'>
         {currentBooks && Array.isArray(currentBooks) &&  currentBooks.map((order,index) => (
           <motion.div

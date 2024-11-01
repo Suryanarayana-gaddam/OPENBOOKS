@@ -7,39 +7,46 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import { setLogLevel } from 'firebase/app';
 import Loading from './Loading';
 import image from "../assets/Open Books.jpg"
+import UseLoginWithGoogle from '../../hooks/UseLoginWithGoogle';
 
 const Login = () => {
-  const {login,loginWithGoogle} = useContext(AuthContext);
-  const [error,setError] = useState({status:0,message:""});
-  const [loading, setLoading] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+    const {login,loginWithGoogle} = useContext(AuthContext);
+    const [error,setError] = useState({status:0,message:""});
+    const [loading, setLoading] = useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    
+    const settingError = (errVal) => {
+        setError(err => ({...err,message: errVal}));
+    } 
+    const handleRegister = UseLoginWithGoogle({setError: settingError});
 
-  const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
-  };
-
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
     const handlePasswordChange = (event) => {
     const newPassword = event.target.value;
     setPassword(newPassword);
     };
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    setLoading(true)
-    const form = event.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    
-        fetch("https://book-store-api-theta.vercel.app/login", {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify({email,password})
+    const handleLogin = (event) => {
+        event.preventDefault();
+        setLoading(true)
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        login(email,password).then((userCredential) => {
+            const user = userCredential.user;
+            console.log(user)
+            fetch("https://book-store-api-theta.vercel.app/login", {
+                method: "PATCH",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify({email,password, userDetails: user})
             })
             .then(res => {
                 if (res.status === 404 || res.status === 401) {
@@ -50,18 +57,10 @@ const Login = () => {
                     });
                 }else {
                     return res.json().then(result => {
-                        login(email,password).then((userCredential) => {
-                            const user = userCredential.user;
-                            setError({status:0,message:""})
-                            navigate("/",{replace:true})
-                            alert("Welcome Back User...")
-                        }).catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        console.log("error :",errorMessage)
-                        setError(errorMessage);
-                        setLogLevel(false)
-                        });
+                        console.log(result)
+                        setError({status:0,message:""})
+                        navigate("/",{replace:true})
+                        alert(`Welcome Back ${result.username}`)
                     })
                 }
             })
@@ -71,65 +70,23 @@ const Login = () => {
             }).finally(
                 setTimeout(() => setLoading(false),1000)
             )
-        }
-  const from = location.state?.from?.pathname || "/";
 
-const handleRegister = () => {
-    loginWithGoogle().then((result) => {
-        const user = result.user;
-        const userObj = {
-            username: user.displayName,
-            email: user.email,
-            password: "",
-            googleSignIn: true 
-        };
-        setLoading(true);
-        
-        const token = localStorage.getItem('access-token');
-        fetch(`https://book-store-api-theta.vercel.app/userByEmail/${user.email}`, {
-                method: "GET",
-                headers: {
-                    "Content-type": "application/json",
-                }
-        }).then(res => {
-            if (res.status === 404) {
-                fetch("https://book-store-api-theta.vercel.app/sign-up", {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json",
-                        "authorization" : `Bearer ${token}`
-                    },
-                    body: JSON.stringify(userObj)
-                }).then(res => res.json()).then(response => {
-                    if(response.ok){
-                        alert("Signed up Successfully!");
-                        navigate(from, { replace: true });
-                    }
-                }).catch(error =>{
-                    console.error("Error in Signup:",error);
-                }).finally(
-                    setTimeout(() => setLoading(false),1000)
-                )
-            } else {
-                setTimeout(() => setLoading(false),1000)                    
-                alert(`Welcome back , ${user.displayName} `);
-                navigate(from, { replace: true });
+        }).catch((error) => {
+            setError({status: error.code,message:error.message});
+            setLogLevel(false)
+        });
+            
             }
-        })
-    }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setError(errorMessage);
-    });
-}
-if(loading){
-    return <Loading/>
-  }
+    const from = location.state?.from?.pathname || "/";
 
-const handlePaste = (event) => {
-    event.preventDefault();
-    window.alert("Paste is not allowed in Password!")
-}
+    if(loading){
+        return <Loading/>
+    }
+
+    const handlePaste = (event) => {
+        event.preventDefault();
+        window.alert("Paste is not allowed in Password!")
+    }
 
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12 lg:pb-2">

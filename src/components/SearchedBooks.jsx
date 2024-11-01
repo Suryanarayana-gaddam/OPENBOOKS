@@ -119,15 +119,12 @@ const SearchedBooks = () => {
     }
   };
 
-  const handleGoBack = () => {
-    window.history.back();
-  };
-
+  
   return (
       <div className=" relative bottom-[76px] px-4 lg:px-14">
         <br />
           <div className='ml-5 md:ml-10  flex'>
-            <button onClick={handleGoBack}><BiArrowBack className='text-black border border-black rounded-full p-1 w-7 h-7 relative top-[37px] right-4 text-2xl'/></button>
+            <Link to="/"><BiArrowBack className='text-black border border-black rounded-full p-1 w-7 h-7 relative top-[65px] right-4 text-2xl'/></Link>
             <Search 
               autofocus={true}
               inputStyles={" relative top-3 rounded-s-md h-[34px] outline-none px-1 xl:w-[88%] lg:w-[87%] md:w-[85%] sm:w-11/12 w-5/6 text-center md:ml-6 lg:ml-10"} 

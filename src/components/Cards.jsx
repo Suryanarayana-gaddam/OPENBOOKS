@@ -17,14 +17,26 @@ const Cards = ({booksTodisplay}) => {
     const [indexOfFirstBook,setIndexOfFirstBook] = useState(null);
     const [wishlistBooks, setWishlistBooks] = useState([]);
     const [cartBooks, setCartBooks] = useState([]);
+    const [widthOfWindow, setWidthOfWindow] = useState(window.innerWidth);
     const token = localStorage.getItem('access-token');
 
     const setItemsDetails = (x) => {
-        setCurrentBooks(x);
+      setCurrentBooks(x);
+    }
+    const setIndexBook = (y) => {
+      setIndexOfFirstBook(y);
+    }
+
+    useEffect(() => {
+      const widthofWindow = () => {
+        setWidthOfWindow(window.innerWidth);
       }
-      const setIndexBook = (y) => {
-        setIndexOfFirstBook(y);
+
+      window.addEventListener("resize",widthofWindow);
+      return () =>{
+        window.removeEventListener("resize",widthofWindow);
       }
+    },[])
 
     useEffect(() => {
         if (userData && userData.wishlist && userData.cart ) {
@@ -133,7 +145,7 @@ const Cards = ({booksTodisplay}) => {
                 </Card>
             ))}
         </div>
-        <Pagination setItemsDetails={setItemsDetails} setIndexBook={setIndexBook} itemsPerPage={20} maxPageNumbers={10} inputArrayItems={books}/>
+        <Pagination setItemsDetails={setItemsDetails} setIndexBook={setIndexBook} itemsPerPage={widthOfWindow > 760 ? 20 : widthOfWindow > 640 ? 15 : 10} maxPageNumbers={10} inputArrayItems={books}/>
     </div>
   )
 }

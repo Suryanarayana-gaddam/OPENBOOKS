@@ -59,7 +59,7 @@ const UserUploadBook = () => {
 
 
   return (
-    <div className='pt-14 px-2 my-12 w-full'>
+    <div className='pt-14 px-4 my-12 w-full'>
         <h2 className='mb-4 text-3xl text-center bg-red-300 p-1 rounded font-bold'>Upload Book</h2>
         <h2 className='mb-2'>Welcome <b>{username}</b> you can upload a book here !</h2>
         <form className="flex lg:w-[1180px] flex-col flex-wrap gap-4 " onSubmit={handleBookSubmit}>
