@@ -22,7 +22,6 @@ const useSignUp = ({proceed,setError,setLoading,profilePic}) => {
         
         const email = form.email.value;
         const password = form.password.value;
-        console.log(username,email,password);
       
         fetch(`https://book-store-api-theta.vercel.app/userByEmail/${email}`, {
             method: "GET",
@@ -32,10 +31,8 @@ const useSignUp = ({proceed,setError,setLoading,profilePic}) => {
             }
         }).then(res => {
             if (res.status == 404) {
-                console.log(404);
                 createUser(email,password).then((userCredential) => {
                     const user = userCredential.user;
-                    console.log("user :",user   )
                     const userObj = {
                         username,
                         email,
@@ -45,7 +42,6 @@ const useSignUp = ({proceed,setError,setLoading,profilePic}) => {
                         googleSignIn: false
                     };
 
-                console.log("userOBJ :",userObj)
                     fetch("https://book-store-api-theta.vercel.app/sign-up", {
                         method: "POST",
                         headers: {

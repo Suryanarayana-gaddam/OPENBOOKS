@@ -5,7 +5,7 @@ import Loading from '../src/components/Loading';
 
 const UseLoginWithGoogle = ({setError}) => {
 
-    const {createUser,loginWithGoogle} = useContext(AuthContext);
+    const {createUser,loginWithGoogle,settingActiveUser} = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
     const token = localStorage.getItem("access-token");
     const navigate = useNavigate();
@@ -35,7 +35,6 @@ const UseLoginWithGoogle = ({setError}) => {
                     "Content-type": "application/json",
                 }
             }).then(res => {
-                if (res.status === 404) {
                     fetch("https://book-store-api-theta.vercel.app/sign-up", {
                         method: "POST",
                         headers: {
@@ -44,13 +43,10 @@ const UseLoginWithGoogle = ({setError}) => {
                         },
                         body: JSON.stringify(userObj)
                     }).then(res => res.json()).then(data => {
-                        alert("Signed up Successfully!");
                         navigate(from, { replace: true });
+                        settingActiveUser(data.user);
+                        res.status == 404 ? alert("Signed up Successfully!") : alert(`Welcome, ${data.user.username}`);
                     });
-                } else {
-                    alert(`Welcome, ${user.displayName} `);
-                    navigate(from, { replace: true });
-                }
             }).catch((error) => {
                 const errorMessage = error.message;
                 setError(errorMessage || error);

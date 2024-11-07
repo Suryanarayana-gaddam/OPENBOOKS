@@ -3,7 +3,7 @@ import { AuthContext } from "../src/context/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 
 const useUser = () => {
-    const user = useContext(AuthContext);
+    const {user,settingActiveUser} = useContext(AuthContext);
     const token = localStorage.getItem("access-token");
     const userEmail = user?.email || user?.user?.email ;
     const fetchUserData = async () => {
@@ -17,6 +17,7 @@ const useUser = () => {
             });
             
             const responseData = await response.json();
+            settingActiveUser(responseData);
             return responseData;
         } catch (error) {
             console.error("Error fetching user data:", error);

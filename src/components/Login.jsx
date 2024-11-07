@@ -10,7 +10,7 @@ import image from "../assets/Open Books.jpg"
 import UseLoginWithGoogle from '../../hooks/UseLoginWithGoogle';
 
 const Login = () => {
-    const {login,loginWithGoogle} = useContext(AuthContext);
+    const {login,settingActiveUser} = useContext(AuthContext);
     const [error,setError] = useState({status:0,message:""});
     const [loading, setLoading] = useState(false);
     const location = useLocation();
@@ -40,7 +40,6 @@ const Login = () => {
         const password = form.password.value;
         login(email,password).then((userCredential) => {
             const user = userCredential.user;
-            console.log(user)
             fetch("https://book-store-api-theta.vercel.app/login", {
                 method: "PATCH",
                 headers: {
@@ -49,15 +48,14 @@ const Login = () => {
                 body: JSON.stringify({email,password, userDetails: user})
             })
             .then(res => {
+                settingActiveUser(user);
                 if (res.status === 404 || res.status === 401) {
                     setError(prev => ({...prev,status : res.status}))
                     return res.json().then(data => {
-                        console.log("res:", res.status, data.error);
                         setError(dat => ({...dat,message:data.error})); // Return data for further processing if needed
                     });
                 }else {
                     return res.json().then(result => {
-                        console.log(result)
                         setError({status:0,message:""})
                         navigate("/",{replace:true})
                         alert(`Welcome Back ${result.username}`)

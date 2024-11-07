@@ -10,7 +10,7 @@ import image from "../assets/Open Books.jpg"
 import Search from './Search';
 import { FaSearch } from 'react-icons/fa';
 const Navbar = () => {
-    const [activeItem, setActiveItem] = useState('');
+    const [activeItem, setActiveItem] = useState({Menu: "Home", userMenu: ""});
     const [isMenuOpen,setIsMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [isSticky,setIsSticky] = useState(false);
@@ -39,17 +39,16 @@ const Navbar = () => {
         setIsMenuOpen(false);
     }
 
-    setInterval(timefun,1000);
-    function timefun(){
+    const timefun = () => {
         let d = new Date();
         setTimeDate(
-        d.getHours() + ":" +
-        d.getMinutes() + ":" +
-        d.getSeconds() )   
-    }
+            d.getHours() + ":" +
+            d.getMinutes() + ":" +
+            d.getSeconds() )   
+        }
+    setInterval(timefun,1000);
 
     useEffect(() => {
-        if (!user) return 
         if(userData && userData.role){
             {
                 userData.role == "admin" ?
@@ -130,9 +129,9 @@ return (
                                 <Link 
                                     key={path} 
                                     to={path}  
-                                    className={`block text-black uppercase cursor-pointer hover:text-blue-700 ${activeItem === link ? 'font-semibold relative bottom-[3px] text-lg text-blue-700' : 'text-black'}` } 
+                                    className={`block text-black uppercase cursor-pointer hover:text-blue-700 ${activeItem.Menu === link ? 'font-semibold relative bottom-[3px] text-lg text-blue-700' : 'text-black'}` } 
                                     onClick={() => {
-                                        setActiveItem(link);
+                                        setActiveItem(prev => ({...prev,Menu: link}));
                                         if(link === "Admin" && !isAdmin){
                                             window.alert("You are not an Admin!")
                                         }
@@ -152,9 +151,10 @@ return (
                          onClick={CloseMenu}/>
                         {
                             navItems.map(({link,path}) => 
-                                <Link key={path} to={path} className="block text-base text-[#4f30ec] font-semibold uppercase cursor-pointer text-center hover:bg-[#A2C8FB] rounded-md bg-[#aae6e8] hover:font-bold hover:text-black hover:scale-105 duration-500 py-1" 
+                                <Link key={path} to={path} className={`block text-base text-[#4f30ec] font-semibold uppercase cursor-pointer text-center rounded-md ${activeItem.Menu == link ? "bg-[#A2C8FB]" : "hover:bg-[#A2C8FB] bg-[#aae6e8]"} hover:font-bold hover:text-black hover:scale-105 duration-500 py-1`} 
                                 onClick={() => {
-                                    CloseMenu()
+                                    setActiveItem(prev => ({...prev,Menu: link}))
+                                    CloseMenu();
                                     if(link === "Admin" && !isAdmin){
                                         window.alert("You are not admin!")
                                     }
@@ -233,7 +233,7 @@ return (
                         ) : null
                     }
                                    
-                    {/* User menu Items */}
+                    {/* User menu Items non-mobile devices*/}
                     <div className="relative">
                         <button title='Toggle User Menu' onClick={toggleUserMenu} className="text-black focus:outline-none">
                             { isUserMenuOpen ?
@@ -244,7 +244,7 @@ return (
                         </button>
                         <div className={`absolute top-full right-[-5px]  z-10 mt-2 px-2 py-2 bg-gray-200 rounded-lg shadow-md text-left ${isUserMenuOpen ? "block" : "hidden"}`}>
                             {userMenuItems.map(({ link, path }) => (
-                                <Link key={path} to={path} onClick={CloseUserMenu} className="block font-semibold hover:text-white items-center w-36  p-0 py-1 text-center text-inherit text-black my-1 rounded-md bg-[#99c0f8] hover:bg-[#3379dc] duration-700 " >
+                                <Link key={path} to={path} onClick={() => {setActiveItem(prev => ({...prev,userMenu : link})); CloseUserMenu()}} className={`block font-semibold hover:text-white items-center w-36  p-0 py-1 text-center text-inherit text-black my-1 rounded-md ${activeItem.userMenu == link ? "bg-[#3379dc]" : "bg-[#99c0f8] hover:bg-[#3379dc]"} duration-700`} >
                                     {link}
                                 </Link>
                             ))}
@@ -265,7 +265,8 @@ return (
                         </label>
                        </Link>
                         ) : null
-                       }
+                    }
+                    {/* users menu for mobile devices */}
                     <button onClick={toggleUserMenu} className="text-black focus:outline-none relative right-1">
                         {
                             isUserMenuOpen ? 
@@ -282,7 +283,7 @@ return (
                     </button>
                     <div className={`absolute top-12 lg:top-10 right-1 z-10 mt-2 py-2 px-2 bg-gray-200 rounded-lg shadow-md text-left ${isUserMenuOpen ? "block" : "hidden"}`}>
                             {userMenuItems.map(({ link, path }) => (
-                                <Link key={path} to={path} onClick={CloseUserMenu} className=" block p-0 px-4 py-2 text-base text-black hover:text-white shadow-xl bg-[#9ac1f8] font-bold duration-700 my-1 rounded hover:bg-[#3372d9] cursor-pointer text-center">
+                                <Link key={path} to={path} onClick={() => {setActiveItem(prev => ({...prev,userMenu: link})); CloseUserMenu();}} className={`block p-0 px-4 py-2 text-base text-black hover:text-white shadow-xl font-bold duration-700 my-1 rounded  cursor-pointer text-center ${activeItem.userMenu == link ? "bg-[#3372d9]" : "bg-[#9ac1f8] hover:bg-[#3372d9]"}`}>
                                     {link}
                                 </Link>
                             ))}

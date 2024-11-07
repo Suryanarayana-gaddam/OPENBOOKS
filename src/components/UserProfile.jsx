@@ -17,7 +17,7 @@ const UserProfile = () => {
     const fileInputRef = useRef(null);
     const picaInstance = pica();
 
-    const { logOut } = useContext(AuthContext);
+    const { logOut, activeUser } = useContext(AuthContext);
     const navigate = useNavigate();
     const [userData,refetch] = useUser();
     const user = useContext(AuthContext);
@@ -129,7 +129,6 @@ const UserProfile = () => {
             }
     
             const updatedData = await response.json();
-            console.log('User data updated successfully:', updatedData);
     
             setUsername(updatedData.username); 
             setProfilePic(updatedData.profilePic); 
@@ -157,7 +156,7 @@ const UserProfile = () => {
     return (
         <div className="lg:pt-24 pt-[178px] text-center">
             <h1 className='font-bold text-3xl'>Profile Details :</h1>
-            <div className="text-center p-8 max-w-lg mx-auto shadow rounded-lg sm:pr-5 hover:scale-110 duration-300">
+            <div className=" p-8 max-w-lg mx-auto shadow rounded-lg sm:pr-5 hover:scale-110 duration-300">
                 <img
                     className="h-36 w-36 rounded-full ml-32 lg:ml-36 text-center"
                     src={ profilePic || user?.user?.photoURL}
@@ -212,6 +211,18 @@ const UserProfile = () => {
                 <p className="text-gray">
                     <b>E-Mail : </b>
                     {userData.email}
+                </p>
+                <p className="text-gray">
+                    <b>Created At : </b>
+                    {String(new Date(Number((activeUser.userDetails[activeUser.userDetails.length-1].createdAt)))).slice(0,String(new Date(Number((activeUser.userDetails[activeUser.userDetails.length-1].createdAt)))).length-31)}
+                </p>
+                <p className="text-gray">
+                    <b>Last Login At : </b>
+                    {String(new Date(Number((activeUser.userDetails[activeUser.userDetails.length-1].lastLoginAt)))).slice(0,String(new Date(Number((activeUser.userDetails[activeUser.userDetails.length-1].lastLoginAt)))).length-31)}
+                </p>
+                <p className="text-gray">
+                    <b>Role : </b>
+                    {activeUser.role}
                 </p>
                 <button onClick={handleLogout} className="bg-red-700 px-8 py-2 hover:scale-95 duration-75 text-white rounded mt-6">
                     Logout

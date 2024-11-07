@@ -12,6 +12,7 @@ const SideBar = ({toggleSidebar}) => {
   const {user} = useContext(AuthContext);
   const [profilePic,setProfilePic] = useState(null);
   const [userName, setUserName] = useState('');
+  const [activeItem, setActiveItem] = useState('DashBoard');
   const [userData,refetch] = useUser();
 
   useEffect(() => {
@@ -20,6 +21,14 @@ const SideBar = ({toggleSidebar}) => {
       setProfilePic(userData.profilePic);
     }
   }, [userData]);
+
+  const sidebarItems = [
+    {title : "DashBoard", icon : HiChartPie, link : "/admin/Dashboard"},
+    {title : "Upload Book", icon : HiOutlineCloudUpload, link : "/admin/Dashboard/upload"},
+    {title : "Manaage Books", icon : HiInbox, link : "/admin/Dashboard/manage"},
+    {title : "Mange Users", icon : HiUser, link : "/admin/Dashboard/all-users"},
+    {title : "All Orders", icon : HiCash, link : "/admin/Dashboard/all-orders"},
+  ]
 
   return (
     <Sidebar className='bg-[#a2c9ff]' style={{backgroundColor:'#d5f5f6'}} aria-label="Sidebar with content separator example">
@@ -36,32 +45,17 @@ const SideBar = ({toggleSidebar}) => {
       </div>
       <Sidebar.Items className='m-1'>
         <Sidebar.ItemGroup className=''>
-          <Link to={"/admin/Dashboard"} onClick={toggleSidebar}>
-            <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiChartPie}>
-              DashBoard
-            </Sidebar.Item>
-          </Link>
-          <Link to={"/admin/Dashboard/upload"} onClick={toggleSidebar}>
-            <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiOutlineCloudUpload}>
-              Upload Book
-            </Sidebar.Item>
-          </Link>
-          <Link to={"/admin/Dashboard/manage"} onClick={toggleSidebar}>
-            <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiInbox}>
-              Mangage Books
-            </Sidebar.Item>
-          </Link>
-          <Link to={"/admin/Dashboard/all-users"} onClick={toggleSidebar}>
-            <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiUser}>
-              Mangage Users
-            </Sidebar.Item>
-          </Link>
-          <Link to={"/admin/Dashboard/all-orders"} onClick={toggleSidebar}>
-            <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiCash}>
-              Orders
-            </Sidebar.Item>
-          </Link>
-          <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiTable}>
+          { sidebarItems.map((item,index) => 
+            <Link to={item.link} key={index} onClick={() => {
+              setActiveItem(item.title);
+              toggleSidebar();
+            }}>
+              <Sidebar.Item className={`my-2 ${activeItem == item.title ? "bg-red-300" : "bg-[#a2c9ff] hover:bg-red-300"} duration-700 cursor-pointer hover:text-pretty hover:scale-105`} icon={item.icon}>
+                {item.title}
+              </Sidebar.Item>
+            </Link>
+          )}
+           <Sidebar.Item className='bg-[#a2c9ff] my-2 hover:bg-red-300 duration-700 cursor-pointer hover:text-pretty hover:scale-105' icon={HiTable}>
             <Logout nocolor={true}/>
           </Sidebar.Item>
         </Sidebar.ItemGroup>
