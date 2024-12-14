@@ -38,29 +38,45 @@ const Login = () => {
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
-        login(email,password).then((userCredential) => {
-            const user = userCredential.user;
-            fetch("https://book-store-api-theta.vercel.app/login", {
+        fetch("https://book-store-api-theta.vercel.app/login", {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",
                 },
-                body: JSON.stringify({email,password, userDetails: user})
+                body: JSON.stringify({email,password})
             })
             .then(res => {
-                settingActiveUser(user);
                 if (res.status === 404 || res.status === 401) {
                     setError(prev => ({...prev,status : res.status}))
                     return res.json().then(data => {
                         setError(dat => ({...dat,message:data.error})); // Return data for further processing if needed
                     });
-                }else {
-                    return res.json().then(result => {
-                        setError({status:0,message:""})
-                        navigate("/",{replace:true})
-                        alert(`Welcome Back ${result.username}`)
-                    })
                 }
+                else if(res.status === 200) { login(email,password).then((userCredential) => {
+                    const user = userCredential.user;
+                    fetch("https://book-store-api-theta.vercel.app/login", {
+                        method: "PATCH",
+                        headers: {
+                            "Content-type": "application/json",
+                        },
+                        body: JSON.stringify({email,password, userDetails: user})
+                    })
+                    .then(res => {
+                        settingActiveUser(user);
+                        return res.json().then(result => {
+                            setError({status:0,message:""})
+                            navigate("/",{replace:true})
+                            alert(`Welcome Back ${result.username}`)
+                        })
+                    })
+                    .catch(error =>{
+                        console.error("Error in Login:",error)
+                        setError(error)
+                    })
+                }).catch((error) => {
+                    setError({status: error.code,message:error.message});
+                    setLogLevel(false);
+                })}
             })
             .catch(error =>{
                 console.error("Error in Login:",error)
@@ -68,15 +84,8 @@ const Login = () => {
             }).finally(
                 setTimeout(() => setLoading(false),1000)
             )
-
-        }).catch((error) => {
-            setError({status: error.code,message:error.message});
-            setLogLevel(false)
-        });
             
             }
-    const from = location.state?.from?.pathname || "/";
-
     if(loading){
         return <Loading/>
     }

@@ -33,7 +33,6 @@ const home = () => {
       <Banner/>
       <BestSellerBooks/> 
       <FavBook/>
-      <FavBook/>
       <OtherBooks/>
     </div>
   )
