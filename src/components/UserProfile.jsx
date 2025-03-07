@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState, useRef } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { FaPen } from 'react-icons/fa';
-import pica from 'pica';
 import { useNavigate } from 'react-router-dom';
 import useUser from '../../hooks/useUser';
 import Loading from './Loading';
@@ -15,7 +14,6 @@ const UserProfile = () => {
     const [loading, setLoading] = useState(true);
     const token = localStorage.getItem('access-token');
     const fileInputRef = useRef(null);
-    const picaInstance = pica();
 
     const { logOut, activeUser } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -60,6 +58,7 @@ const UserProfile = () => {
                 const reader = new FileReader();
                 reader.onloadend = () => {
                     localStorage.setItem("ProfilePic",reader.result);
+                    console.log(reader.result);
                     handleUpdateProfile(); 
                 };
                 
@@ -74,6 +73,7 @@ const UserProfile = () => {
         return new Promise((resolve, reject) => {
             const img = document.createElement('img');
             const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
             const reader = new FileReader();
 
             reader.onload = (event) => {
@@ -88,10 +88,14 @@ const UserProfile = () => {
                 canvas.width = width;
                 canvas.height = height;
 
-                picaInstance.resize(img, canvas)
-                    .then(result => picaInstance.toBlob(result, 'image/jpeg', 0.90))
-                    .then(blob => resolve(blob))
-                    .catch(err => reject(err));
+                ctx.drawImage(img, 0, 0, width, height);
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        resolve(blob);
+                    } else {
+                        reject('Canvas to Blob conversion failed');
+                    }
+                }, 'image/jpeg', 0.90);
             };
 
             img.onerror = reject;
@@ -132,12 +136,11 @@ const UserProfile = () => {
     
             setUsername(updatedData.username); 
             setProfilePic(updatedData.profilePic); 
+            refetch();
         } catch (error) {
             console.error('Error updating user profile:', error);
         }
-        window.location.reload();
     };
-    
 
     const handleClickEditName = () => {
         setIsNameChangeClicked(true);
@@ -214,11 +217,11 @@ const UserProfile = () => {
                 </p>
                 <p className="text-gray">
                     <b>Created At : </b>
-                    {String(new Date(Number((activeUser.userDetails[activeUser.userDetails.length-1].createdAt)))).slice(0,String(new Date(Number((activeUser.userDetails[activeUser.userDetails.length-1].createdAt)))).length-31)}
+                    {Date(userData.createdAt).toString().slice(0,24)}
                 </p>
                 <p className="text-gray">
                     <b>Last Login At : </b>
-                    {String(new Date(Number((activeUser.userDetails[activeUser.userDetails.length-1].lastLoginAt)))).slice(0,String(new Date(Number((activeUser.userDetails[activeUser.userDetails.length-1].lastLoginAt)))).length-31)}
+                    {Date(userData.updatedAt).toString().slice(0,24)}
                 </p>
                 <p className="text-gray">
                     <b>Role : </b>

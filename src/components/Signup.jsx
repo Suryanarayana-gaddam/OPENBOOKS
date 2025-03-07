@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import googleLogo from "../assets/google-logo.svg"
-import pica from "pica";
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import Loading from './Loading';
 import image from "../assets/Open Books.jpg"
@@ -12,7 +11,6 @@ const Signup = () => {
     const [error,setError] = useState("");
     const [profilePic, setProfilePic] = useState(null);
     const [loading, setLoading] = useState(false);
-    const picaa = pica();
     
     const [password, setPassword] = useState('');
     const [strengthMessage, setStrengthMessage] = useState('');
@@ -90,6 +88,7 @@ const Signup = () => {
         return new Promise((resolve, reject) => {
             const img = document.createElement('img');
             const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
             const reader = new FileReader();
 
             reader.onload = (event) => {
@@ -103,11 +102,14 @@ const Signup = () => {
 
                 canvas.width = width;
                 canvas.height = height;
-
-                picaa.resize(img, canvas)
-                    .then(result => picaa.toBlob(result, 'image/jpeg', 0.90))
-                    .then(blob => resolve(blob))
-                    .catch(err => reject(err));
+                ctx.drawImage(img, 0, 0, width, height);
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        resolve(blob);
+                    } else {
+                        reject('Canvas to Blob conversion failed');
+                    }
+                }, 'image/jpeg', 0.90);
             };
 
             img.onerror = reject;
