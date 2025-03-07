@@ -141,7 +141,6 @@ const UserProfile = () => {
             console.error('Error updating user profile:', error);
         }
     };
-    
 
     const handleClickEditName = () => {
         setIsNameChangeClicked(true);
@@ -216,14 +215,14 @@ const UserProfile = () => {
                     <b>E-Mail : </b>
                     {userData.email}
                 </p>
-                {/*<p className="text-gray">
+                <p className="text-gray">
                     <b>Created At : </b>
-                    {String(new Date(Number((activeUser.userDetails[activeUser.userDetails.length-1].createdAt)))).slice(0,String(new Date(Number((activeUser.userDetails[activeUser.userDetails.length-1].createdAt)))).length-31)}
+                    {Date(userData.createdAt).toString().slice(0,24)}
                 </p>
                 <p className="text-gray">
                     <b>Last Login At : </b>
-                    {String(new Date(Number((activeUser.userDetails[activeUser.userDetails.length-1].lastLoginAt)))).slice(0,String(new Date(Number((activeUser.userDetails[activeUser.userDetails.length-1].lastLoginAt)))).length-31)}
-                </p>*/}
+                    {Date(userData.updatedAt).toString().slice(0,24)}
+                </p>
                 <p className="text-gray">
                     <b>Role : </b>
                     {activeUser.role}
