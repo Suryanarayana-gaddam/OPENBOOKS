@@ -47,10 +47,10 @@ const BookCards = ({headLine,books, user, isAutoPlay, isPagination, isNavigation
     const bookId = book._id;
     if (!isBookInWishlist(book)) {
       addToWishlist(book);
-      refetch();
+      // refetch();
     } else {
       removeFromWishlist(bookId);
-      refetch();
+      // refetch();
     }
   };
 

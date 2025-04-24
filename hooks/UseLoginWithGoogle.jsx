@@ -25,7 +25,6 @@ const UseLoginWithGoogle = ({setError}) => {
                 email: user.email,               
                 profilePic: user.photoURL,
                 password: "",
-                userDetails : user,
                 googleSignIn: true 
             };
             setLoading(true);

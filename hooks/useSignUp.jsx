@@ -38,7 +38,6 @@ const useSignUp = ({proceed,setError,setLoading,profilePic}) => {
                         email,
                         password,
                         profilePic,
-                        userDetails : user,
                         googleSignIn: false
                     };
 

@@ -217,11 +217,11 @@ const UserProfile = () => {
                 </p>
                 <p className="text-gray">
                     <b>Created At : </b>
-                    {Date(userData.createdAt).toString().slice(0,24)}
+                    {new Date(userData.createdAt).toString().slice(0,24)}
                 </p>
                 <p className="text-gray">
                     <b>Last Login At : </b>
-                    {Date(userData.updatedAt).toString().slice(0,24)}
+                    {new Date(userData.updatedAt).toString().slice(0,24)}
                 </p>
                 <p className="text-gray">
                     <b>Role : </b>

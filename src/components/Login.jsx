@@ -59,7 +59,7 @@ const Login = () => {
                         headers: {
                             "Content-type": "application/json",
                         },
-                        body: JSON.stringify({email,password, userDetails: user})
+                        body: JSON.stringify({email,password})
                     })
                     .then(res => {
                         settingActiveUser(user);

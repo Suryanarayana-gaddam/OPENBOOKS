@@ -72,10 +72,10 @@ const SingleBook = () => {
     const bookId = book._id;
     if (!isBookInWishlist(book)) {
       addToWishlist(book);
-      refetch();
+      // refetch();
     } else {
        removeFromWishlist(bookId);
-       refetch();
+      //  refetch();
     }
   };
   const handleCart = (event,book) => {
