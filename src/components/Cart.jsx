@@ -114,6 +114,7 @@ const Cart = () => {
   
   const emptyCart = () => {
     clearCart()
+    window.alert("Order Placed, please visit orders sections for more details!")
     setCartBooks([]);
     refetch() 
   };
